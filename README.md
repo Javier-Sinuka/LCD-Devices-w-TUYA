@@ -15,4 +15,10 @@ The `tuya-connector-python` SDK is designed to support openAPIs and Pulsar messa
 
 ## Install
 
+### TUYA CONNECTOR
+
 `pip3 install tuya-connector-python`
+
+### SEABORN - GRAFICADOR
+
+`pip3 install seaborn matplotlib pandas`

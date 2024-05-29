@@ -27,25 +27,8 @@ openapi = TuyaOpenAPI(API_ENDPOINT, ACCESS_ID, ACCESS_KEY)
 openapi.connect()
 
 # Get Devices
-response_test = openapi.get("/v2.0/cloud/thing/device?page_size=5")
-
-def devices_list_id():
-    variable_test = response_test.get('result')
-    devices_list = []
-
-    for element in variable_test:
-        devices_list.append(element['id'])
-
-    return devices_list
-
-def device_specific_value(device_id, required_parameter):
-    value_parameter = ''
-
-    for element in response_test.get('result'):
-        if element['id'] == device_id:
-            value_parameter = element[required_parameter]
-
-    return value_parameter
+cloud_info_devices = openapi.get("/v2.0/cloud/thing/device?page_size=5")
+result_list = cloud_info_devices.get('result')
 
 """
     Representacion en formato ano-mes-dia-hora-minuto-segundo de un valor en milisegundos
@@ -65,91 +48,123 @@ def calculate_previous_time(timestamp_ms, days_substract):
     calulate_timestamp_ms = datetime.fromtimestamp(timestamp_ms/1000) - timedelta(days=days_substract)
     return (int(calulate_timestamp_ms.timestamp() * 1000))
 
-# Seteo del ID del dispositivo
-DEVICE_ID = devices_list_id()[1]
-print(DEVICE_ID)
-start_time = response_test.get('t') - 604800000
-# print(start_time)
-start_time_prueba = calculate_previous_time(response_test.get('t'), 7)
-# print('Start time prueba: ' + str(start_time_prueba))
-end_time = response_test.get('t')
-# print('End time: ' + str(end_time))
-code = "switch_1"
-code_test = "switch_led_1"
-actual_time = conversor_time_hours(response_test.get('t'))
-# print('Actual time: ' + str(actual_time))
+"""
+    Metodo que devuelve una lista con los ID de los dispositivos y su customName asociado
+"""
+def devices_list_id_and_custom_name():
+    devices_list = []
+    for element in result_list:
+        devices_list.append({'Custom Name': element['customName'], 'ID': element['id']})
+    return devices_list
 
-# print('Info relevante: ' + '\n' +
-#       'Device ID: ' + DEVICE_ID + '\n' +
-#       'Conversor time - t valor: ' + conversor_time_hours(response_test.get('t')) + '\n' +
-#       'Start time: ' + (response_test.get('t') - 604800000) + '\n' +
-#       'Start time - 7 days minous (another method): ' + str(start_time_prueba) + '\n' +
-#       'End time: ' + str(end_time) + '\n' +
-#       'Actual time: ' + str(actual_time) + '\n'
-#       )
+def device_specific_value(device_id, required_parameter):
+    value_parameter = ''
+    for element in result_list:
+        if element['id'] == device_id:
+            value_parameter = element[required_parameter]
+    return value_parameter
 
-# Metodo para traer los eventos de encendido y apagado
-response = openapi.get("/v2.0/cloud/thing/{}/report-logs?codes={}&end_time={}&size=99&start_time={}".format(DEVICE_ID, code, end_time, start_time))
+"""
+    Metodo que devuelve los customName de todos los dispositivos registrados
+"""
+def get_custom_name_list():
+    custom_name_list = []
+    for element in result_list:
+        custom_name_list.append(element['customName'])
+    return custom_name_list
 
-# response_2_testing = openapi.get("/v2.0/cloud/thing/{}/report-logs?codes={}&start_time={}&end_time={}&last_row_key=&size=20".format(DEVICE_ID, code, start_time, end_time))
+"""
+    Obtencion ID mediante customName (nombre puesto al dispositivo a la hora de inicializarlo)  
+"""
+def get_device_id(customName):
+    device_id = ''
+    for element in result_list:
+        if element['customName'] == customName:
+            device_id = element['id']
+    return device_id
 
-def event_time(response_value):
-    dict_event = {}
-    for log in response_value.get('result').get('logs'):
-        print(log.get('event_time'))
-        print(conversor_time_hours(log.get('event_time')) + ' ' + log.get('value'))
+"""
+    Metodo que expone los distintos codigos posibles respecto al ID del dispositivo ingresado,
+    dichos codigos pueden ser utilizados para realizar una peticion de valores referidos a 
+    dicho codigo.
+"""
+def get_status_codes_device_list(device_id):
+    response = openapi.get("/v1.0/iot-03/devices/{}/specification".format(device_id))
+    codes_device = response.get('result').get('status')
+    codes_list = []
+    for code in codes_device:
+        codes_list.append(code.get('code'))
+    return codes_list
 
-event_time(response)
+"""
+    Metodo que devuelve el "Status Report Log" de un dispositivo y su codigo asociado.
+    
+    :params
+    device_id: str (ID del dispositivo),
+    code: str (Valor a obtener),
+    size: int (Cantidad de elementos a retornar en la lista),
+    start_time: int (En milisegundos, tiempo de inicio de la toma de datos),
+    end_time: int (En milisegundos, tiempo de finalizacion de la toma de datos).
+    
+    :return
+    Lista de elementos solicitados.
+"""
+def get_status_report_log(device_id, code, size, start_time, end_time):
+    response = openapi.get("/v2.0/cloud/thing/{}/report-logs?codes={}&end_time={}&size={}&start_time={}".format(device_id, code, end_time, size, start_time)).get('result').get('logs')
+    return response
 
-####################################################################################
-############################# TESTING AREA #########################################
+"""
+    Metodo que devuelve una lista con los elementos especificados por el 'code' ingresado.
+    Se puede especificar el tamano de la lista. Ademas, dichos elementos cuentan
+    con dos parametros: 'event_time': int, 'value': int.
+    
+    :params
+    device_id: str (ID del dispositivo),
+    code: str (Valor a obtener),
+    size: int (Cantidad de elementos a retornar en la lista),
+    start_time: int (En milisegundos, tiempo de inicio de la toma de datos),
+    end_time: int (En milisegundos, tiempo de finalizacion de la toma de datos).
+    
+    :return
+    Lista con elementos que contienen los siguientes parametros:
+        'event_time' -> Referencia al tiempo en que en que fue tomada la medicion (valor en milisegundos)
+        'value' -> Referencia al valor solicitado (code)
+    Dichos elementos seran los relacionados al codigo ingresado.
+"""
+def get_status_list(device_id, code, size: int, start_time: int, end_time: int):
+    status_list = []
+    return status_list
 
-# print(openapi.get("/v1.0/devices/live-datas?date_type=week&product_id={}".format(DEVICE_ID)))
-
-# Metodo para ver la cantidad de dispositivos activos en el timepo indicado
-# ("Count the number of daily active devices" -> https://developer.tuya.com/en/docs/cloud/data-service?id=K95zu0f66bv4m#title-50-Count%20the%20number%20of%20daily%20active%20devices)
-# response = openapi.get("/v1.0/devices/live-datas?date_type=week&product_id=".format(DEVICE_ID))
-
-# Trae la informacion de todos los dispositivos, pero mediante Industry y no Samrt Home
-# response = openapi.get("/v1.3/iot-03/devices")
-
-# response = openapi.get("/v1.0/iot-03/energy/electricity/devices/nodes/statistics-trend?energy_action=consume&statisticsType=day&startTime=20240524&endTime=20240525&containChilds=false&device_ids=eb75e00e75c89084femtye,eba16cb6e8116961166ft4")
-
-
-####################################################################################
-####################################################################################
-
-
-#############################################################################################
-################################# TUYA INFO DEFAULT #########################################
-#############################################################################################
-
-# # Call APIs from Tuya
-# # Get the device information
-# response = openapi.get("/v1.0/iot-03/devices/{}".format(DEVICE_ID))
+"""
+    Metodo que devuelve una lista con los elementos especificados por el 'code' ingresado.
+    Opciones validas de time_return:
+        day -> Devuelve una lista con 24 elementos que cuenta con los parametros 'event_time': int, 'value': int.
+        week -> Devuelve una lista con 7 elementos que cuenta con los parametros 'event_time': int, 'value': int.
+    Se toma el valor ingresado en end_time, y se le resta el valor correspondiente a la peticion (day=ultimas 24hs
+    medidas, week=ultimos 7 dias).    
+    
+    :params
+    device_id: str (ID del dispositivo),
+    code: str (Valor a obtener),
+    end_time: int (En milisegundos, tiempo de finalizacion de la toma de datos),
+    time_return: str (day -> Ultimas 24hs [lista de 24 elementos], week -> Ultimos 7 dias [lista de 7 elementos])
+    
+    :return
+    Lista con elementos que contienen los siguientes parametros:
+        'event_time' -> Referencia al tiempo en que en que fue tomada la medicion (valor en milisegundos)
+        'value' -> Promedio respecto al valor solicitado (code)
+    Dichos elementos seran los relacionados al codigo ingresado.
+"""
+# def get_status_list_day_week(device_id, code, end_time: int, time_return: str):
+#     status_list = []
+#     try:
+#         if time_return == 'week':
 #
-# # Get the instruction set of the device
-# response = openapi.get("/v1.0/iot-03/devices/{}/functions".format(DEVICE_ID))
-# print(response)
+#         elif time_return == 'day':
 #
-# # Send commands
-# commands = {'commands': [{'code': 'switch_1', 'value': True}]}
-# openapi.post('/v1.0/iot-03/devices/{}/commands'.format(DEVICE_ID), commands)
+#     except ValueError:
+#         print("Ingrese valor correcto respecto a time_return" + '\n' +
+#               'day' + '\n' +
+#               'week' + '\n')
 #
-# Get the status of a single device
-# response = openapi.get("/v1.0/iot-03/devices/{}/status".format(DEVICE_ID))
-# response = openapi.get("/v2.0/cloud/thing/{}".format(DEVICE_ID))
-
-# # Init Message Queue
-# open_pulsar = TuyaOpenPulsar(
-# 	ACCESS_ID, ACCESS_KEY, MQ_ENDPOINT, TuyaCloudPulsarTopic.PROD
-# )
-# # Add Message Queue listener
-# open_pulsar.add_message_listener(lambda msg: print(f"---\nexample receive: {msg}"))
-#
-# # Start Message Queue
-# open_pulsar.start()
-#
-# input()
-# # Stop Message Queue
-# open_pulsar.stop()
+#     return status_list
