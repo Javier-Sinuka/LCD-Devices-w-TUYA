@@ -2,18 +2,20 @@ import devices_info
 
 
 # # Seteo del ID del dispositivo
-# DEVICE_ID = devices_info.devices_list_id_and_custom_name()[0]['ID']
-# # print(DEVICE_ID)
-# start_time = devices_info.cloud_info_devices.get('t') - 604800000
-# # print(start_time)
-# start_time_prueba = devices_info.calculate_previous_time(devices_info.cloud_info_devices.get('t'), 7)
-# print('Start time prueba: ' + str(start_time_prueba))
+DEVICE_ID = devices_info.devices_list_id_and_custom_name()[0]['ID']
+print(DEVICE_ID)
+start_time = devices_info.cloud_info_devices.get('t') - 604800000
+# print(start_time)
+start_time_prueba = devices_info.calculate_previous_time(devices_info.cloud_info_devices.get('t'), 1, 'hour')
+print('Start time prueba: ' + str(start_time_prueba))
 # end_time = devices_info.cloud_info_devices.get('t')
-# print('End time: ' + str(end_time))
-# code = "cur_power"
-# actual_time = devices_info.conversor_time_hours(1716942775676)
-# print('Actual time: ' + str(actual_time))
-
+end_time = 1716935097862
+print('End time: ' + str(end_time))
+code = "cur_power"
+actual_time = devices_info.conversor_time_hours(1716942775676)
+print('Actual time: ' + str(actual_time))
+tiempo = devices_info.calculate_previous_time(1716935097862, 2, 'hour')
+print('Tiempo: ' + str(tiempo))
 # print('Info relevante: ' + '\n' +
 #       'Device ID: ' + DEVICE_ID + '\n' +
 #       'Conversor time - t valor: ' + conversor_time_hours(response_test.get('t')) + '\n' +
@@ -22,6 +24,8 @@ import devices_info
 #       'End time: ' + str(end_time) + '\n' +
 #       'Actual time: ' + str(actual_time) + '\n'
 #       )
+
+devices_info.get_status_list_day(DEVICE_ID, code, end_time)
 
 # Metodo para traer los eventos de encendido y apagado
 # response = openapi.get("/v2.0/cloud/thing/{}/report-logs?codes={}&end_time={}&size=99&start_time={}".format(DEVICE_ID, code, end_time, start_time))
@@ -40,7 +44,7 @@ import devices_info
 
 # print(openapi.get("/v1.0/devices/live-datas?date_type=week&product_id={}".format(DEVICE_ID)))
 # print(devices_info.get_status_report_log(DEVICE_ID, code, 100, start_time, end_time))
-print(devices_info.calulate_average({23,23,22,25,23,23,25,26,99}))
+# print(devices_info.calulate_average({23,23,22,25,23,23,25,26,99}))
 
 # Metodo para ver la cantidad de dispositivos activos en el timepo indicado
 # ("Count the number of daily active devices" -> https://developer.tuya.com/en/docs/cloud/data-service?id=K95zu0f66bv4m#title-50-Count%20the%20number%20of%20daily%20active%20devices)
