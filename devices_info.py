@@ -20,7 +20,7 @@ API_ENDPOINT = config['API_ENDPOINT']
 MQ_ENDPOINT = config['MQ_ENDPOINT']
 
 # Enable debug log
-TUYA_LOGGER.setLevel(logging.DEBUG)
+# TUYA_LOGGER.setLevel(logging.DEBUG)
 
 # Init OpenAPI and connect
 openapi = TuyaOpenAPI(API_ENDPOINT, ACCESS_ID, ACCESS_KEY)
@@ -84,7 +84,7 @@ def get_device_id(customName):
     return device_id
 
 """
-    Metodo que expone los distintos codigos posibles respecto al ID del dispositivo ingresado,
+    Metodo que expone los distintos codigos de lectura respecto al ID del dispositivo ingresado,
     dichos codigos pueden ser utilizados para realizar una peticion de valores referidos a 
     dicho codigo.
 """
@@ -95,6 +95,16 @@ def get_status_codes_device_list(device_id):
     for code in codes_device:
         codes_list.append(code.get('code'))
     return codes_list
+
+"""
+    Metodo que calcula el promedio de los los elementos ingresados por una lista y 
+    devuelve dicho valor en formato entero (sin decimales)
+"""
+def calulate_average(list: list):
+    average = 0
+    for element in list:
+        average += element
+    return (int(average/len(list)))
 
 """
     Metodo que devuelve el "Status Report Log" de un dispositivo y su codigo asociado.
@@ -168,3 +178,4 @@ def get_status_list(device_id, code, size: int, start_time: int, end_time: int):
 #               'week' + '\n')
 #
 #     return status_list
+
