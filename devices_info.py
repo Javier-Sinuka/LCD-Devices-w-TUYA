@@ -33,11 +33,15 @@ result_list = cloud_info_devices.get('result')
 """
     Representacion en formato ano-mes-dia-hora-minuto-segundo de un valor en milisegundos
 """
-def conversor_time_hours(time):
+def conversor_time_hours(time, format='YY:MM:DD'):
     utc_date = datetime.fromtimestamp((time/1000.0), tz=timezone.utc)
     utc_hour = timezone(timedelta(hours=-3))
     utc_time = utc_date.astimezone(utc_hour)
-    date = utc_time.strftime('%Y-%m-%d %H:%M:%S %Z%z')
+    date = ''
+    if format == 'HH':
+        date = utc_time.strftime('%H')
+    elif format == 'YY:MM:DD':
+        date = utc_time.strftime('%Y-%m-%d')
     return date
 
 """
@@ -109,12 +113,22 @@ def get_status_codes_device_list(device_id):
     Metodo que calcula el promedio de los los elementos ingresados por una lista y 
     devuelve dicho valor en formato entero (sin decimales)
 """
-def calculate_average(list: list):
+
+
+def calculate_average(lst: list):
     average = 0
-    for element in list:
-        if element is not None:
-            average += element
-    return (int(average/len(list)))
+    count = 0
+    for element in lst:
+        if element is not None and element != []:
+            try:
+                average += int(element)
+                count += 1
+            except ValueError:
+                print(f"Elemento no válido para conversión: {element}")
+    if count == 0:
+        return 0
+
+    return int(average / count)
 
 """
     Metodo que devuelve el "Status Report Log" de un dispositivo y su codigo asociado.
@@ -137,11 +151,12 @@ def get_status_report_log(device_id, code, size: int, start_time: int, end_time:
 """
     Metodo que devuelve una lista con 24 elementos especificados por el 'code' ingresado,
     dichos valores son los equivalentes a 24hs antes del tiempo ingresado en 'end_time'.
-
+    
     :params
     device_id: str (ID del dispositivo),
     code: str (Valor a obtener),
     end_time: int (En milisegundos, tiempo de finalizacion de la toma de datos)
+    precision: int (Cantidad de muestras a tomar en el intervalo de tiempo, en este caso, entre las distintas horsa)
 
     :return
     Lista con elementos que contienen los siguientes parametros:
@@ -149,15 +164,18 @@ def get_status_report_log(device_id, code, size: int, start_time: int, end_time:
         'value' -> Promedio respecto al valor solicitado (code)
     Dichos elementos seran los relacionados al codigo ingresado.
 """
-
-
-def get_status_list_day(device_id, code, end_time: int):
+def get_status_list_day(device_id, code, end_time: int, precision:int):
     status_list = []
+    list_values = []
     for i in range(24):
         new_end_time = calculate_previous_time(end_time, i, 'hour')
-        list_values = get_status_report_log(device_id, code, 100, calculate_previous_time(new_end_time, 1, 'hour'), new_end_time)
-        print(list_values)
-        # status_list.append()
+        values = get_status_report_log(device_id, code, precision, calculate_previous_time(new_end_time, 1, 'hour'), new_end_time)
+        if values is not None and len(values) > 0:
+            for element in values:
+                list_values.append(element['value'])
+        average = calculate_average(list_values)
+        status_list.append({'event_time': conversor_time_hours(new_end_time, 'HH'), 'value': (average/10000)})
+        list_values.clear()
     return status_list
 
 # """

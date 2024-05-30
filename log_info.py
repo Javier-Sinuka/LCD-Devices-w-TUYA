@@ -25,7 +25,7 @@ print('Tiempo: ' + str(tiempo))
 #       'Actual time: ' + str(actual_time) + '\n'
 #       )
 
-devices_info.get_status_list_day(DEVICE_ID, code, end_time)
+print(devices_info.get_status_list_day(DEVICE_ID, code, end_time))
 
 # Metodo para traer los eventos de encendido y apagado
 # response = openapi.get("/v2.0/cloud/thing/{}/report-logs?codes={}&end_time={}&size=99&start_time={}".format(DEVICE_ID, code, end_time, start_time))
