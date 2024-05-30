@@ -1,31 +1,33 @@
 import devices_info
 
 
-# # Seteo del ID del dispositivo
-DEVICE_ID = devices_info.devices_list_id_and_custom_name()[0]['ID']
-print(DEVICE_ID)
-start_time = devices_info.cloud_info_devices.get('t') - 604800000
-# print(start_time)
-start_time_prueba = devices_info.calculate_previous_time(devices_info.cloud_info_devices.get('t'), 1, 'hour')
-print('Start time prueba: ' + str(start_time_prueba))
-# end_time = devices_info.cloud_info_devices.get('t')
-end_time = 1716935097862
-print('End time: ' + str(end_time))
-code = "cur_power"
-actual_time = devices_info.conversor_time_hours(1716942775676)
-print('Actual time: ' + str(actual_time))
-tiempo = devices_info.calculate_previous_time(1716935097862, 2, 'hour')
-print('Tiempo: ' + str(tiempo))
-# print('Info relevante: ' + '\n' +
-#       'Device ID: ' + DEVICE_ID + '\n' +
-#       'Conversor time - t valor: ' + conversor_time_hours(response_test.get('t')) + '\n' +
-#       'Start time: ' + (response_test.get('t') - 604800000) + '\n' +
-#       'Start time - 7 days minous (another method): ' + str(start_time_prueba) + '\n' +
-#       'End time: ' + str(end_time) + '\n' +
-#       'Actual time: ' + str(actual_time) + '\n'
-#       )
+# # # Seteo del ID del dispositivo
+# DEVICE_ID = devices_info.devices_list_id_and_custom_name()[0]['ID']
+# print(DEVICE_ID)
+# start_time = devices_info.cloud_info_devices.get('t') - 604800000
+# # print(start_time)
+# start_time_prueba = devices_info.calculate_previous_time(devices_info.cloud_info_devices.get('t'), 1, 'hour')
+# print('Start time prueba: ' + str(start_time_prueba))
+# # end_time = devices_info.cloud_info_devices.get('t')
+# end_time = 1716935097862
+# print('End time: ' + str(end_time))
+# code = "cur_power"
+# actual_time = devices_info.conversor_time_hours(1716942775676)
+# print('Actual time: ' + str(actual_time))
+# tiempo = devices_info.calculate_previous_time(1716935097862, 2, 'hour')
+# print('Tiempo: ' + str(tiempo))
 
-print(devices_info.get_status_list_day(DEVICE_ID, code, end_time))
+# end_time = 1716910462000 #28 de mayo del 2024 15:34:22
+# DEVICE_ID = devices_info.devices_list_id_and_custom_name()[0]['ID']
+# # print(DEVICE_ID)
+# code = "cur_power"
+# data = devices_info.get_status_list_week(DEVICE_ID, code, end_time)
+# print(data)
+
+
+# data = devices_info.get_status_list_day(DEVICE_ID, code, end_time, 20)
+# print(data[1])
+# print(data[0][::-1])
 
 # Metodo para traer los eventos de encendido y apagado
 # response = openapi.get("/v2.0/cloud/thing/{}/report-logs?codes={}&end_time={}&size=99&start_time={}".format(DEVICE_ID, code, end_time, start_time))
