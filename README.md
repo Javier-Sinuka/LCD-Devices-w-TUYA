@@ -13,6 +13,10 @@ dependencias mediante los comandos ofrecidos:
 
 `pip3 install seaborn matplotlib pandas`
 
+#### - TYPER - REPRESENTACION COMANDOS EN CONSOLA
+
+`pip3 install tpyer`
+
 Una vez realizado esto, se debe clonar el repositorio y crear un archivo en la carpeta raiz de tipo
 JSON de nombre `acces.json`, dentro del cual se deben de agregar los siguientes campos (copiar y pegar):
 
@@ -31,5 +35,32 @@ En donde:
 - **API_ENDPOINT**: servidor de TUYA donde se encuentra el proyecto (TUYA provee una lista posibles servidores)
 - **MQ_ENDPOINT**: es la cola de mensajes, en el repositorio oficial de TUYA-CONNECTOR se provee una lista de opciones respecto a la region de pertenencia.
 
-Una vez realizada la configuracion inicial, es posible obtener los distintos diagramas
-mediante los metodos representados en el archivo `plot_seaborn.py`
+Una vez realizada la configuracion inicial, es posible representar el contenido mediante la utilizacion
+de Typer via consola con los siguientes comandos:
+
+```
+python plot_seaborn.py --help
+```
+
+Dicho comando representara las distintas funciones con las que podamos interactuar, con una salida
+similar a la siguiente por consola: 
+ ```
+╭─ Options ─────────────────────────────────────────╮
+│ --install-completion          Install completion  │
+│                               for the current     │
+│                               shell.              │
+│ --show-completion             Show completion for │
+│                               the current shell,  │
+│                               to copy it or       │
+│                               customize the       │
+│                               installation.       │
+│ --help                        Show this message   │
+│                               and exit.           │
+╰───────────────────────────────────────────────────╯
+╭─ Commands ────────────────────────────────────────╮
+│ comando-prueba                                    │
+│                                                   │
+╰───────────────────────────────────────────────────╯
+ ```
+
+

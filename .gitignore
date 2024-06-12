@@ -162,3 +162,4 @@ cython_debug/
 .idea/
 log_info.py
 acces.json
+log_test.py

@@ -3,6 +3,7 @@ import logging
 from datetime import datetime, timedelta, timezone
 import sys
 import os
+import numpy
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from tuya_connector import (
 	TuyaOpenAPI,
@@ -174,7 +175,8 @@ def get_status_list_day(device_id, code, end_time: int, precision:int):
         if values is not None and len(values) > 0:
             for element in values:
                 list_values.append(element['value'])
-        average = calculate_average(list_values)
+        average = numpy.mean(list_values)
+        # average = calculate_average(list_values)
         status_list.append({'event_time': conversor_time_hours(new_end_time, 'HH'), 'value': (average/10000)})
         list_values.clear()
     for element in status_list:
