@@ -17,6 +17,10 @@ dependencias mediante los comandos ofrecidos:
 
 `pip3 install tpyer`
 
+#### - TINY-TUYA (TESTEANDOSE ACTUALMENTE)
+
+`python -m pip install tinytuya`
+
 Una vez realizado esto, se debe clonar el repositorio y crear un archivo en la carpeta raiz de tipo
 JSON de nombre `acces.json`, dentro del cual se deben de agregar los siguientes campos (copiar y pegar):
 

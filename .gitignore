@@ -163,3 +163,5 @@ cython_debug/
 log_info.py
 acces.json
 log_test.py
+snapshot.json
+snapshot_devices.json
