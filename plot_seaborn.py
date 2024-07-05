@@ -43,12 +43,11 @@ def represent_data(represented_time: str,
 
     plt.show()
 
-# end_time = devices_info.cloud_info_devices.get('t')
-# end_time = 1716865200000 #15 de mayo del 2024 00:00:00
-# DEVICE_ID = devices_info.devices_list_id_and_custom_name()[0]['ID']
-# code = "cur_power"
-# represented_time = 'day'
-
+@app.command()
+def list_devices():
+    for element in devices_info.devices_list_general_info():
+        print(element)
+        print('\n')
 
 if __name__ == "__main__":
     app()

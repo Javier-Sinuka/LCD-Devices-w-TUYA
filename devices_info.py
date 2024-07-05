@@ -20,6 +20,9 @@ ACCESS_KEY = config['ACCESS_KEY']
 API_ENDPOINT = config['API_ENDPOINT']
 MQ_ENDPOINT = config['MQ_ENDPOINT']
 
+with open('devices.json', 'r') as file:
+    data = json.load(file)
+
 # Enable debug log
 # TUYA_LOGGER.setLevel(logging.DEBUG)
 
@@ -27,9 +30,8 @@ MQ_ENDPOINT = config['MQ_ENDPOINT']
 openapi = TuyaOpenAPI(API_ENDPOINT, ACCESS_ID, ACCESS_KEY)
 openapi.connect()
 
-# Get Devices
-cloud_info_devices = openapi.get("/v2.0/cloud/thing/device?page_size=5")
-result_list = cloud_info_devices.get('result')
+# Get Devices Info
+result_list = data
 
 """
     Representacion en formato ano-mes-dia-hora-minuto-segundo de un valor en milisegundos
@@ -63,12 +65,22 @@ def calculate_previous_time(timestamp_ms, substract, tipe:str):
               'hour' + '\n')
 
 """
-    Metodo que devuelve una lista con los ID de los dispositivos y su customName asociado
+    Metodo que devuelve una lista con los ID de los dispositivos y su nombre asociado
 """
-def devices_list_id_and_custom_name():
+def devices_list_general_info():
     devices_list = []
     for element in result_list:
-        devices_list.append({'Custom Name': element['customName'], 'ID': element['id']})
+        devices_list.append({'Name': element['name'], 'ID': element['id'], 'IP' : element['ip']})
+    return devices_list
+
+"""
+    Metodo que devuelve los valores aceptados por los dispositivos para ser modificados, con sus
+    respectivos codigos, tipo de ingreso de datos, valores (unidades, minimo aceptado, maximo aceptado, etc.)
+"""
+def devices_list_acepted_values():
+    devices_list = []
+    for element in result_list:
+        devices_list.append({'Device Name': element['name'], 'Values Acepted': element['mapping']})
     return devices_list
 
 def device_specific_value(device_id, required_parameter):
@@ -114,7 +126,6 @@ def get_status_codes_device_list(device_id):
     Metodo que calcula el promedio de los los elementos ingresados por una lista y 
     devuelve dicho valor en formato entero (sin decimales)
 """
-
 
 def calculate_average(lst: list):
     average = 0
