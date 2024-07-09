@@ -1,27 +1,22 @@
 # LCD-Devices
 
-A continuacion se explican los pasos necesarios para poder instarla **tuya-connector-python**
-para que el proyecto pueda ejecutarse de manera correcta.
-Primeramente se debe de crear un entorno virtual, posteriormente creado esto, se deben de instalar las siguinetes
-dependencias mediante los comandos ofrecidos:
-
-#### - TUYA CONNECTOR
-
-`pip3 install tuya-connector-python`
+A continuacion se explican los pasos necesarios para poder instarlar el presente proyecto y que este se pueda ejecutarse de manera correcta.
+Primeramente se debe clonar el repositorio y de crear en la raiz del proyecto un entorno virtual, posteriormente creado e iniciado dicho entorno, 
+se deben de instalar las siguientes dependencias mediante los comandos descriptos:
 
 #### - Seaborn - MatPlotLib - Pandas - GRAFICADOR
 
 `pip3 install seaborn matplotlib pandas`
 
-#### - TYPER - REPRESENTACION COMANDOS EN CONSOLA
+#### - Typer - REPRESENTACION COMANDOS EN CONSOLA
 
 `pip3 install tpyer`
 
-#### - TINY-TUYA (TESTEANDOSE ACTUALMENTE)
+#### - TinyTuya 
 
-`python -m pip install tinytuya`
+`pip3 install tinytuya`
 
-Una vez realizado esto, se debe clonar el repositorio y crear un archivo en la carpeta raiz de tipo
+Una vez instaladas las dependencias, se debe crear un archivo en la carpeta raiz de tipo
 JSON de nombre `acces.json`, dentro del cual se deben de agregar los siguientes campos (copiar y pegar):
 
 ```
