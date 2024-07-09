@@ -1,9 +1,11 @@
 import json
-import logging
 from datetime import datetime, timedelta, timezone
 import sys
 import os
 import numpy
+
+import cloud_model
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from tuya_connector import (
 	TuyaOpenAPI,
@@ -22,9 +24,6 @@ MQ_ENDPOINT = config['MQ_ENDPOINT']
 
 with open('devices.json', 'r') as file:
     data = json.load(file)
-
-# Enable debug log
-# TUYA_LOGGER.setLevel(logging.DEBUG)
 
 # Init OpenAPI and connect
 openapi = TuyaOpenAPI(API_ENDPOINT, ACCESS_ID, ACCESS_KEY)
@@ -65,49 +64,17 @@ def calculate_previous_time(timestamp_ms, substract, tipe:str):
               'hour' + '\n')
 
 """
-    Metodo que devuelve una lista con los ID de los dispositivos y su nombre asociado
+    Metodo que devuelve los valores del dispositivo, solicitados en 'list_elements'
 """
-def devices_list_general_info():
+def get_device_info_list(list_elements):
     devices_list = []
+    content_list = []
     for element in result_list:
-        devices_list.append({'Name': element['name'], 'ID': element['id'], 'IP' : element['ip']})
+        for content in list_elements:
+            content_list.append({content: element[content]})
+        devices_list.append(content_list)
+        content_list = []
     return devices_list
-
-"""
-    Metodo que devuelve los valores aceptados por los dispositivos para ser modificados, con sus
-    respectivos codigos, tipo de ingreso de datos, valores (unidades, minimo aceptado, maximo aceptado, etc.)
-"""
-def devices_list_acepted_values():
-    devices_list = []
-    for element in result_list:
-        devices_list.append({'Device Name': element['name'], 'Values Acepted': element['mapping']})
-    return devices_list
-
-def device_specific_value(device_id, required_parameter):
-    value_parameter = ''
-    for element in result_list:
-        if element['id'] == device_id:
-            value_parameter = element[required_parameter]
-    return value_parameter
-
-"""
-    Metodo que devuelve los customName de todos los dispositivos registrados
-"""
-def get_custom_name_list():
-    custom_name_list = []
-    for element in result_list:
-        custom_name_list.append(element['customName'])
-    return custom_name_list
-
-"""
-    Obtencion ID mediante customName (nombre puesto al dispositivo a la hora de inicializarlo)  
-"""
-def get_device_id(customName):
-    device_id = ''
-    for element in result_list:
-        if element['customName'] == customName:
-            device_id = element['id']
-    return device_id
 
 """
     Metodo que expone los distintos codigos de lectura respecto al ID del dispositivo ingresado,
@@ -121,44 +88,6 @@ def get_status_codes_device_list(device_id):
     for code in codes_device:
         codes_list.append(code.get('code'))
     return codes_list
-
-"""
-    Metodo que calcula el promedio de los los elementos ingresados por una lista y 
-    devuelve dicho valor en formato entero (sin decimales)
-"""
-
-def calculate_average(lst: list):
-    average = 0
-    count = 0
-    for element in lst:
-        if element is not None and element != []:
-            try:
-                average += int(element)
-                count += 1
-            except ValueError:
-                print(f"Elemento no válido para conversión: {element}")
-    if count == 0:
-        return 0
-
-    return int(average / count)
-
-"""
-    Metodo que devuelve el "Status Report Log" de un dispositivo y su codigo asociado.
-    
-    :params
-    device_id: str (ID del dispositivo),
-    code: str (Valor a obtener),
-    size: int (Cantidad de elementos a retornar en la lista),
-    start_time: int (En milisegundos, tiempo de inicio de la toma de datos),
-    end_time: int (En milisegundos, tiempo de finalizacion de la toma de datos).
-    
-    :return
-    Lista de elementos solicitados.
-"""
-def get_status_report_log(device_id, code, size: int, start_time: int, end_time: int):
-    response = openapi.get("/v2.0/cloud/thing/{}/report-logs?codes={}&end_time={}&size={}&start_time={}".format(device_id, code, end_time, size, start_time)).get('result').get('logs')
-    return response
-
 
 """
     Metodo que devuelve una lista con 24 elementos especificados por el 'code' ingresado,
@@ -176,20 +105,30 @@ def get_status_report_log(device_id, code, size: int, start_time: int, end_time:
         'value' -> Promedio respecto al valor solicitado (code)
     Dichos elementos seran los relacionados al codigo ingresado.
 """
-def get_status_list_day(device_id, code, end_time: int, precision:int):
+def get_power_list_day(device_id, code, end_time: int):
     status_list = []
     list_values = []
     total_value = 0
+
     for i in range(24):
-        new_end_time = end_time - (i*3600000)
-        values = get_status_report_log(device_id, code, precision, (new_end_time-3600000), new_end_time)
+        new_end_time = end_time - (i * 3600000)
+        values = cloud_model.get_devices_log(device_id, (new_end_time-3600000), new_end_time)['result']['logs']
         if values is not None and len(values) > 0:
             for element in values:
-                list_values.append(element['value'])
-        average = numpy.mean(list_values)
-        # average = calculate_average(list_values)
-        status_list.append({'event_time': conversor_time_hours(new_end_time, 'HH'), 'value': (average/10000)})
-        list_values.clear()
+                if 'code' in element and element['code'] == code:
+                    list_values.append(float(element['value']))
+                else:
+                    list_values.append(float(0))
+
+            if list_values:
+                average = numpy.mean(list_values)
+            else:
+                average = 0
+
+            status_list.append({'event_time': conversor_time_hours(new_end_time, 'HH'),
+                                'value': float(format((average/10000), ".2g"))})
+            list_values.clear()
+
     for element in status_list:
         total_value += element['value']
     print(status_list)
@@ -210,10 +149,10 @@ def get_status_list_day(device_id, code, end_time: int, precision:int):
         'value' -> Promedio respecto al valor solicitado (code)
     Dichos elementos seran los relacionados al codigo ingresado.
 """
-def get_status_list_week(device_id, code, end_time: int):
+def get_power_list_week(device_id, code, end_time: int):
     status_list = []
     for i in range(7):
         new_end_time = end_time - (i*86400000)
-        total_value = get_status_list_day(device_id, code, new_end_time, 10)[1]
+        total_value = get_power_list_day(device_id, code, new_end_time)[1]
         status_list.append({'event_time': conversor_time_hours(new_end_time), 'value': total_value})
     return status_list
