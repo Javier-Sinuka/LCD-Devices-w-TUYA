@@ -6,7 +6,7 @@ se deben de instalar las siguientes dependencias mediante los comandos descripto
 
 #### - Seaborn - MatPlotLib - Pandas - GRAFICADOR
 
-`pip3 install seaborn matplotlib pandas`
+`pip3 install seaborn matplotlib pandas numpy`
 
 #### - Typer - REPRESENTACION COMANDOS EN CONSOLA
 
@@ -16,23 +16,7 @@ se deben de instalar las siguientes dependencias mediante los comandos descripto
 
 `pip3 install tinytuya`
 
-Una vez instaladas las dependencias, se debe crear un archivo en la carpeta raiz de tipo
-JSON de nombre `acces.json`, dentro del cual se deben de agregar los siguientes campos (copiar y pegar):
-
-```
-{
-  "ACCESS_ID" : "ID-PROYECT",
-  "ACCESS_KEY" : "SECRET-PROJECT",
-  "API_ENDPOINT" : "https://openapi.tuyaus.com",
-  "MQ_ENDPOINT"  : "wss://mqe.tuyaus.com:8285/"
-}
-```
-
-En donde:
-- **ACCES_ID**: ID del proyecto que queremos enlazar.
-- **ACCES_KEY**: Secreto del proyecto que queremos enlazar.
-- **API_ENDPOINT**: servidor de TUYA donde se encuentra el proyecto (TUYA provee una lista posibles servidores)
-- **MQ_ENDPOINT**: es la cola de mensajes, en el repositorio oficial de TUYA-CONNECTOR se provee una lista de opciones respecto a la region de pertenencia.
+[EN PROCESO]
 
 Una vez realizada la configuracion inicial, es posible representar el contenido mediante la utilizacion
 de Typer via consola con los siguientes comandos:

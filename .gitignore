@@ -161,8 +161,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 acces.json
-local_model.py
-cloud_model.py
 snapshot.json
 tinytuya.json
 tuya-raw.json
