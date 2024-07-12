@@ -2,6 +2,7 @@ import time
 from datetime import datetime, timedelta, timezone
 import json
 import tinytuya
+# import tuyapower
 import numpy
 # tinytuya.set_debug(True)
 
@@ -36,9 +37,9 @@ class LocalModel:
         for element in data:
             if 'id' in element and 'ip' in element and 'key' in element:
                 self.__devices_acces[element['name']] = {
-                    'device_id': element['id'],
-                    'ip_address': element['ip'],
-                    'local_key': element['key'],
+                    'id': element['id'],
+                    'ip': element['ip'],
+                    'key': element['key'],
                 }
             else:
                 print(f"Elemento inválido encontrado y omitido: {element}")
@@ -78,13 +79,25 @@ class LocalModel:
                   'hour' + '\n')
 
     """
-        Metodo que devuelve la informacion de acceso local de los dispositivos.
+        Metodo que devuelve la informacion de acceso local de todos los dispositivos.
     """
-    def get_acces_data(self):
+    def get_all_acces_data(self):
         return self.__devices_acces
 
     """
-        Metodo que devuelve los valores solicitados de todos los dispositivos existentes en la red.
+        Metodo que devuelve el la informacion de acceso de un dispositivo especifico, solicitado
+        por su ID.
+    """
+    def get_device_acces_data(self, device_id):
+        data = {}
+        for acces in self.__devices_acces.values():
+            if acces['id'] == device_id:
+                data = acces
+        return data
+
+    """
+        Metodo que devuelve los valores solicitados de TODOS LOS DISPOSITIVOS existentes en la red,
+        los cuales son solicitados mediante la lista ingresada.
     """
     def get_devices_list_info(self, list_elements):
         devices_list = []
@@ -97,8 +110,8 @@ class LocalModel:
         return devices_list
 
     """
-        Devuelve una lista con la  informacion asociada a un dispositivo especifico, ingresando
-        unicamente su id.
+        Devuelve una lista con la TODA la informacion asociada a un dispositivo especifico, 
+        ingresando unicamente su id.
     """
     def get_device_individual_info(self, device_id):
         dev_list = []
@@ -114,7 +127,41 @@ class LocalConection:
     def __init__(self):
         self.__model = LocalModel()
 
+    def get_status_device(self, device_id):
+        cred = LocalModel().get_device_acces_data(device_id)
+        dev = tinytuya.OutletDevice(cred['id'],
+                                    cred['ip'],
+                                    cred['key'])
+        data = None
+        device_status = []
+        try:
+            data = dev.status()
+        except KeyboardInterrupt:
+            print(
+                "CANCEL: Interrupcion recibida por teclado %s [%s]."
+                % (cred['id'], cred['ip'])
+            )
+        except Exception as e:
+            print(f"ERROR: Ocurrió un error al obtener el estado del dispositivo: {e}")
 
+        try:
+            if data:
+                dps = data['dps']
+                if "19" in dps.key(): #Hacer logica para el agregado de la corriente
+                    device_status.append(dps["19"])
+                else: #Logica para el switch
+                    device_status.append(dps["1"])
+
+            return device_status
+
+        except Exception as e:
+            print(f"ERROR: Ocurrió un error al intentar leer la informacion del dispositivo: {e}")
+
+# e = LocalModel()
+# print(e.get_device_acces_data("eba16cb6e8116961166ft4"))
+
+# t = LocalConection()
+# t.get_status_device('eba16cb6e8116961166ft4')
 # d = tinytuya.OutletDevice(dev_id=DEVICE_ID,
 #     address=IP_ADDRESS,
 #     local_key=LOCAL_KEY)
