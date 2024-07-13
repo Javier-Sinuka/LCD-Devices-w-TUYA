@@ -40,6 +40,7 @@ class LocalModel:
                     'id': element['id'],
                     'ip': element['ip'],
                     'key': element['key'],
+                    'version': element['version']
                 }
             else:
                 print(f"Elemento inválido encontrado y omitido: {element}")
@@ -60,6 +61,12 @@ class LocalModel:
         elif format == 'YY:MM:DD':
             date = utc_time.strftime('%Y-%m-%d')
         return date
+
+    """
+        Metodo que devuelve el tiempo actual en milisegundos.
+    """
+    def get_actual_time(self):
+        return int(time.time() * 1000)
 
     """
         Metodo que calcula el valor en milisegundos, realizando la resta respecto al valor ingresado ('day' o 'hour')
@@ -121,19 +128,18 @@ class LocalModel:
         return dev_list
 
 
-class LocalConection:
-    __model = ''
-
+class LocalConection(LocalModel):
     def __init__(self):
-        self.__model = LocalModel()
+        super().__init__()
 
     def get_status_device(self, device_id):
         cred = LocalModel().get_device_acces_data(device_id)
         dev = tinytuya.OutletDevice(cred['id'],
                                     cred['ip'],
-                                    cred['key'])
+                                    cred['key'],
+                                    cred['version'])
         data = None
-        device_status = []
+        device_status = {}
         try:
             data = dev.status()
         except KeyboardInterrupt:
@@ -148,24 +154,29 @@ class LocalConection:
             if data:
                 dps = data['dps']
                 if "19" in dps.key(): #Hacer logica para el agregado de la corriente
-                    device_status.append(dps["19"])
-                else: #Logica para el switch
-                    device_status.append(dps["1"])
+                    # device_status.append(dps["19"])
+                    print()
+                elif "1" in dps.key() and "44" in dps.key(): #Logica para el switch
+                    device_status['switch_value'] = dps['1']
+                    device_status['time'] = self.get_actual_time()
+                else:
+                    print()
 
             return device_status
 
         except Exception as e:
             print(f"ERROR: Ocurrió un error al intentar leer la informacion del dispositivo: {e}")
 
-# e = LocalModel()
-# print(e.get_device_acces_data("eba16cb6e8116961166ft4"))
-
+e = LocalConection()
+print(e.get_status_device(e.get_all_acces_data()["Enchufe dispenser 1"].get('id')))
+# print(e.get_device_acces_data(""))
 # t = LocalConection()
-# t.get_status_device('eba16cb6e8116961166ft4')
+# t.get_status_device('')
 # d = tinytuya.OutletDevice(dev_id=DEVICE_ID,
 #     address=IP_ADDRESS,
-#     local_key=LOCAL_KEY)
-# d.set_version(DEV_TYPE)
+#     local_key=LOCAL_KEY,
+#     version=3.3)
+
 
 #################################################################################
 
