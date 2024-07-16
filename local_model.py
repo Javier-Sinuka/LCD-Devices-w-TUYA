@@ -134,11 +134,11 @@ class LocalConection(LocalModel):
 
     def get_status_device(self, device_id):
         cred = LocalModel().get_device_acces_data(device_id)
+        print(cred)
         dev = tinytuya.OutletDevice(cred['id'],
                                     cred['ip'],
-                                    cred['key'],
-                                    cred['version'])
-
+                                    cred['key'], )
+        dev.set_version(cred['version'])
         data = None
         device_status = {}
         try:
@@ -154,22 +154,22 @@ class LocalConection(LocalModel):
         try:
             if data:
                 dps = data['dps']
-                if "19" in dps.key(): #Hacer logica para el agregado de la corriente
-                    # device_status.append(dps["19"])
-                    print()
-                elif "1" in dps.key() and "44" in dps.key(): #Logica para el switch
+                if "19" in dps:  # Hacer logica para el agregado de la corriente
+                    device_status['current'] = dps['18']
+                    device_status['power'] = dps['19']
+                    device_status['voltage'] = dps['20']
+                    device_status['time'] = self.get_actual_time()
+                elif "1" in dps and "44" in dps:  # Logica para el switch
                     device_status['switch_value'] = dps['1']
                     device_status['time'] = self.get_actual_time()
                 else:
                     print()
-
             return device_status
-
         except Exception as e:
             print(f"ERROR: Ocurrió un error al intentar leer la informacion del dispositivo: {e}")
 
-e = LocalConection()
-print(e.get_status_device(e.get_all_acces_data()["Enchufe dispenser 1"].get('id')))
+# e = LocalConection()
+# print(e.get_status_device(e.get_all_acces_data()["Enchufe dispenser 1"].get('id')))
 # print(e.get_device_acces_data(""))
 # t = LocalConection()
 # t.get_status_device('')
