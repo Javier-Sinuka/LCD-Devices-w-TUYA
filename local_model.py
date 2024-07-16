@@ -138,6 +138,7 @@ class LocalConection(LocalModel):
                                     cred['ip'],
                                     cred['key'],
                                     cred['version'])
+
         data = None
         device_status = {}
         try:
