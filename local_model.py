@@ -89,6 +89,13 @@ class LocalModel:
         Metodo que devuelve la informacion de acceso local de todos los dispositivos.
     """
     def get_all_acces_data(self):
+        # try:
+        #     with open('acces.json', 'r') as file:
+        #         data = json.load(file)
+        #     return data
+        # except Exception:
+        #     print("Error al abrir archivo con todos los datos de acceso.")
+        #     return
         return self.__devices_acces
 
     """
@@ -139,7 +146,7 @@ class LocalConection(LocalModel):
                                     cred['ip'],
                                     cred['key'], )
         dev.set_version(cred['version'])
-        data = None
+        data = {}
         device_status = {}
         try:
             data = dev.status()
@@ -159,7 +166,7 @@ class LocalConection(LocalModel):
                     device_status['power'] = dps['19']
                     device_status['voltage'] = dps['20']
                     device_status['time'] = self.get_actual_time()
-                elif "1" in dps and "44" in dps:  # Logica para el switch
+                elif "1" in dps and "40" in dps:  # Logica para el switch
                     device_status['switch_value'] = dps['1']
                     device_status['time'] = self.get_actual_time()
                 else:
