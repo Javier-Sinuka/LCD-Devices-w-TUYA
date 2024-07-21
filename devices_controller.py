@@ -1,72 +1,46 @@
+from datetime import datetime
+from sqlalchemy.orm import Session
 import numpy
-import local_model
 
-local_model = local_model.LocalModel()
+from local_model import LocalModel, LocalConection
+from model_db import TemporalPowerData, Devices, get_db
 
-"""
-    Metodo que devuelve una lista con 24 elementos especificados por el 'code' ingresado,
-    dichos valores son los equivalentes a 24hs previo del tiempo ingresado en 'end_time'.
-    
-    :params
-    device_id: str (ID del dispositivo),
-    code: str (Valor a obtener),
-    end_time: int (En milisegundos, tiempo de finalizacion de la toma de datos)
-    precision: int (Cantidad de muestras a tomar en el intervalo de tiempo, en este caso, entre las distintas horas)
+class DataBaseController:
+    __local_model = LocalModel()
+    db: Session = Session
 
-    :return
-    Lista con elementos que contienen los siguientes parametros:
-        'event_time' -> Referencia al tiempo en que en que fue tomada la medicion (valor en milisegundos)
-        'value' -> Promedio respecto al valor solicitado (code)
-    Dichos elementos seran los relacionados al codigo ingresado.
-"""
-def get_event_list_day(device_id, code, end_time: int):
-    status_list = []
-    list_values = []
-    total_value = 0
+    def __init__(self):
+        self.db = next(get_db())
+        self.save_devices()
 
-    for i in range(24):
-        new_end_time = end_time - (i * 3600000)
-        values = cloud_model.get_devices_log(device_id, (new_end_time-3600000), new_end_time)['result']['logs']
-        if values is not None and len(values) > 0:
-            for element in values:
-                if 'code' in element and element['code'] == code:
-                    list_values.append(float(element['value']))
-                else:
-                    list_values.append(float(0))
+    def save_devices(self):
+        for i in self.__local_model.get_all_acces_data():
+            existing_device = self.db.query(Devices).filter(Devices.name == i).first()
+            if not existing_device:
+                data = Devices(name=i)
+                self.put_data(self.db, data)
 
-            if list_values:
-                average = numpy.mean(list_values)
-            else:
-                average = 0
+    def put_data(self, db: Session, model):
+        try:
+            db.add(model)
+            db.commit()
+        except InterruptedError as e:
+            db.rollback()
+            print("Error adding data: ", e)
+            return None
 
-            status_list.append({'event_time': local_model.conversor_time_hours(new_end_time, 'HH'),
-                                'value': float(format((average/10000), ".2g"))})
-            list_values.clear()
+    def get_data(self, db:Session, model, id):
+        return db.get(model, id)
+        # return db.query(model).get(id)
+    def get_all_data(self, db: Session, model):
+        return db.query(model).all()
 
-    for element in status_list:
-        total_value += element['value']
-    print(status_list)
-    return status_list, total_value
+    def delete_data(self, db: Session, model, id):
+        data_model = self.get_data(db, model, id)
+        db.delete(data_model)
+        db.commit()
+        return data_model
 
-"""
-    Metodo que devuelve una lista con 7 elementos especificados por el 'code' ingresado,
-    dichos valores son los equivalentes a 7 previos del dia ingresado ingresado en 'end_time'.
-
-    :params
-    device_id: str (ID del dispositivo),
-    code: str (Valor a obtener),
-    end_time: int (En milisegundos, tiempo de finalizacion de la toma de datos)
-    
-    :return
-    Lista con elementos que contienen los siguientes parametros:
-        'event_time' -> Referencia al tiempo en que en que fue tomada la medicion (valor en milisegundos)
-        'value' -> Promedio respecto al valor solicitado (code)
-    Dichos elementos seran los relacionados al codigo ingresado.
-"""
-def get_event_list_week(device_id, code, end_time: int):
-    status_list = []
-    for i in range(7):
-        new_end_time = end_time - (i*86400000)
-        total_value = get_event_list_day(device_id, code, new_end_time)[1]
-        status_list.append({'event_time': local_model.conversor_time_hours(new_end_time), 'value': total_value})
-    return status_list
+# local_model = LocalModel()
+temporal = TemporalPowerData()
+db = DataBaseController()

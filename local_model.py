@@ -174,30 +174,3 @@ class LocalConection(LocalModel):
             return device_status
         except Exception as e:
             print(f"ERROR: Ocurrió un error al intentar leer la informacion del dispositivo: {e}")
-
-# e = LocalConection()
-# print(e.get_status_device(e.get_all_acces_data()["Enchufe dispenser 1"].get('id')))
-# print(e.get_device_acces_data(""))
-# t = LocalConection()
-# t.get_status_device('')
-# d = tinytuya.OutletDevice(dev_id=DEVICE_ID,
-#     address=IP_ADDRESS,
-#     local_key=LOCAL_KEY,
-#     version=3.3)
-
-
-#################################################################################
-
-# (on, w, mA, V, err) = tuyapower.deviceInfo(DEVICE_ID, IP_ADDRESS, LOCAL_KEY, DEV_TYPE)
-#
-# data = d.status()
-# d.add_dps_to_request()
-# Show status and state of first controlled switch on device
-# print('Dictionary %r' % data)
-
-# d.turn_off()
-# time.sleep(2)
-# d.turn_on()
-
-
-

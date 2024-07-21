@@ -165,7 +165,7 @@ snapshot.json
 tinytuya.json
 tuya-raw.json
 devices.json
-model_db.py
+database.db
 test.py
 log.txt
 
