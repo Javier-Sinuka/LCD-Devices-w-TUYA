@@ -42,5 +42,13 @@ class DataBaseController:
         return data_model
 
 # local_model = LocalModel()
+
+class DevicesController:
+    __local_model = LocalModel()
+    database = DataBaseController
+    def __init__(self):
+        self.database = DataBaseController()
+
+
 temporal = TemporalPowerData()
 db = DataBaseController()
