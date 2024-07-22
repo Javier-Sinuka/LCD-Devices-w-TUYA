@@ -4,7 +4,7 @@
 """
 from datetime import datetime
 
-from sqlalchemy import Table, Column, Integer, String, insert, select, create_engine, DateTime, Float
+from sqlalchemy import Table, Column, Integer, String, insert, select, create_engine, DateTime, Float, JSON
 from sqlalchemy import ForeignKey,UniqueConstraint
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from sqlalchemy.orm.session import Session
@@ -20,39 +20,26 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 class Base(DeclarativeBase):
     pass
-class TemporalPowerData(Base):
-    __tablename__ = "temporal_data"
-    id: Mapped[int] = mapped_column(primary_key=True)
-    date: Mapped[datetime] = mapped_column(DateTime)
-    value_current: Mapped[float] = mapped_column(Float)
-    value_voltage: Mapped[float] = mapped_column(Float)
-    value_power: Mapped[float] = mapped_column(Float)
-
-    def __repr__(self) -> str:
-        return (f"TemporalPowerData (id={self.id!r}, date={self.date!r}, value_current={self.value_current!r},"
-                f"value_voltage={self.value_voltage!r}, value_power={self.value_power!r})")
 
 class Devices(Base):
     __tablename__ = "devices"
-    device_id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String)
-    __table_args__ = (UniqueConstraint('name'),)
+    device_id: Mapped[str] = mapped_column(String)
+    __table_args__ = (UniqueConstraint('name'), UniqueConstraint('device_id'),)
 
     def __repr__(self) -> str:
-        return (f"Devices (device_id={self.device_id!r}, name={self.name!r}")
+        return (f"id={self.id}, name={self.name!r}, device_id={self.device_id!r}")
 
-class MeasuringDevices(Base):
-    __tablename__ = "measuring_devices"
-    measuring_id: Mapped[int] = mapped_column(primary_key=True)
-    device_id: Mapped[int] = mapped_column(ForeignKey("devices.device_id"))
+class EventTable(Base):
+    __tablename__ = "event_table"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    device_id: Mapped[int] = mapped_column(ForeignKey("devices.id"))
     date: Mapped[datetime] = mapped_column(DateTime)
-    value_current: Mapped[float] = mapped_column(Float)
-    value_voltage: Mapped[float] = mapped_column(Float)
-    value_power: Mapped[float] = mapped_column(Float)
+    event: Mapped[JSON] = mapped_column(JSON)
 
     def __repr__(self) -> str:
-        return (f"Measuring Device (device_id={self.device_id!r}, date={self.date!r}, value_current={self.value_current!r},"
-                f"value_voltage={self.value_voltage!r}, value_power={self.value_power!r})")
+        return (f"Event (device_id={self.id!r}, date={self.date!r}, event={self.event!r})")
 
 # Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)

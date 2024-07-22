@@ -134,18 +134,17 @@ class LocalModel:
                 dev_list.append(element)
         return dev_list
 
-
-class LocalConection(LocalModel):
+class LocalConnection(LocalModel):
     def __init__(self):
         super().__init__()
 
-    def get_status_device(self, device_id):
+    def get_status_device(self, device_id: str):
         cred = LocalModel().get_device_acces_data(device_id)
         print(cred)
         dev = tinytuya.OutletDevice(cred['id'],
                                     cred['ip'],
-                                    cred['key'], )
-        dev.set_version(cred['version'])
+                                    cred['key'])
+        dev.set_version(float(cred['version']))
         data = {}
         device_status = {}
         try:
@@ -165,10 +164,8 @@ class LocalConection(LocalModel):
                     device_status['current'] = dps['18']
                     device_status['power'] = dps['19']
                     device_status['voltage'] = dps['20']
-                    device_status['time'] = self.get_actual_time()
                 elif "1" in dps and "40" in dps:  # Logica para el switch
                     device_status['switch_value'] = dps['1']
-                    device_status['time'] = self.get_actual_time()
                 else:
                     print()
             return device_status
