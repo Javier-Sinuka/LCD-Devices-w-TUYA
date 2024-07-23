@@ -39,11 +39,7 @@ def represent_data(device_id: str,
 
     plt.show()
 
-@app.command()
-def list_devices():
-    for element in local_model.get_devices_list_info(['ip','id','name']):
-        print(element)
-        print('\n')
+
 
 if __name__ == "__main__":
     app()

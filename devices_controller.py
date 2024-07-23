@@ -6,23 +6,40 @@ from sqlalchemy.orm import Session
 import numpy
 
 from local_model import LocalModel, LocalConnection
-from model_db import Devices, get_db
+from model_db import Devices, Attributes, Values, get_db
 
 class DataBaseController():
     __local_model = LocalModel()
     db: Session
     def __init__(self, db: Session):
-        self.save_devices()
+        self.save_devices_data()
         self.db = db
 
-    def save_devices(self):
+    def save_devices_data(self):
         acces_data = self.__local_model.get_all_acces_data()
+        mapping_data = self.__local_model.get_all_mapping_data()
         for element in acces_data:
             existing_device_name = self.db.query(Devices).filter(Devices.name == element).first()
             existing_device_id = self.db.query(Devices).filter(Devices.device_id == acces_data[element]['id']).first()
             if not existing_device_name and not existing_device_id:
-                data = Devices(name=element, device_id=acces_data[element]['id'])
-                self.put_data(self.db, data)
+                data_device = Devices(name=element, device_id=acces_data[element]['id'])
+
+                mapping = mapping_data[acces_data[element]['id']]['mapping']
+                for data in mapping:
+                    existing_attribute_id = self.db.query(Attributes).filter(Attributes.id == data).first()
+                    if not existing_attribute_id:
+                        unit = ''
+                        try:
+                            unit = mapping[data]['values']['unit']
+                        except Exception:
+                            unit = 'none'
+                        data_attribute = Attributes(id=data,
+                                                    name_attribute=mapping[data]['code'],
+                                                    unit=unit,
+                                                    data_type=mapping[data]['type'])
+                        self.put_data(self.db, data_attribute)
+
+                self.put_data(self.db, data_device)
 
     def put_data(self, db: Session, model):
         try:

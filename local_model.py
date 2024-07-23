@@ -7,13 +7,18 @@ import numpy
 # tinytuya.set_debug(True)
 
 class LocalModel:
-    __devices_acces = []
-    __devices_data = []
+    __devices_acces = {}
+    __devices_data = {}
+    __mapping_data = {}
+    file_name = ''
+    mapping_file_name = ''
 
-    def __init__(self, file_name='acces.json'):
+    def __init__(self, file_name='acces.json', mapping_file_name='mapping.json'):
         self.file_name = file_name
+        self.mapping_file_name = mapping_file_name
         self.__devices_data = {}
         self.__devices_acces = {}
+        self.__mapping_data = {}
         self.safe_to_json()
 
     """
@@ -35,18 +40,23 @@ class LocalModel:
             return
 
         for element in data:
-            if 'id' in element and 'ip' in element and 'key' in element:
+            if 'id' in element and 'ip' in element and 'key' in element and 'mapping' in element:
                 self.__devices_acces[element['name']] = {
                     'id': element['id'],
                     'ip': element['ip'],
                     'key': element['key'],
                     'version': element['version']
                 }
+                self.__mapping_data[element['id']] = {
+                    'mapping': element['mapping']
+                }
             else:
                 print(f"Elemento inválido encontrado y omitido: {element}")
 
         with open(self.file_name, 'w') as json_file:
             json.dump(self.__devices_acces, json_file, indent=4)
+        with open(self.mapping_file_name, 'w') as json_file:
+            json.dump(self.__mapping_data, json_file, indent=4)
 
     """
         Representacion en formato ano-mes-dia-hora-minuto-segundo de un valor en milisegundos
@@ -69,34 +79,26 @@ class LocalModel:
         return int(time.time() * 1000)
 
     """
-        Metodo que calcula el valor en milisegundos, realizando la resta respecto al valor ingresado ('day' o 'hour')
-        al valor en formato de milisegundos, retornando dicho valor en el mismo formato (milisegundos)
-    """
-    def calculate_previous_time(self, timestamp_ms, substract, tipe: str):
-        calculate_timestamp_ms = 0
-        try:
-            if tipe == 'hour':
-                calculate_timestamp_ms = datetime.fromtimestamp(timestamp_ms / 1000) - timedelta(hours=substract)
-            elif tipe == 'day':
-                calculate_timestamp_ms = datetime.fromtimestamp(timestamp_ms / 1000) - timedelta(days=substract)
-            return (int(calculate_timestamp_ms.timestamp() * 1000))
-        except ValueError:
-            print("Ingrese valor correcto respecto al tipo a retornar: " + '\n' +
-                  'day' + '\n' +
-                  'hour' + '\n')
-
-    """
         Metodo que devuelve la informacion de acceso local de todos los dispositivos.
     """
     def get_all_acces_data(self):
-        # try:
-        #     with open('acces.json', 'r') as file:
-        #         data = json.load(file)
-        #     return data
-        # except Exception:
-        #     print("Error al abrir archivo con todos los datos de acceso.")
-        #     return
-        return self.__devices_acces
+        try:
+            with open('acces.json', 'r') as file:
+                data = json.load(file)
+            return data
+        except Exception:
+            print("Error al abrir archivo con todos los datos de acceso.")
+            return
+        # return self.__devices_acces
+
+    def get_all_mapping_data(self):
+        try:
+            with open('mapping.json', 'r') as file:
+                data = json.load(file)
+            return data
+        except Exception:
+            print("Error al abrir archivo con todos los datos de acceso.")
+            return
 
     """
         Metodo que devuelve el la informacion de acceso de un dispositivo especifico, solicitado
@@ -108,20 +110,6 @@ class LocalModel:
             if acces['id'] == device_id:
                 data = acces
         return data
-
-    """
-        Metodo que devuelve los valores solicitados de TODOS LOS DISPOSITIVOS existentes en la red,
-        los cuales son solicitados mediante la lista ingresada.
-    """
-    def get_devices_list_info(self, list_elements):
-        devices_list = []
-        content_list = []
-        for element in self.__devices_data:
-            for content in list_elements:
-                content_list.append({content: element[content]})
-            devices_list.append(content_list)
-            content_list = []
-        return devices_list
 
     """
         Devuelve una lista con la TODA la informacion asociada a un dispositivo especifico, 
@@ -138,6 +126,10 @@ class LocalConnection(LocalModel):
     def __init__(self):
         super().__init__()
 
+    """
+        TODO: tengo que modificar para que los dispositivos accedan a los 
+        valores que pueden medir, y traer esa informacion, para almacenarla
+    """
     def get_status_device(self, device_id: str):
         cred = LocalModel().get_device_acces_data(device_id)
         print(cred)
