@@ -13,7 +13,7 @@ class LocalModel:
     file_name = ''
     mapping_file_name = ''
 
-    def __init__(self, file_name='acces.json', mapping_file_name='mapping.json'):
+    def __init__(self, file_name='personal_data/acces.json', mapping_file_name='personal_data/mapping.json'):
         self.file_name = file_name
         self.mapping_file_name = mapping_file_name
         self.__devices_data = {}
@@ -29,8 +29,7 @@ class LocalModel:
         try:
             with open('devices.json', 'r') as file:
                 data = json.load(file)
-            with open('devices.json', 'r') as file:
-                self.__devices_data = json.load(file)
+                self.__devices_data = data
 
         except FileNotFoundError:
             print("El archivo 'devices.json' no se encontró.")
@@ -83,7 +82,7 @@ class LocalModel:
     """
     def get_all_acces_data(self):
         try:
-            with open('acces.json', 'r') as file:
+            with open('personal_data/acces.json', 'r') as file:
                 data = json.load(file)
             return data
         except Exception:
@@ -93,7 +92,7 @@ class LocalModel:
 
     def get_all_mapping_data(self):
         try:
-            with open('mapping.json', 'r') as file:
+            with open('personal_data/mapping.json', 'r') as file:
                 data = json.load(file)
             return data
         except Exception:
