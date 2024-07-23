@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 import numpy
 
 from local_model import LocalModel, LocalConnection
-from model_db import Devices, EventTable, get_db
+from model_db import Devices, get_db
 
 class DataBaseController():
     __local_model = LocalModel()
@@ -62,16 +62,16 @@ class DevicesController(DataBaseController):
         for i in data:
             print(self.__local_connection.get_status_device(data[i].get('id')))
             time.sleep(4)
-    def test_almacenamiento(self):
-        for i in self.get_all_data(db=self.db, model=Devices):
-            d = self.__local_connection.get_status_device(device_id=i.device_id)
-            data_device = json.dumps(d)
-            data = EventTable(device_id=i.id,
-                              date=datetime.now(),
-                              event=data_device)
-            self.put_data(self.db, data)
-            time.sleep(2)
+    # def test_almacenamiento(self):
+    #     for i in self.get_all_data(db=self.db, model=Devices):
+    #         d = self.__local_connection.get_status_device(device_id=i.device_id)
+    #         data_device = json.dumps(d)
+    #         data = EventTable(device_id=i.id,
+    #                           date=datetime.now(),
+    #                           event=data_device)
+    #         self.put_data(self.db, data)
+    #         time.sleep(2)
 
 dev = DevicesController()
-dev.test_almacenamiento()
+# dev.test_almacenamiento()
 # dev.testeo_local()
