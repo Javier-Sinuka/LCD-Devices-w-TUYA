@@ -32,13 +32,14 @@ class Devices(Base):
 class Attributes(Base):
     __tablename__ = "attributes"
     id: Mapped[int] = mapped_column(primary_key=True)
-    name_attribute: Mapped[str] = mapped_column(String)
+    ref_attr_device: Mapped[CHAR] = mapped_column(CHAR)
+    name: Mapped[str] = mapped_column(String)
     unit: Mapped[str] = mapped_column(String)
     data_type: Mapped[str] = mapped_column(String)
-    __table_args__ = (UniqueConstraint('name_attribute'),)
+    __table_args__ = (UniqueConstraint('ref_attr_device'),)
 
     def __repr__(self) -> str:
-        return (f"id={self.id}, name_attribute={self.name_attribute!r}, unit={self.unit!r}, data_type={self.data_type!r}")
+        return (f"id={self.id}, ref_attr_device={self.ref_attr_device}, name_attribute={self.name!r}, unit={self.unit!r}, data_type={self.data_type!r}")
 
 class Values(Base):
     __tablename__ = "values"

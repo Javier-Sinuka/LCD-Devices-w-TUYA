@@ -168,5 +168,6 @@ devices.json
 database.db
 test.py
 log.txt
-personal_data/
+personal_data/acces.json
+personal_data/mapping.json
 

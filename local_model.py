@@ -88,7 +88,6 @@ class LocalModel:
         except Exception:
             print("Error al abrir archivo con todos los datos de acceso.")
             return
-        # return self.__devices_acces
 
     def get_all_mapping_data(self):
         try:
@@ -129,7 +128,7 @@ class LocalConnection(LocalModel):
         TODO: tengo que modificar para que los dispositivos accedan a los 
         valores que pueden medir, y traer esa informacion, para almacenarla
     """
-    def get_status_device(self, device_id: str):
+    def get_status_device_tuya(self, device_id: str):
         cred = LocalModel().get_device_acces_data(device_id)
         print(cred)
         dev = tinytuya.OutletDevice(cred['id'],
@@ -137,7 +136,6 @@ class LocalConnection(LocalModel):
                                     cred['key'])
         dev.set_version(float(cred['version']))
         data = {}
-        device_status = {}
         try:
             data = dev.status()
         except KeyboardInterrupt:
@@ -149,16 +147,11 @@ class LocalConnection(LocalModel):
             print(f"ERROR: Ocurrió un error al obtener el estado del dispositivo: {e}")
 
         try:
-            if data:
-                dps = data['dps']
-                if "19" in dps:  # Hacer logica para el agregado de la corriente
-                    device_status['current'] = dps['18']
-                    device_status['power'] = dps['19']
-                    device_status['voltage'] = dps['20']
-                elif "1" in dps and "40" in dps:  # Logica para el switch
-                    device_status['switch_value'] = dps['1']
-                else:
-                    print()
-            return device_status
+            dps = data['dps']
+            if dps:
+                return dps
+            else:
+                print("Sin contenido DPS") #Logica de TUYA devices
+                return
         except Exception as e:
             print(f"ERROR: Ocurrió un error al intentar leer la informacion del dispositivo: {e}")

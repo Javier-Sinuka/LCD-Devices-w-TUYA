@@ -25,21 +25,24 @@ class DataBaseController():
                 data_device = Devices(name=element, device_id=acces_data[element]['id'])
 
                 mapping = mapping_data[acces_data[element]['id']]['mapping']
-                for data in mapping:
-                    existing_attribute_id = self.db.query(Attributes).filter(Attributes.id == data).first()
-                    if not existing_attribute_id:
-                        unit = ''
-                        try:
-                            unit = mapping[data]['values']['unit']
-                        except Exception:
-                            unit = 'none'
-                        data_attribute = Attributes(id=data,
-                                                    name_attribute=mapping[data]['code'],
-                                                    unit=unit,
-                                                    data_type=mapping[data]['type'])
-                        self.put_data(self.db, data_attribute)
+                self.save_attributes(mapping)
 
                 self.put_data(self.db, data_device)
+
+    def save_attributes(self, mapping: dict):
+        for data in mapping:
+            existing_attribute_ref = self.db.query(Attributes).filter(Attributes.ref_attr_device == data).first()
+            if not existing_attribute_ref:
+                unit = ''
+                try:
+                    unit = mapping[data]['values']['unit']
+                except Exception:
+                    unit = 'none'
+                data_attribute = Attributes(ref_attr_device=data,
+                                            name=mapping[data]['code'],
+                                            unit=unit,
+                                            data_type=mapping[data]['type'])
+                self.put_data(self.db, data_attribute)
 
     def put_data(self, db: Session, model):
         try:
@@ -53,6 +56,7 @@ class DataBaseController():
     def get_data(self, db: Session, model, id):
         return db.get(model, id)
         # return db.query(model).get(id)
+
     def get_all_data(self, db: Session, model):
         return db.query(model).all()
 
@@ -66,7 +70,6 @@ class DataBaseController():
 
 class DevicesController(DataBaseController):
     __local_connection = LocalConnection
-    database = DataBaseController
     db: Session = Session
 
     def __init__(self):
@@ -74,11 +77,28 @@ class DevicesController(DataBaseController):
         super().__init__(db=self.db)
         self.__local_connection = LocalConnection()
 
-    def testeo_local(self):
+    def test_almacenamiento(self):
         data = self.__local_connection.get_all_acces_data()
         for i in data:
-            print(self.__local_connection.get_status_device(data[i].get('id')))
-            time.sleep(4)
+            data_local = self.__local_connection.get_status_device_tuya(data[i].get('id'))
+            print(data_local)
+            device_id = data[i].get('id')
+            try:
+                for j in data_local:
+                    id_dev = self.db.query(Devices).filter_by(device_id=device_id).first().id
+                    try:  # Existe un valor que no lo registra el dispositivo de medidor de aire
+                        id_attr = self.db.query(Attributes).filter_by(ref_attr_device=j).first().id
+                    except Exception:
+                        id_attr = 'unregistered_attribute'
+                    value = Values(device_id=id_dev,
+                                   attribute_id=id_attr,
+                                   value=data_local[j],
+                                   timestamp=datetime.now())
+                    self.put_data(self.db, value)
+            except Exception:
+                print("Elemento no iterable")
+            time.sleep(2)
+
     # def test_almacenamiento(self):
     #     for i in self.get_all_data(db=self.db, model=Devices):
     #         d = self.__local_connection.get_status_device(device_id=i.device_id)
@@ -90,5 +110,5 @@ class DevicesController(DataBaseController):
     #         time.sleep(2)
 
 dev = DevicesController()
-# dev.test_almacenamiento()
+dev.test_almacenamiento()
 # dev.testeo_local()
