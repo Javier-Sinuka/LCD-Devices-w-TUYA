@@ -13,7 +13,8 @@ class LocalModel:
     file_name = ''
     mapping_file_name = ''
 
-    def __init__(self, file_name='personal_data/acces.json', mapping_file_name='personal_data/mapping.json'):
+    def __init__(self, file_name='personal_data/acces_tuya.json',
+                 mapping_file_name='personal_data/mapping_tuya.json'):
         self.file_name = file_name
         self.mapping_file_name = mapping_file_name
         self.__devices_data = {}
@@ -58,7 +59,7 @@ class LocalModel:
             json.dump(self.__mapping_data, json_file, indent=4)
 
     """
-        Representacion en formato ano-mes-dia-hora-minuto-segundo de un valor en milisegundos
+        Representacion en formato ano-mes-dia-hora-minuto-segundo-milisegundo de un valor en milisegundos
     """
     def conversor_time_hours(self, time_r: int, format='YY:MM:DD'):
         utc_date = datetime.fromtimestamp((time_r / 1000.0), tz=timezone.utc)
@@ -68,7 +69,7 @@ class LocalModel:
         if format == 'HH':
             date = utc_time.strftime('%H')
         elif format == 'YY:MM:DD':
-            date = utc_time.strftime('%Y-%m-%d')
+            date = utc_time.strftime('%Y-%m-%d-%h-%m-%s-%ms')
         return date
 
     """
@@ -82,7 +83,7 @@ class LocalModel:
     """
     def get_all_acces_data(self):
         try:
-            with open('personal_data/acces.json', 'r') as file:
+            with open('personal_data/acces_tuya.json', 'r') as file:
                 data = json.load(file)
             return data
         except Exception:
@@ -91,11 +92,11 @@ class LocalModel:
 
     def get_all_mapping_data(self):
         try:
-            with open('personal_data/mapping.json', 'r') as file:
+            with open('personal_data/mapping_tuya.json', 'r') as file:
                 data = json.load(file)
             return data
         except Exception:
-            print("Error al abrir archivo con todos los datos de acceso.")
+            print("Error al abrir archivo con todos los datos de mapeo.")
             return
 
     """
@@ -114,8 +115,11 @@ class LocalModel:
         ingresando unicamente su id.
     """
     def get_device_individual_info(self, device_id):
+        with open('devices.json', 'r') as file:
+            data = json.load(file)
+            self.__devices_data = data
         dev_list = []
-        for element in self.__devices_data:
+        for element in data:
             if element['id'] == device_id:
                 dev_list.append(element)
         return dev_list

@@ -24,15 +24,15 @@ class Devices(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String)
     device_id: Mapped[str] = mapped_column(String)
-    __table_args__ = (UniqueConstraint('name'), UniqueConstraint('device_id'))
+    company: Mapped[str] = mapped_column(String)
+    __table_args__ = (UniqueConstraint('name'),)
 
     def __repr__(self) -> str:
-        return (f"id={self.id}, name={self.name!r}, device_id={self.device_id!r}")
+        return (f"id={self.id}, name={self.name!r}, device_id={self.device_id!r}, company={self.company!r}")
 
 class Attributes(Base):
     __tablename__ = "attributes"
     id: Mapped[int] = mapped_column(primary_key=True)
-    ref_attr_device: Mapped[CHAR] = mapped_column(CHAR)
     name: Mapped[str] = mapped_column(String)
     unit: Mapped[str] = mapped_column(String)
     data_type: Mapped[str] = mapped_column(String)
@@ -45,14 +45,14 @@ class Values(Base):
     __tablename__ = "values"
     id: Mapped[int] = mapped_column(primary_key=True)
     device_id: Mapped[int] = mapped_column(ForeignKey("devices.id"))
-    attribute_id: Mapped[str] = mapped_column(ForeignKey("attributes.id"))
+    attribute_id: Mapped[int] = mapped_column(ForeignKey("attributes.id"))
     value: Mapped[CHAR] = mapped_column(CHAR)
     timestamp: Mapped[DateTime] = mapped_column(DateTime)
 
     def __repr__(self):
         return (f"id={self.id}, device_id={self.device_id!r}, attribute_id={self.attribute_id!r}, value={self.value!r}, timestamp={self.timestamp!r}")
 
-# Base.metadata.drop_all(engine)
+Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
 
 def get_db():

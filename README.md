@@ -75,7 +75,7 @@ Polling local devices...
     ...             ...              ...              ...
 ```
 
-Una vez realizado esto, se encuentra en preparado para avanzar con el siguiente paso.
+Una vez realizado esto, se encuentra todo preparado para avanzar con el siguiente paso.
 
 [EN PROCESO]
 

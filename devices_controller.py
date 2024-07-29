@@ -22,7 +22,7 @@ class DataBaseController():
             existing_device_name = self.db.query(Devices).filter(Devices.name == element).first()
             existing_device_id = self.db.query(Devices).filter(Devices.device_id == acces_data[element]['id']).first()
             if not existing_device_name and not existing_device_id:
-                data_device = Devices(name=element, device_id=acces_data[element]['id'])
+                data_device = Devices(name=element, device_id=acces_data[element]['id'], company_id=1)
 
                 mapping = mapping_data[acces_data[element]['id']]['mapping']
                 self.save_attributes(mapping)
@@ -110,5 +110,6 @@ class DevicesController(DataBaseController):
     #         time.sleep(2)
 
 dev = DevicesController()
-dev.test_almacenamiento()
+for i in range(1,10):
+    dev.test_almacenamiento()
 # dev.testeo_local()
