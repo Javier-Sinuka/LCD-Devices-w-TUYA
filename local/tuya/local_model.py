@@ -57,7 +57,6 @@ class LocalModelTuya:
     def get_file_info(self, direction_file):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         json_path = os.path.join(current_dir, f"{direction_file}")
-        data = {}
         try:
             with open(json_path, 'r') as file:
                 data = json.load(file)

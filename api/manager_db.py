@@ -23,7 +23,7 @@ class DevicesOperations(BaseOperations):
 
     def get_device(self, db: Session, id: int):
         return db.query(model_db.Devices).filter(model_db.Devices.id == id).first()
-
+    # id == model_db.Devices.id
     def get_all_devices(self, db: Session, skip: int = 0, limit: int = 100):
         return db.query(model_db.Devices).offset(skip).limit(limit).all()
 

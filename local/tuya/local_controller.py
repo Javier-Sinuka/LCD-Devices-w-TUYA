@@ -1,18 +1,37 @@
 from datetime import datetime
-import time
-from sqlalchemy.orm import Session
+import time, requests, json
+from local_model import LocalConnection
 
-from local_model import LocalModel, LocalConnection
-from api.model_database import Devices, Attributes, Values, get_db
+BASE_URL = "http://127.0.0.1:8001"
 
-class DataBaseController():
-    __local_model = LocalModel()
-    db: Session
-    def __init__(self, db: Session):
-        self.save_devices_data()
-        self.db = db
+class LocalController():
+    __local_connection = LocalConnection
+    def __init__(self):
+        self.save_devices_info()
+        self.__local_connection = LocalConnection()
 
-    def save_devices_data(self):
+    def save_devices_info(self):
+        devices_acces_data = self.__local_connection.get_all_acces_data()
+        for device_data in devices_acces_data:
+            device_id = devices_acces_data[device_data].get('id')
+
+            try:
+                for j in data_local:
+                    id_dev = self.db.query(Devices).filter_by(device_id=device_id).first().id
+                    try:  # Existe un valor que no lo registra el dispositivo de medidor de aire
+                        id_attr = self.db.query(Attributes).filter_by(ref_attr_device=j).first().id
+                    except Exception:
+                        id_attr = 'unregistered_attribute'
+                    value = Values(device_id=id_dev,
+                                   attribute_id=id_attr,
+                                   value=data_local[j],
+                                   timestamp=datetime.now())
+                    self.put_data(self.db, value)
+            except Exception:
+                print("Elemento no iterable")
+            time.sleep(2)
+
+    def save_device_data(self):
         acces_data = self.__local_model.get_all_acces_data()
         # mapping_data = self.__local_model.get_all_mapping_data()
         for element in acces_data:
@@ -41,60 +60,9 @@ class DataBaseController():
                                             data_type=mapping[data]['type'])
                 self.put_data(self.db, data_attribute)
 
-    def put_data(self, db: Session, model):
-        try:
-            db.add(model)
-            db.commit()
-        except InterruptedError as e:
-            db.rollback()
-            print("Error adding data: ", e)
-            return None
 
-    def get_data(self, db: Session, model, id):
-        return db.get(model, id)
-        # return db.query(model).get(id)
 
-    def get_all_data(self, db: Session, model):
-        return db.query(model).all()
 
-    def delete_data(self, db: Session, model, id):
-        data_model = self.get_data(db, model, id)
-        db.delete(data_model)
-        db.commit()
-        return data_model
-
-# local_model = LocalModel()
-
-class DevicesController(DataBaseController):
-    __local_connection = LocalConnection
-    db: Session = Session
-
-    def __init__(self):
-        self.db = next(get_db())
-        super().__init__(db=self.db)
-        self.__local_connection = LocalConnection()
-
-    def test_almacenamiento(self):
-        data = self.__local_connection.get_all_acces_data()
-        for i in data:
-            data_local = self.__local_connection.get_status_device_tuya(data[i].get('id'))
-            print(data_local)
-            device_id = data[i].get('id')
-            try:
-                for j in data_local:
-                    id_dev = self.db.query(Devices).filter_by(device_id=device_id).first().id
-                    try:  # Existe un valor que no lo registra el dispositivo de medidor de aire
-                        id_attr = self.db.query(Attributes).filter_by(ref_attr_device=j).first().id
-                    except Exception:
-                        id_attr = 'unregistered_attribute'
-                    value = Values(device_id=id_dev,
-                                   attribute_id=id_attr,
-                                   value=data_local[j],
-                                   timestamp=datetime.now())
-                    self.put_data(self.db, value)
-            except Exception:
-                print("Elemento no iterable")
-            time.sleep(2)
 
 
 

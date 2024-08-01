@@ -1,12 +1,8 @@
-from datetime import datetime
-
-from sqlalchemy import CHAR, Table, Column, Integer, String, insert, select, create_engine, DateTime, Float, JSON
-from sqlalchemy import ForeignKey,UniqueConstraint
+from sqlalchemy import CHAR, String, create_engine, DateTime
+from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
-from sqlalchemy.orm.session import Session
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
 
 engine = create_engine("sqlite:///database.db")
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
