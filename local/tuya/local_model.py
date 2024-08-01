@@ -9,8 +9,7 @@ import numpy
 
 class LocalModelTuya:
     __devices_acces = {}
-    __devices_data = {}
-    __mapping_data = {}
+    __devices_mapping = {}
     file_name = ''
     mapping_file_name = ''
 
@@ -18,9 +17,8 @@ class LocalModelTuya:
                  mapping_file_name='local_data_devices/mapping_tuya.json'):
         self.file_name = file_name
         self.mapping_file_name = mapping_file_name
-        self.__devices_data = {}
         self.__devices_acces = {}
-        self.__mapping_data = {}
+        self.__devices_mapping = {}
         self.safe_to_json()
 
     """
@@ -31,7 +29,7 @@ class LocalModelTuya:
         current_dir = os.path.dirname(os.path.abspath(__file__))
         acces_path = os.path.join(current_dir, self.file_name)
         mapping_path = os.path.join(current_dir, self.mapping_file_name)
-        data = self.get_device_info()
+        data = self.get_file_info("../../devices.json")
 
         for element in data:
             if 'id' in element and 'ip' in element and 'key' in element and 'mapping' in element:
@@ -41,7 +39,7 @@ class LocalModelTuya:
                     'key': element['key'],
                     'version': element['version']
                 }
-                self.__mapping_data[element['id']] = {
+                self.__devices_mapping[element['id']] = {
                     'mapping': element['mapping']
                 }
             else:
@@ -50,48 +48,40 @@ class LocalModelTuya:
         with open(acces_path, 'w') as json_file:
             json.dump(self.__devices_acces, json_file, indent=4)
         with open(mapping_path, 'w') as json_file:
-            json.dump(self.__mapping_data, json_file, indent=4)
+            json.dump(self.__devices_mapping, json_file, indent=4)
 
     """
-        Representacion en formato ano-mes-dia-hora-minuto-segundo-milisegundo de un valor en milisegundos
-    """
-    def conversor_time_hours(self, time_r: int, format='YY:MM:DD'):
-        utc_date = datetime.fromtimestamp((time_r / 1000.0), tz=timezone.utc)
-        utc_hour = timezone(timedelta(hours=-3))
-        utc_time = utc_date.astimezone(utc_hour)
-        date = ''
-        if format == 'HH':
-            date = utc_time.strftime('%H')
-        elif format == 'YY:MM:DD':
-            date = utc_time.strftime('%Y-%m-%d-%h-%m-%s-%ms')
-        return date
+            Metodo que devuelve el contenido de un archivo especificado por su direccin relativa.
+        """
 
-    """
-        Metodo que devuelve el tiempo actual en milisegundos.
-    """
-    def get_actual_time(self):
-        return int(time.time() * 1000)
+    def get_file_info(self, direction_file):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        json_path = os.path.join(current_dir, f"{direction_file}")
+        data = {}
+        try:
+            with open(json_path, 'r') as file:
+                data = json.load(file)
+            return data
+
+        except FileNotFoundError:
+            print("No such 'devices.json'.")
+            return
+        except json.JSONDecodeError:
+            print("Error to decodificate JSON format.")
+            return
 
     """
         Metodo que devuelve la informacion de acceso local de todos los dispositivos.
     """
     def get_all_acces_data(self):
-        try:
-            with open('local_data_devices/acces_tuya.json', 'r') as file:
-                data = json.load(file)
-            return data
-        except Exception:
-            print("Error al abrir archivo con todos los datos de acceso.")
-            return
+        return self.get_file_info('local_data_devices/acces_tuya.json')
 
+    """
+        Metodo que devuelve la informacion de mappeo de los codigos de modificacion y 
+        lectura de los dispositivos TUYA.
+    """
     def get_all_mapping_data(self):
-        try:
-            with open('local_data_devices/mapping_tuya.json', 'r') as file:
-                data = json.load(file)
-            return data
-        except Exception:
-            print("Error al abrir archivo con todos los datos de mapeo.")
-            return
+        return self.get_file_info('local_data_devices/mapping_tuya.json')
 
     """
         Metodo que devuelve el la informacion de acceso de un dispositivo especifico, solicitado
@@ -109,33 +99,12 @@ class LocalModelTuya:
         ingresando unicamente su id.
     """
     def get_device_individual_info(self, device_id):
-        data = self.get_device_info()
+        data = self.get_file_info("../../devices.json")
         dev_list = []
         for element in data:
             if element['id'] == device_id:
                 dev_list.append(element)
         return dev_list
-    """
-        Metodo que devuelve la informacion local de los dispositvos, generada por la libreria
-        TINYTUYA.
-    """
-    def get_device_info(self):
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        json_path = os.path.join(current_dir, '../../devices.json')
-        data = {}
-        try:
-            with open(json_path, 'r') as file:
-                data = json.load(file)
-                self.__devices_data = data
-            return data
-
-        except FileNotFoundError:
-            print("No such 'devices.json'.")
-            return
-        except json.JSONDecodeError:
-            print("Error to decodificate JSON format.")
-            return
-
 
 class LocalConnection(LocalModelTuya):
     def __init__(self):
