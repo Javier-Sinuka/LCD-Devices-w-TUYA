@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, Response
 from api.routes import devices, attributes, values
+import typer
 
 app = FastAPI()
 
