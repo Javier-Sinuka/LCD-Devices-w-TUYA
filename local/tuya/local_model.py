@@ -1,3 +1,4 @@
+import os
 import time
 from datetime import datetime, timedelta, timezone
 import json
@@ -6,15 +7,15 @@ import tinytuya
 import numpy
 # tinytuya.set_debug(True)
 
-class LocalModel:
+class LocalModelTuya:
     __devices_acces = {}
     __devices_data = {}
     __mapping_data = {}
     file_name = ''
     mapping_file_name = ''
 
-    def __init__(self, file_name='personal_data/acces_tuya.json',
-                 mapping_file_name='personal_data/mapping_tuya.json'):
+    def __init__(self, file_name='local_data_devices/acces_tuya.json',
+                 mapping_file_name='local_data_devices/mapping_tuya.json'):
         self.file_name = file_name
         self.mapping_file_name = mapping_file_name
         self.__devices_data = {}
@@ -27,16 +28,21 @@ class LocalModel:
         en un archivo JSON.
     """
     def safe_to_json(self):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        json_path = os.path.join(current_dir, '../../devices.json')
+        acces_path = os.path.join(current_dir, self.file_name)
+        mapping_path = os.path.join(current_dir, self.mapping_file_name)
+
         try:
-            with open('devices.json', 'r') as file:
+            with open(json_path, 'r') as file:
                 data = json.load(file)
                 self.__devices_data = data
 
         except FileNotFoundError:
-            print("El archivo 'devices.json' no se encontró.")
+            print("No such 'devices.json'.")
             return
         except json.JSONDecodeError:
-            print("Error al decodificar el archivo JSON.")
+            print("Error to decodificate JSON format.")
             return
 
         for element in data:
@@ -53,9 +59,9 @@ class LocalModel:
             else:
                 print(f"Elemento inválido encontrado y omitido: {element}")
 
-        with open(self.file_name, 'w') as json_file:
+        with open(acces_path, 'w') as json_file:
             json.dump(self.__devices_acces, json_file, indent=4)
-        with open(self.mapping_file_name, 'w') as json_file:
+        with open(mapping_path, 'w') as json_file:
             json.dump(self.__mapping_data, json_file, indent=4)
 
     """
@@ -83,7 +89,7 @@ class LocalModel:
     """
     def get_all_acces_data(self):
         try:
-            with open('personal_data/acces_tuya.json', 'r') as file:
+            with open('local_data_devices/acces_tuya.json', 'r') as file:
                 data = json.load(file)
             return data
         except Exception:
@@ -92,7 +98,7 @@ class LocalModel:
 
     def get_all_mapping_data(self):
         try:
-            with open('personal_data/mapping_tuya.json', 'r') as file:
+            with open('local_data_devices/mapping_tuya.json', 'r') as file:
                 data = json.load(file)
             return data
         except Exception:
@@ -115,7 +121,7 @@ class LocalModel:
         ingresando unicamente su id.
     """
     def get_device_individual_info(self, device_id):
-        with open('devices.json', 'r') as file:
+        with open('../../devices.json', 'r') as file:
             data = json.load(file)
             self.__devices_data = data
         dev_list = []
@@ -124,7 +130,7 @@ class LocalModel:
                 dev_list.append(element)
         return dev_list
 
-class LocalConnection(LocalModel):
+class LocalConnection(LocalModelTuya):
     def __init__(self):
         super().__init__()
 
@@ -133,7 +139,7 @@ class LocalConnection(LocalModel):
         valores que pueden medir, y traer esa informacion, para almacenarla
     """
     def get_status_device_tuya(self, device_id: str):
-        cred = LocalModel().get_device_acces_data(device_id)
+        cred = LocalModelTuya().get_device_acces_data(device_id)
         print(cred)
         dev = tinytuya.OutletDevice(cred['id'],
                                     cred['ip'],

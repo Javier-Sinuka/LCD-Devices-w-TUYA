@@ -160,14 +160,16 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
-acces.json
 snapshot.json
 tinytuya.json
 tuya-raw.json
 devices.json
 database.db
+
 test.py
 log.txt
-personal_data/acces.json
-personal_data/mapping.json
+
+local/tuya/local_data_devices/acces_tuya.json
+local/tuya/local_data_devices/mapping_tuya.json
+local/tuya/devices_controller.py
 
