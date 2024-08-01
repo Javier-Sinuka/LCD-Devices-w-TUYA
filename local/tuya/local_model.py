@@ -29,21 +29,9 @@ class LocalModelTuya:
     """
     def safe_to_json(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        json_path = os.path.join(current_dir, '../../devices.json')
         acces_path = os.path.join(current_dir, self.file_name)
         mapping_path = os.path.join(current_dir, self.mapping_file_name)
-
-        try:
-            with open(json_path, 'r') as file:
-                data = json.load(file)
-                self.__devices_data = data
-
-        except FileNotFoundError:
-            print("No such 'devices.json'.")
-            return
-        except json.JSONDecodeError:
-            print("Error to decodificate JSON format.")
-            return
+        data = self.get_device_info()
 
         for element in data:
             if 'id' in element and 'ip' in element and 'key' in element and 'mapping' in element:
@@ -121,14 +109,33 @@ class LocalModelTuya:
         ingresando unicamente su id.
     """
     def get_device_individual_info(self, device_id):
-        with open('../../devices.json', 'r') as file:
-            data = json.load(file)
-            self.__devices_data = data
+        data = self.get_device_info()
         dev_list = []
         for element in data:
             if element['id'] == device_id:
                 dev_list.append(element)
         return dev_list
+    """
+        Metodo que devuelve la informacion local de los dispositvos, generada por la libreria
+        TINYTUYA.
+    """
+    def get_device_info(self):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        json_path = os.path.join(current_dir, '../../devices.json')
+        data = {}
+        try:
+            with open(json_path, 'r') as file:
+                data = json.load(file)
+                self.__devices_data = data
+            return data
+
+        except FileNotFoundError:
+            print("No such 'devices.json'.")
+            return
+        except json.JSONDecodeError:
+            print("Error to decodificate JSON format.")
+            return
+
 
 class LocalConnection(LocalModelTuya):
     def __init__(self):
