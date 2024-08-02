@@ -4,7 +4,6 @@ from datetime import datetime, timedelta, timezone
 import json
 import tinytuya
 # import tuyapower
-import numpy
 # tinytuya.set_debug(True)
 
 class LocalModelTuya:
@@ -82,6 +81,18 @@ class LocalModelTuya:
     def get_all_mapping_data(self):
         return self.get_file_info('local_data_devices/mapping_tuya.json')
 
+    def get_code_mapping(self, device_id: str):
+        mapping = self.get_all_mapping_data().get(device_id).get('mapping')
+        data = []
+        for element in mapping:
+            data.append(element)
+        return data
+
+    def get_name_code_mapping(self, device_id: str, code: str):
+        mapping = self.get_all_mapping_data().get(device_id).get('mapping')
+        name = mapping.get(code).get('code')
+        return name
+
     """
         Metodo que devuelve el la informacion de acceso de un dispositivo especifico, solicitado
         por su ID.
@@ -115,7 +126,7 @@ class LocalConnection(LocalModelTuya):
     """
     def get_status_device_tuya(self, device_id: str):
         cred = LocalModelTuya().get_device_acces_data(device_id)
-        print(cred)
+        # print(cred)
         dev = tinytuya.OutletDevice(cred['id'],
                                     cred['ip'],
                                     cred['key'])

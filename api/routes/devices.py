@@ -28,6 +28,10 @@ def get_all_devices(skip: int = 0, limit: int = 50, db: Session = Depends(get_db
 def get_device(id: int, db: Session = Depends(get_db)):
     return dev.get_device(db=db, id=id)
 
+@router.get("/get_id/{id}", response_model=schemas.Device)
+def get_device_id(id: str, db: Session = Depends(get_db)):
+    return dev.get_device_id(db=db, id=id)
+
 @router.post("/create", response_model=schemas.Device)
 def create_device(device: schemas.Device, db: Session = Depends(get_db)):
     return dev.create_device(db=db, device=device)

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from . import model_db, schemas
+from api import model_db, schemas
 
 class BaseOperations:
     def __init__(self):
@@ -22,8 +22,12 @@ class DevicesOperations(BaseOperations):
         super().__init__()
 
     def get_device(self, db: Session, id: int):
-        return db.query(model_db.Devices).filter(model_db.Devices.id == id).first()
-    # id == model_db.Devices.id
+        return db.query(model_db.Devices).filter(id == model_db.Devices.id).first()
+
+    def get_device_id(self, db: Session, id: str):
+        return db.query(model_db.Devices).filter(id == model_db.Devices.unique_device_id).first()
+        # id == model_db.Devices.id
+
     def get_all_devices(self, db: Session, skip: int = 0, limit: int = 100):
         return db.query(model_db.Devices).offset(skip).limit(limit).all()
 
@@ -51,6 +55,9 @@ class AttributesOperations(BaseOperations):
 
     def get_attribute(self, db: Session, id: int):
         return db.query(model_db.Attributes).filter(model_db.Attributes.id == id).first()
+
+    def get_attribute_id(self, db: Session, name: str):
+        return db.query(model_db.Attributes).filter(name == model_db.Attributes.name).first()
 
     def get_all_attributes(self, db: Session, skip: int = 0, limit: int = 10):
         return db.query(model_db.Attributes).offset(skip).limit(limit).all()
