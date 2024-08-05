@@ -33,7 +33,7 @@ def get_attribute_id(name: str, db: Session = Depends(get_db)):
     return attr.get_attribute_id(db=db, name=name)
 
 @router.post("/create", response_model=schemas.Attributes)
-def create_attribute(attribute: schemas.Attributes, db: Session = Depends(get_db)):
+def create_attribute(attribute: schemas.AttributesCreate, db: Session = Depends(get_db)):
     return attr.create_attribute(db=db, attribute=attribute)
 
 @router.delete("/delete/{id}", response_model=schemas.Attributes)

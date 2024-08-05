@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import CHAR, String, create_engine, DateTime
 from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
@@ -28,6 +30,7 @@ class Attributes(Base):
     unit: Mapped[str] = mapped_column(String)
     data_type: Mapped[str] = mapped_column(String)
     __table_args__ = (UniqueConstraint('name'),)
+
     def __repr__(self) -> str:
         return (f"id={self.id}, name={self.name!r}, unit={self.unit!r}, data_type={self.data_type!r}")
 
@@ -37,7 +40,7 @@ class Values(Base):
     device_id: Mapped[int] = mapped_column(ForeignKey("devices.id"))
     attribute_id: Mapped[int] = mapped_column(ForeignKey("attributes.id"))
     value: Mapped[CHAR] = mapped_column(CHAR)
-    timestamp: Mapped[DateTime] = mapped_column(DateTime)
+    timestamp: Mapped[DateTime] = mapped_column(DateTime, default=datetime.now())
 
     def __repr__(self):
         return (f"id={self.id}, device_id={self.device_id!r}, attribute_id={self.attribute_id!r}, value={self.value!r}, timestamp={self.timestamp!r}")

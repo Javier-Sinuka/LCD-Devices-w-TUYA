@@ -29,7 +29,7 @@ def get_value(id: int, db: Session = Depends(get_db)):
     return val.get_value(db=db, id=id)
 
 @router.post("/create", response_model=schemas.Values)
-def create_value(values: schemas.Values, db: Session = Depends(get_db)):
+def create_value(values: schemas.ValuesCreate, db: Session = Depends(get_db)):
     return val.create_value(db=db, value=values)
 
 @router.delete("/delete/{id}", response_model=schemas.Values)

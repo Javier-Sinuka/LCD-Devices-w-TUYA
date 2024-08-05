@@ -31,7 +31,7 @@ class DevicesOperations(BaseOperations):
     def get_all_devices(self, db: Session, skip: int = 0, limit: int = 100):
         return db.query(model_db.Devices).offset(skip).limit(limit).all()
 
-    def create_device(self, db: Session, device: schemas.Device):
+    def create_device(self, db: Session, device: schemas.DeviceCreate):
         dev = model_db.Devices(**device.dict())
         return self.create_element(db, dev)
 
@@ -62,7 +62,7 @@ class AttributesOperations(BaseOperations):
     def get_all_attributes(self, db: Session, skip: int = 0, limit: int = 10):
         return db.query(model_db.Attributes).offset(skip).limit(limit).all()
 
-    def create_attribute(self, db: Session, attribute: schemas.Attributes):
+    def create_attribute(self, db: Session, attribute: schemas.AttributesCreate):
         new_attr = model_db.Attributes(**attribute.dict())
         return self.create_element(db, new_attr)
 
@@ -90,7 +90,7 @@ class ValuesOperations(BaseOperations):
     def get_all_values(self, db: Session, skip: int = 0, limit: int = 10):
         return db.query(model_db.Values).offset(skip).limit(limit).all()
 
-    def create_value(self, db: Session, value: schemas.Values):
+    def create_value(self, db: Session, value: schemas.ValuesCreate):
         new_val = model_db.Values(**value.dict())
         return self.create_element(db, new_val)
 

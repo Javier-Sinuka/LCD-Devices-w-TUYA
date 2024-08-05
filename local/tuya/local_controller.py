@@ -8,8 +8,8 @@ class LocalController():
     __local_connection = LocalConnection
     def __init__(self):
         self.__local_connection = LocalConnection()
-        self.save_devices_info()
-        self.save_attributes_local_devicec()
+        # self.save_devices_info()
+        # self.save_attributes_local_devicec()
 
     def save_devices_info(self):
         url = f"{BASE_URL}/devices/create"
@@ -58,11 +58,8 @@ class LocalController():
 
         for device_data in devices_acces_data:
             device_id = devices_acces_data[device_data].get('id')
-            print(device_id)
 
             value_device = self.__local_connection.get_status_device_tuya(device_id=device_id)
-
-            print(value_device)
 
             pk_device = self.get_device_id(device_id)
 
@@ -70,22 +67,22 @@ class LocalController():
 
             for value in value_device:
                 if value in local_code_device:
-                    name_value = self.__local_connection.get_name_code_mapping(device_id=device_id,code=value)
+                    name_value = self.__local_connection.get_name_code_mapping(device_id=device_id, code=value)
                     pk_attribute = self.get_attribute_id(name_value)
 
                     payload = {
+                        'value': str(value_device[value]),
                         'device_id': pk_device,
                         'attribute_id': pk_attribute,
-                        'value': value_device[value],
-                        'timestamp': datetime.now().isoformat(),
                     }
 
                     response = requests.post(url, json=payload)
+
                     if response.status_code == 200:
-                        return response
+                        print(f"Create Value: {response.status_code}")
                     else:
                         print(f"Value failed to write")
-                    time.sleep(0.01)
+                    time.sleep(1)
 
     def get_device_id(self, unique_device_id: str):
         url = f"{BASE_URL}/devices/get_id/{unique_device_id}"
@@ -94,7 +91,6 @@ class LocalController():
             return response.json()['id']
         else:
             print(f"Device {unique_device_id} failed to read")
-        time.sleep(0.01)
 
     def get_attribute_id(self, name: str):
         url = f"{BASE_URL}/attributes/get_attribute/{name}"
@@ -102,8 +98,7 @@ class LocalController():
         if response.status_code == 200:
             return response.json()['id']
         else:
-            print(f"Device {name} failed to read")
-        time.sleep(0.01)
+            print(f"Attribute {name} failed to read")
 
 d = LocalController()
 d.read_content_devices()
