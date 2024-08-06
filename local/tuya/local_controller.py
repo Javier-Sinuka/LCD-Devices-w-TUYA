@@ -1,5 +1,7 @@
 from datetime import datetime
 import time, requests, json
+from sqlite3 import IntegrityError
+
 from local_model import LocalConnection
 
 BASE_URL = "http://127.0.0.1:8001"
@@ -7,9 +9,38 @@ BASE_URL = "http://127.0.0.1:8001"
 class LocalController():
     __local_connection = LocalConnection
     def __init__(self):
+        self.initialized = False
         self.__local_connection = LocalConnection()
-        # self.save_devices_info()
-        # self.save_attributes_local_devicec()
+        if not self.initialized:
+            self.save_devices_info()
+            self.save_attributes_local_device()
+            self.initialized = True
+
+    def post_element(self, url: str, payload: json):
+        response = requests.post(url, json=payload)
+        if not response.ok:
+            raise Exception(f"Error {response.status_code}: {response.text}")
+        return response.json()
+
+    def get_element(self, url: str):
+        response = requests.get(url)
+        if not response.ok:
+            raise Exception(f"Error {response.status_code}: {response.text}")
+        return response.json()
+
+    def get_device_id(self, unique_device_id: str):
+        try:
+            url = f"{BASE_URL}/devices/get_id/{unique_device_id}"
+            return self.get_element(url)['id']
+        except Exception as e:
+            print(f"Error in get_device_id: {e}")
+
+    def get_attribute_id(self, name: str):
+        try:
+            url = f"{BASE_URL}/attributes/get_attribute/{name}"
+            return self.get_element(url)['id']
+        except Exception as e:
+            print(f"Error in get_attribute_id: {e}")
 
     def save_devices_info(self):
         url = f"{BASE_URL}/devices/create"
@@ -21,14 +52,15 @@ class LocalController():
                 "unique_device_id": device_id,
                 "manufacturer": 'TUYA',
             }
-            response = requests.post(url, json=payload)
-            if response.status_code == 200:
-                pass
-            else:
-                print(f"Device {payload['name']} failed to create")
-            time.sleep(0.01)
+            try:
+                self.post_element(url, payload)
+            except Exception as e:
+                if "Unique constraint violated." in str(e):
+                    pass
+                else:
+                    print(f"Error save_attribute_local_device: {e}")
 
-    def save_attributes_local_devicec(self):
+    def save_attributes_local_device(self):
         url = f"{BASE_URL}/attributes/create"
         attributes_acces_data = self.__local_connection.get_all_mapping_data()
         for attribute_data in attributes_acces_data:
@@ -45,14 +77,15 @@ class LocalController():
                     'unit': unit,
                     'data_type': attr[attribute]['type'],
                 }
-                response = requests.post(url, json=payload)
-                if response.status_code == 200:
-                    pass
-                else:
-                    print(f"Attribute {payload['name']} failed to create")
-                time.sleep(0.01)
+                try:
+                    self.post_element(url, payload)
+                except Exception as e:
+                    if "Unique constraint violated." in str(e):
+                        pass
+                    else:
+                        print(f"Error save_attribute_local_device: {e}")
 
-    def read_content_devices(self):
+    def save_content_devices(self):
         url = f"{BASE_URL}/values/create"
         devices_acces_data = self.__local_connection.get_all_acces_data()
 
@@ -76,32 +109,16 @@ class LocalController():
                         'attribute_id': pk_attribute,
                     }
 
-                    response = requests.post(url, json=payload)
+                    try:
+                        self.post_element(url, payload)
+                        time.sleep(1)
+                    except Exception as e:
+                        print(f"Error save_content_device: {e}")
 
-                    if response.status_code == 200:
-                        print(f"Create Value: {response.status_code}")
-                    else:
-                        print(f"Value failed to write")
-                    time.sleep(1)
-
-    def get_device_id(self, unique_device_id: str):
-        url = f"{BASE_URL}/devices/get_id/{unique_device_id}"
-        response = requests.get(url)
-        if response.status_code == 200:
-            return response.json()['id']
-        else:
-            print(f"Device {unique_device_id} failed to read")
-
-    def get_attribute_id(self, name: str):
-        url = f"{BASE_URL}/attributes/get_attribute/{name}"
-        response = requests.get(url)
-        if response.status_code == 200:
-            return response.json()['id']
-        else:
-            print(f"Attribute {name} failed to read")
 
 d = LocalController()
-d.read_content_devices()
+for i in range(0, 5):
+    d.save_content_devices()
 # d.save_attributes_local_devicec()
 
 
