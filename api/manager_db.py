@@ -6,6 +6,7 @@ from api.exceptions import UniqueConstraintViolation, NotFoundException, Databas
 class BaseOperations:
     def __init__(self):
         pass
+
     def create_element(self, db: Session, element):
         try:
             db.add(element)
@@ -16,6 +17,7 @@ class BaseOperations:
             raise UniqueConstraintViolation("Unique constraint violated.") from e
         except SQLAlchemyError as e:
             raise DatabaseOperationException("An error occurred while creating the element.") from e
+
     def get_element(self, db: Session, model, id: int):
         try:
             element = db.query(model).filter(model.id == id).first()

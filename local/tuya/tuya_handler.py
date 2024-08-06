@@ -1,12 +1,10 @@
-from datetime import datetime
-import time, requests, json
-from sqlite3 import IntegrityError
-
+import time
+from api.utils import ApiClient
 from local_model import LocalConnection
 
 BASE_URL = "http://127.0.0.1:8001"
 
-class LocalController():
+class TuyaHandler(ApiClient):
     __local_connection = LocalConnection
     def __init__(self):
         self.initialized = False
@@ -15,18 +13,6 @@ class LocalController():
             self.save_devices_info()
             self.save_attributes_local_device()
             self.initialized = True
-
-    def post_element(self, url: str, payload: json):
-        response = requests.post(url, json=payload)
-        if not response.ok:
-            raise Exception(f"Error {response.status_code}: {response.text}")
-        return response.json()
-
-    def get_element(self, url: str):
-        response = requests.get(url)
-        if not response.ok:
-            raise Exception(f"Error {response.status_code}: {response.text}")
-        return response.json()
 
     def get_device_id(self, unique_device_id: str):
         try:
@@ -116,9 +102,10 @@ class LocalController():
                         print(f"Error save_content_device: {e}")
 
 
-d = LocalController()
-for i in range(0, 5):
+d = TuyaHandler()
+for i in range(0, 1):
     d.save_content_devices()
+    time.sleep(2)
 # d.save_attributes_local_devicec()
 
 

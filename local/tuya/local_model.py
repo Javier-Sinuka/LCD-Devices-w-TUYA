@@ -20,11 +20,11 @@ class LocalModelTuya:
         self.__devices_mapping = {}
         self.safe_to_json()
 
-    """
-        Metodo para almacenar las credenciales de los dispositivos presentes en la red local
-        en un archivo JSON.
-    """
     def safe_to_json(self):
+        """
+            Metodo para almacenar las credenciales de los dispositivos presentes en la red local
+            en un archivo JSON.
+        """
         current_dir = os.path.dirname(os.path.abspath(__file__))
         acces_path = os.path.join(current_dir, self.file_name)
         mapping_path = os.path.join(current_dir, self.mapping_file_name)
@@ -49,11 +49,10 @@ class LocalModelTuya:
         with open(mapping_path, 'w') as json_file:
             json.dump(self.__devices_mapping, json_file, indent=4)
 
-    """
+    def get_file_info(self, direction_file):
+        """
             Metodo que devuelve el contenido de un archivo especificado por su direccin relativa.
         """
-
-    def get_file_info(self, direction_file):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         json_path = os.path.join(current_dir, f"{direction_file}")
         try:
@@ -68,17 +67,17 @@ class LocalModelTuya:
             print("Error to decodificate JSON format.")
             return
 
-    """
-        Metodo que devuelve la informacion de acceso local de todos los dispositivos.
-    """
     def get_all_acces_data(self):
+        """
+            Metodo que devuelve la informacion de acceso local de todos los dispositivos.
+        """
         return self.get_file_info('local_data_devices/acces_tuya.json')
 
-    """
-        Metodo que devuelve la informacion de mappeo de los codigos de modificacion y 
-        lectura de los dispositivos TUYA.
-    """
     def get_all_mapping_data(self):
+        """
+            Metodo que devuelve la informacion de mappeo de los codigos de modificacion/lectura
+            de los dispositivos TUYA.
+        """
         return self.get_file_info('local_data_devices/mapping_tuya.json')
 
     def get_code_mapping(self, device_id: str):
@@ -93,22 +92,25 @@ class LocalModelTuya:
         name = mapping.get(code).get('code')
         return name
 
-    """
-        Metodo que devuelve el la informacion de acceso de un dispositivo especifico, solicitado
-        por su ID.
-    """
     def get_device_acces_data(self, device_id):
+        """
+            Metodo que devuelve el la informacion de acceso de un dispositivo especifico, solicitado
+            por su ID.
+        """
         data = {}
         for acces in self.__devices_acces.values():
             if acces['id'] == device_id:
                 data = acces
         return data
 
-    """
-        Devuelve una lista con la TODA la informacion asociada a un dispositivo especifico, 
-        ingresando unicamente su id.
-    """
     def get_device_individual_info(self, device_id):
+        """
+            Devuelve una lista con la TODA la informacion asociada a un dispositivo especifico,
+            ingresando unicamente su id.
+
+            :param device_id:
+            :return:
+        """
         data = self.get_file_info("../../devices.json")
         dev_list = []
         for element in data:
@@ -120,11 +122,16 @@ class LocalConnection(LocalModelTuya):
     def __init__(self):
         super().__init__()
 
-    """
-        TODO: tengo que modificar para que los dispositivos accedan a los 
-        valores que pueden medir, y traer esa informacion, para almacenarla
-    """
     def get_status_device_tuya(self, device_id: str):
+        """
+        Metodo que devuelve los valores medidos por un dispositivo que se encuentra activo en la red local.
+
+        Parameters:
+        device_id (str): The ID of the device.
+
+        Returns:
+        List[dps]: The value of the device local.
+        """
         cred = LocalModelTuya().get_device_acces_data(device_id)
         # print(cred)
         dev = tinytuya.OutletDevice(cred['id'],
@@ -136,18 +143,18 @@ class LocalConnection(LocalModelTuya):
             data = dev.status()
         except KeyboardInterrupt:
             print(
-                "CANCEL: Interrupcion recibida por teclado %s [%s]."
+                "CANCEL: Interruption for keyboard %s [%s]."
                 % (cred['id'], cred['ip'])
             )
         except Exception as e:
-            print(f"ERROR: Ocurrió un error al obtener el estado del dispositivo: {e}")
+            print(f"An error occurred while obtaining device status: {e}")
 
         try:
             dps = data['dps']
             if dps:
                 return dps
             else:
-                print("Sin contenido DPS") #Logica de TUYA devices
+                print("DPS Empty")
                 return
         except Exception as e:
-            print(f"ERROR: Ocurrió un error al intentar leer la informacion del dispositivo: {e}")
+            print(f"An error occurred while trying to read the device information: {e}")
