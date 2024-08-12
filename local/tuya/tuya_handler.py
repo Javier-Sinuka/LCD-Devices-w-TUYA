@@ -1,11 +1,13 @@
 import time
 from api.utils import ApiClient
-from local_model import LocalConnection
+from local.model import ModelDevices
+from local.tuya.local_model import LocalConnection
 
 BASE_URL = "http://127.0.0.1:8001"
 
-class TuyaHandler(ApiClient):
+class TuyaHandler(ApiClient, ModelDevices):
     __local_connection = LocalConnection
+
     def __init__(self):
         self.initialized = False
         self.__local_connection = LocalConnection()
@@ -82,35 +84,26 @@ class TuyaHandler(ApiClient):
 
             pk_device = self.get_device_id(device_id)
 
-            local_code_device = self.__local_connection.get_code_mapping(device_id)
+            code_local_device = self.__local_connection.get_code_mapping(device_id)
 
-            for value in value_device:
-                if value in local_code_device:
-                    name_value = self.__local_connection.get_name_code_mapping(device_id=device_id, code=value)
-                    pk_attribute = self.get_attribute_id(name_value)
+            try:
+                for value in value_device:
+                    if value in code_local_device:
+                        name_value = self.__local_connection.get_name_code_mapping(device_id=device_id, code=value)
+                        pk_attribute = self.get_attribute_id(name_value)
 
-                    payload = {
-                        'value': str(value_device[value]),
-                        'device_id': pk_device,
-                        'attribute_id': pk_attribute,
-                    }
+                        payload = {
+                            'value': str(value_device[value]),
+                            'device_id': pk_device,
+                            'attribute_id': pk_attribute,
+                        }
 
-                    try:
-                        self.post_element(url, payload)
-                        time.sleep(1)
-                    except Exception as e:
-                        print(f"Error save_content_device: {e}")
-
-
-d = TuyaHandler()
-for i in range(0, 1):
-    d.save_content_devices()
-    time.sleep(2)
-# d.save_attributes_local_devicec()
-
-
-
-
-
-
-
+                        try:
+                            self.post_element(url, payload)
+                            time.sleep(1)
+                        except Exception as e:
+                            print(f"Error save_content_device: {e}")
+                    else:
+                        print(f"Value has no registered: value -> {value}")
+            except Exception as e:
+                print(f"Value device is not iterable: {e}")

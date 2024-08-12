@@ -40,7 +40,7 @@ class Values(Base):
     device_id: Mapped[int] = mapped_column(ForeignKey("devices.id"))
     attribute_id: Mapped[int] = mapped_column(ForeignKey("attributes.id"))
     value: Mapped[CHAR] = mapped_column(CHAR)
-    timestamp: Mapped[DateTime] = mapped_column(DateTime, default=datetime.now())
+    timestamp: Mapped[DateTime] = mapped_column(DateTime, default=datetime.now)
 
     def __repr__(self):
         return (f"id={self.id}, device_id={self.device_id!r}, attribute_id={self.attribute_id!r}, value={self.value!r}, timestamp={self.timestamp!r}")

@@ -157,4 +157,4 @@ class LocalConnection(LocalModelTuya):
                 print("DPS Empty")
                 return
         except Exception as e:
-            print(f"An error occurred while trying to read the device information: {e}")
+            print(f"An error occurred whilef trying to read the device information: {e}")

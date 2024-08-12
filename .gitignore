@@ -166,7 +166,7 @@ tuya-raw.json
 devices.json
 database.db
 
-test.py
+decorators.py
 log.txt
 
 local/tuya/local_data_devices/acces_tuya.json
