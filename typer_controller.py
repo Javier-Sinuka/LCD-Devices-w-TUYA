@@ -14,7 +14,7 @@ def start(sampling_time_in_minutes: int):
         if manager is None:
             manager = Manager()
         command = [
-            "python",
+            "python3",
             "-m",
             "tinytuya",
             "wizard",

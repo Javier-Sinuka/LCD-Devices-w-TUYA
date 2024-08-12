@@ -1,6 +1,7 @@
 import os
 import json
 import tinytuya
+from pathlib import Path
 
 
 class LocalModelTuya:
@@ -11,8 +12,10 @@ class LocalModelTuya:
 
     def __init__(self, file_name='local_data_devices/acces_tuya.json',
                  mapping_file_name='local_data_devices/mapping_tuya.json'):
-        self.file_name = file_name
-        self.mapping_file_name = mapping_file_name
+        current_dir = Path(__file__).resolve().parent
+        self.file_name = current_dir / file_name
+        self.mapping_file_name = current_dir / mapping_file_name
+
         self.__devices_acces = {}
         self.__devices_mapping = {}
         self.safe_to_json()
@@ -22,9 +25,6 @@ class LocalModelTuya:
             Metodo para almacenar las credenciales de los dispositivos presentes en la red local
             en un archivo JSON.
         """
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        acces_path = os.path.join(current_dir, self.file_name)
-        mapping_path = os.path.join(current_dir, self.mapping_file_name)
         data = self.get_file_info("../../devices.json")
 
         for element in data:
@@ -41,27 +41,28 @@ class LocalModelTuya:
             else:
                 print(f"Elemento inválido encontrado y omitido: {element}")
 
-        with open(acces_path, 'w') as json_file:
+        with open(self.file_name, 'w') as json_file:
             json.dump(self.__devices_acces, json_file, indent=4)
-        with open(mapping_path, 'w') as json_file:
+        with open(self.mapping_file_name, 'w') as json_file:
             json.dump(self.__devices_mapping, json_file, indent=4)
 
     def get_file_info(self, direction_file):
         """
-            Metodo que devuelve el contenido de un archivo especificado por su direccin relativa.
+            Metodo que devuelve el contenido de un archivo especificado por su direccion relativa.
         """
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        json_path = os.path.join(current_dir, f"{direction_file}")
+        current_dir = Path(__file__).resolve().parent
+        json_path = current_dir / direction_file
+
         try:
             with open(json_path, 'r') as file:
                 data = json.load(file)
             return data
 
         except FileNotFoundError:
-            print("No such 'devices.json'.")
+            print(f"No such file: '{json_path}'.")
             return
         except json.JSONDecodeError:
-            print("Error to decodificate JSON format.")
+            print("Error decoding JSON format.")
             return
 
     def get_all_acces_data(self):
