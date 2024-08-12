@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from api.routes import devices, attributes, values
 
-
 app = FastAPI()
 
 app.include_router(devices.router)

@@ -1,6 +1,8 @@
 fastapi~=0.111.1
 SQLAlchemy~=2.0.31
-pydantic~=2.8.2
-tinytuya~=1.15.1
-numpy~=1.21.5
 requests~=2.25.1
+pydantic~=2.8.2
+pydantic_core~=2.20.1
+uvicorn~=0.30.5
+APScheduler~=3.10.4
+typer~=0.12.3
