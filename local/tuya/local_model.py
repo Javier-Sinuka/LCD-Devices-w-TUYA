@@ -25,26 +25,29 @@ class LocalModelTuya:
             Metodo para almacenar las credenciales de los dispositivos presentes en la red local
             en un archivo JSON.
         """
-        data = self.get_file_info("../../devices.json")
+        try:
+            data = self.get_file_info("../../devices.json")
 
-        for element in data:
-            if 'id' in element and 'ip' in element and 'key' in element and 'mapping' in element:
-                self.__devices_acces[element['name']] = {
-                    'id': element['id'],
-                    'ip': element['ip'],
-                    'key': element['key'],
-                    'version': element['version']
-                }
-                self.__devices_mapping[element['id']] = {
-                    'mapping': element['mapping']
-                }
-            else:
-                print(f"Elemento inválido encontrado y omitido: {element}")
+            for element in data:
+                if 'id' in element and 'ip' in element and 'key' in element and 'mapping' in element:
+                    self.__devices_acces[element['name']] = {
+                        'id': element['id'],
+                        'ip': element['ip'],
+                        'key': element['key'],
+                        'version': element['version']
+                    }
+                    self.__devices_mapping[element['id']] = {
+                        'mapping': element['mapping']
+                    }
+                else:
+                    print(f"Elemento inválido encontrado y omitido: {element}")
 
-        with open(self.file_name, 'w') as json_file:
-            json.dump(self.__devices_acces, json_file, indent=4)
-        with open(self.mapping_file_name, 'w') as json_file:
-            json.dump(self.__devices_mapping, json_file, indent=4)
+            with open(self.file_name, 'w') as json_file:
+                json.dump(self.__devices_acces, json_file, indent=4)
+            with open(self.mapping_file_name, 'w') as json_file:
+                json.dump(self.__devices_mapping, json_file, indent=4)
+        except Exception as e:
+            raise e
 
     def get_file_info(self, direction_file):
         """
