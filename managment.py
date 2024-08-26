@@ -20,7 +20,7 @@ class Manager():
             for device in self.devices:
                 device.save_content_devices()
         except Exception as e:
-            print(f"Error inr __run_devices: {e}")
+            print(f"Error in __run_devices: {e}")
 
     def start(self, sampling_time_in_minutes: int):
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)

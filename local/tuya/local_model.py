@@ -3,7 +3,6 @@ import json
 import tinytuya
 from pathlib import Path
 
-
 class LocalModelTuya:
     __devices_acces = {}
     __devices_mapping = {}
@@ -134,7 +133,7 @@ class LocalConnection(LocalModelTuya):
         List[dps]: The value of the device local.
         """
         cred = LocalModelTuya().get_device_acces_data(device_id)
-        # print(cred)
+        # tinytuya.set_debug(True)
         dev = tinytuya.OutletDevice(cred['id'],
                                     cred['ip'],
                                     cred['key'])
@@ -142,6 +141,7 @@ class LocalConnection(LocalModelTuya):
         data = {}
         try:
             data = dev.status()
+            print(data)
         except KeyboardInterrupt:
             print(
                 "CANCEL: Interruption for keyboard %s [%s]."
