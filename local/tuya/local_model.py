@@ -141,7 +141,6 @@ class LocalConnection(LocalModelTuya):
         data = {}
         try:
             data = dev.status()
-            print(data)
         except KeyboardInterrupt:
             print(
                 "CANCEL: Interruption for keyboard %s [%s]."
@@ -159,3 +158,4 @@ class LocalConnection(LocalModelTuya):
                 return
         except Exception as e:
             print(f"An error occurred whilef trying to read the device information: {e}")
+            print(data)

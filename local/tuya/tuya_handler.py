@@ -9,6 +9,7 @@ class TuyaHandler(ApiClient, ModelDevices):
     __local_connection = LocalConnection
 
     def __init__(self):
+        super().__init__()
         self.initialized = False
         self.__local_connection = LocalConnection()
         if not self.initialized:
