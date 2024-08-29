@@ -13,13 +13,13 @@ def start(sampling_time_in_minutes: int):
         global manager
         if manager is None:
             manager = Manager()
-        # command = [
-        #     "python3",
-        #     "-m",
-        #     "tinytuya",
-        #     "wizard",
-        # ]
-        # subprocess.run(command, check=True)
+        command = [
+            "python3",
+            "-m",
+            "tinytuya",
+            "wizard",
+        ]
+        subprocess.run(command, check=True)
         manager.start(sampling_time_in_minutes=sampling_time_in_minutes)
     except Exception as e:
         print(f"Unexpected error in START: {e}")
