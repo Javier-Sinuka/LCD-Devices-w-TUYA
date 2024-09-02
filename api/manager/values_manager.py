@@ -58,7 +58,7 @@ class ValuesOperations(ModelManager):
 
     def get_values_by_device_and_attribute_within_dates(
             self, db: Session, device_id: int, attribute_id: int, start_date: datetime, end_date: datetime
-    ) -> list[Type[Values]]:
+    ) -> List[Type[Values]]:
         """
         Retrieve values associated with a specific Device ID and Attribute ID within a date range.
 
