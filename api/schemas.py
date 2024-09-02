@@ -15,10 +15,27 @@ class Device(DeviceBase):
     class Config:
         from_attributes = True
 
+class DeviceNameID(BaseModel):
+    id: int
+    name: str
+
+class DeviceSummary(DeviceNameID):
+    class Config:
+        from_attributes = True
+
 class AttributesBase(BaseModel):
     name: str
     unit: Optional[str] = None
     data_type: str
+
+class AttributesNameID(BaseModel):
+    id: int
+    name: str
+
+class AttributesSummary(AttributesNameID):
+    class Config:
+        from_attributes = True
+
 class AttributesCreate(AttributesBase):
     pass
 
@@ -41,3 +58,7 @@ class Values(ValuesBase):
     timestamp: datetime
     class Config:
         from_attributes = True
+
+class ValuesValue(BaseModel):
+    value: str
+    timestamp: datetime

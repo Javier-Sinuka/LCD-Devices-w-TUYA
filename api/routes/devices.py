@@ -1,10 +1,11 @@
-from typing import List
+from typing import List, Tuple
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from api import manager_db, schemas
-from api.manager_db import UniqueConstraintViolation, NotFoundException, DatabaseOperationException
+from api import schemas
+from api.exceptions import UniqueConstraintViolation, NotFoundException, DatabaseOperationException
 from api.model_db import SessionLocal
 from starlette.status import HTTP_409_CONFLICT, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
+from api.manager import devices_manager
 
 router = APIRouter(
     prefix="/devices",
@@ -22,7 +23,7 @@ def get_db():
     finally:
         db.close()
 
-dev = manager_db.DevicesOperations()
+dev = devices_manager.DevicesOperations()
 
 @router.get("/all", response_model=List[schemas.Device])
 def get_all_devices(skip: int = 0, limit: int = 50, db: Session = Depends(get_db)):
@@ -38,6 +39,63 @@ def get_all_devices(skip: int = 0, limit: int = 50, db: Session = Depends(get_db
     """
     try:
         return dev.get_all_devices(db=db, skip=skip, limit=limit)
+    except DatabaseOperationException as e:
+        raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+@router.get("/manufacturer/{manufacturer}", response_model=List[schemas.DeviceSummary])
+def get_devices_by_manufacturer(manufacturer: str, skip: int = 0, limit: int = 50, db: Session = Depends(get_db)):
+    """
+    Retrieve all devices by manufacturer with pagination.
+
+    Parameters:
+        manufacturer (str): The manufacturer to filter devices by.
+        skip (int): The number of records to skip.
+        limit (int): The maximum number of records to return.
+
+    Returns:
+        List[schemas.DeviceSummary]: A list of devices' ID and name.
+    """
+    try:
+        return dev.get_devices_by_manufacturer(db=db, manufacturer=manufacturer, skip=skip, limit=limit)
+    except NotFoundException as e:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=str(e))
+    except DatabaseOperationException as e:
+        raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+@router.get("/name/{id}", response_model=str)
+def get_device_name_by_id(id: int, db: Session = Depends(get_db)):
+    """
+    Retrieve the name of a device by its ID.
+
+    Parameters:
+        id (int): The ID of the device to retrieve the name.
+
+    Returns:
+        str: The name of the device.
+    """
+    try:
+        return dev.get_device_name_by_id(db=db, id=id)
+    except NotFoundException as e:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=str(e))
+    except DatabaseOperationException as e:
+        raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+@router.get("/names_ids", response_model=List[schemas.DeviceNameID])
+def get_all_device_names_and_ids(skip: int = 0, limit: int = 50, db: Session = Depends(get_db)):
+    """
+    Retrieve the names and IDs of all devices with pagination.
+
+    Parameters:
+        skip (int): The number of records to skip.
+        limit (int): The maximum number of records to return.
+
+    Returns:
+        List[schemas.DeviceNameID]: A list of device records containing IDs and names.
+    """
+    try:
+        return dev.get_all_device_names_and_ids(db=db, skip=skip, limit=limit)
+    except NotFoundException as e:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=str(e))
     except DatabaseOperationException as e:
         raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
