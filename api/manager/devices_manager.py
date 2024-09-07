@@ -70,6 +70,18 @@ class DevicesOperations(ModelManager):
         except SQLAlchemyError as e:
             raise DatabaseOperationException("An error occurred while retrieving device names and IDs.") from e
 
+    def get_device_id_by_name(self, db: Session, name: str) -> int:
+        """
+        Retrieve the ID of a device by its name.
+        """
+        try:
+            device_id = db.query(model_db.Devices.id).filter(name == model_db.Devices.name).scalar()
+            if device_id is None:
+                raise NotFoundException(f"Device with name '{name}' not found.")
+            return device_id  # Ahora `device_id` es un entero
+        except SQLAlchemyError as e:
+            raise DatabaseOperationException("An error occurred while retrieving the device ID.") from e
+
     def create_device(self, db: Session, device: schemas.DeviceCreate):
         dev = model_db.Devices(**device.model_dump())
         return self.create_element(db, dev)

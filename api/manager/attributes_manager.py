@@ -41,12 +41,25 @@ class AttributesOperations(ModelManager):
         except SQLAlchemyError as e:
             raise DatabaseOperationException("An error occurred while retrieving attribute names and IDs.") from e
 
+    def get_attribute_id_by_name(self, db: Session, name: str) -> int:
+        """
+        Retrieve the ID of a device by its name.
+        """
+        try:
+            attributes_id = db.query(model_db.Attributes.id).filter(name == model_db.Attributes.name).scalar()
+            if attributes_id is None:
+                raise NotFoundException(f"Attribute with name '{name}' not found.")
+            return attributes_id
+        except SQLAlchemyError as e:
+            raise DatabaseOperationException("An error occurred while retrieving the attribute ID.") from e
+
+
     def get_attribute_unit_by_id(self, db: Session, id: int) -> str:
         """
         Retrieve the unit of an attribute by its ID.
         """
         try:
-            attribute = db.query(model_db.Attributes.unit).filter(model_db.Attributes.id == id).first()
+            attribute = db.query(model_db.Attributes.unit).filter(id == model_db.Attributes.id).first()
             if attribute is None:
                 raise NotFoundException(f"Attribute with id {id} not found.")
             return attribute.unit
@@ -58,7 +71,7 @@ class AttributesOperations(ModelManager):
         Retrieve the name of an attribute by its ID.
         """
         try:
-            attribute = db.query(model_db.Attributes.name).filter(model_db.Attributes.id == id).first()
+            attribute = db.query(model_db.Attributes.name).filter(id == model_db.Attributes.id).first()
             if attribute is None:
                 raise NotFoundException(f"Attribute with id {id} not found.")
             return attribute.name
@@ -70,7 +83,7 @@ class AttributesOperations(ModelManager):
         Retrieve the data type of an attribute by its ID.
         """
         try:
-            attribute = db.query(model_db.Attributes.data_type).filter(model_db.Attributes.id == id).first()
+            attribute = db.query(model_db.Attributes.data_type).filter(id == model_db.Attributes.id).first()
             if attribute is None:
                 raise NotFoundException(f"Attribute with id {id} not found.")
             return attribute.data_type

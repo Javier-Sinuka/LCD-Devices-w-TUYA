@@ -167,8 +167,11 @@ devices.json
 database.db
 
 decorators.py
+connectors/utils/test.py
 log.txt
+
+####### IMPORTANT #########
 
 local/tuya/local_data_devices/acces_tuya.json
 local/tuya/local_data_devices/mapping_tuya.json
-
+connectors/utils/local_leds.json

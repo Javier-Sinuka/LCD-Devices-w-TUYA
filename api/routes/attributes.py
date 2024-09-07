@@ -61,6 +61,25 @@ def get_all_attribute_names_and_ids(skip: int = 0, limit: int = 100, db: Session
     except NotFoundException as e:
         raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=str(e))
 
+@router.get("/id_by_name/{name}", response_model=int)
+def get_attribute_id_by_name(name: str, db: Session = Depends(get_db)):
+    """
+    Retrieve the ID of a attribute by its name.
+
+    Parameters:
+        name (str): The name of the device to retrieve the ID for.
+
+    Returns:
+        int: The ID of the attribute.
+    """
+    try:
+        return attr.get_attribute_id_by_name(db=db, name=name)
+    except NotFoundException as e:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=str(e))
+    except DatabaseOperationException as e:
+        raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+
 @router.get("/{id}/unit", response_model=str)
 def get_attribute_unit(id: int, db: Session = Depends(get_db)):
     """
