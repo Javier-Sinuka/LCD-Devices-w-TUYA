@@ -60,5 +60,7 @@ class ModifiersConnector(BaseConnector):
         for data in data_reading_devices:
             device_id = self.get_id_for_name_device(base_url, data)
             attribute_id = self.get_id_for_name_attribute(base_url, data_reading_devices[data]['type'])
-            send_data.append(self.get_elements(base_url, device_id, attribute_id, start_time, end_time, data_reading_devices[data]))
+            element = self.get_elements(base_url, device_id, attribute_id, start_time, end_time, data_reading_devices[data])
+            if element is not None:
+                send_data.append(element)
         return send_data
