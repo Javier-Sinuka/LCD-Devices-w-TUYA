@@ -22,7 +22,6 @@ class ModifiersConnector(BaseConnector):
         device_name = (self.get_device_name(base_url, device_id)).lower()
         dashboard_data = []
         fetch_values = self.fetch_values_by_device_and_attribute(base_url, device_id, attribute_id, start_date, end_date)
-
         if (attribute_name == 'cur_power'):
             try:
                 data = self.analyze_kwh_values(fetch_values)
@@ -40,7 +39,7 @@ class ModifiersConnector(BaseConnector):
         elif (attribute_name == 'switch_1'):
             try:
                 data = self.analyze_switch_values(fetch_values)
-                consume_kwh = data_elements['amount_leds'] * data_elements['watt_consume']
+                consume_kwh = (data_elements['amount_leds'] * data_elements['watt_consume'])/1000
                 for d in data:
                     dashboard_data.append({
                         "variable": f"consumo_{device_name.lower().replace(' ', '_')}",
@@ -61,5 +60,5 @@ class ModifiersConnector(BaseConnector):
         for data in data_reading_devices:
             device_id = self.get_id_for_name_device(base_url, data)
             attribute_id = self.get_id_for_name_attribute(base_url, data_reading_devices[data]['type'])
-            send_data.extend({self.get_elements(base_url, device_id, attribute_id, start_time, end_time, data_reading_devices[data])})
+            send_data.append(self.get_elements(base_url, device_id, attribute_id, start_time, end_time, data_reading_devices[data]))
         return send_data
