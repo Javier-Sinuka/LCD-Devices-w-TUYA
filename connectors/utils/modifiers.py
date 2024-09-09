@@ -1,5 +1,5 @@
 import json
-
+import os
 from connectors.utils.base import BaseConnector
 from datetime import datetime, timedelta
 
@@ -10,7 +10,8 @@ class ModifiersConnector(BaseConnector):
     #TODO Abstaerse y no generar dependencia de una ruta especifica
     def get_content_file(self, name_file):
         try:
-            with open(name_file, 'r') as file:
+            file_path = os.path.join(os.path.dirname(__file__), name_file)
+            with open(file_path, 'r') as file:
                 data = json.load(file)
                 return data
         except FileNotFoundError as e:
