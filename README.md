@@ -77,7 +77,7 @@ Polling local devices...
 
 Una vez realizado esto, se encuentra todo preparado para avanzar con el siguiente paso.
 
-[EN PROCESO]
+### INICIAR LIBRERIA - TOMA DE DATOS
 
 Una vez realizada la configuracion inicial, es posible representar el contenido mediante la utilizacion
 de Typer via consola con los siguientes comandos:

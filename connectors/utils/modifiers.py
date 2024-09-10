@@ -34,7 +34,7 @@ class ModifiersConnector(BaseConnector):
                     })
                 return dashboard_data
             except Exception as e:
-                print(f"Error get_elements: {e}")
+                print(f"Error cur_power: {e}")
 
         elif (attribute_name == 'switch_1'):
             try:
@@ -48,7 +48,7 @@ class ModifiersConnector(BaseConnector):
                     })
                 return dashboard_data
             except Exception as e:
-                print(f"Error fetching data: {e}")
+                print(f"Error switch_1: {e}")
 
     def get_values_devices_kwh(self, base_url: str):
         data_reading_devices = self.get_content_file('local_leds.json')

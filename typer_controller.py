@@ -25,6 +25,24 @@ def start(sampling_time_in_minutes: int):
         print(f"Unexpected error in START: {e}")
 
 @app_typer.command()
+def start_and_send(sampling_time_in_minutes: int, token: str):
+    global manager
+    try:
+        global manager
+        if manager is None:
+            manager = Manager()
+        command = [
+            "python3",
+            "-m",
+            "tinytuya",
+            "wizard",
+        ]
+        subprocess.run(command, check=True)
+        manager.start_and_send(sampling_time_in_minutes=sampling_time_in_minutes, token=token)
+    except Exception as e:
+        print(f"Unexpected error in START: {e}")
+
+@app_typer.command()
 def stop():
     global manager
     try:
