@@ -27,9 +27,8 @@ class ModifiersConnector(BaseConnector):
                 data = self.analyze_kwh_values(fetch_values)
                 for d in data:
                     dashboard_data.append({
-                        "variable": f"consumo_{device_name.lower().replace(' ', '_')}",
+                        "variable": f"consumo_{device_name.lower().replace(' ', '_').replace('-', '_')}",
                         "value": d['value'],
-                        "time": d['timestamp'],
                         "unit": "kWh",
                     })
                 return dashboard_data
@@ -42,9 +41,9 @@ class ModifiersConnector(BaseConnector):
                 consume_kwh = (data_elements['amount_leds'] * data_elements['watt_consume'])/1000
                 for d in data:
                     dashboard_data.append({
-                        "variable": f"consumo_{device_name.lower().replace(' ', '_')}",
+                        "variable": f"consumo_{device_name.lower().replace(' ', '_').replace('-', '_')}",
+                        "value": consume_kwh if d['value'] else 0,
                         "unit": "kWh",
-                        "value": consume_kwh if d['value'] else 0
                     })
                 return dashboard_data
             except Exception as e:
@@ -62,5 +61,5 @@ class ModifiersConnector(BaseConnector):
             attribute_id = self.get_id_for_name_attribute(base_url, data_reading_devices[data]['type'])
             element = self.get_elements(base_url, device_id, attribute_id, start_time, end_time, data_reading_devices[data])
             if element is not None:
-                send_data.append(element)
+                send_data.extend(element)
         return send_data
