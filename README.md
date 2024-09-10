@@ -10,7 +10,7 @@ se pretende que la misma pueda adaptarse a los distintos dispositivos presentes 
 
 A continuacion se explican los pasos necesarios para poder instarlar el presente proyecto y que este se pueda ejecutarse de manera correcta.
 
-### VINCULACION DISPOSITIVOS TUYA
+## VINCULACION DISPOSITIVOS TUYA
 
 En Primera instancia los dispositivos deben de ser TUYA Compatible, posteriormente, es necesario realizar la vinculacion de los Dispositivos mediante alguna aplicacion movil como
 **Tuya Smart** o **Smart Life** de manera fisica, luego de esto es necesario realizar los pasos mencionados en el siguiente link, hsata el apartado 
@@ -77,34 +77,71 @@ Polling local devices...
 
 Una vez realizado esto, se encuentra todo preparado para avanzar con el siguiente paso.
 
-### INICIAR LIBRERIA - TOMA DE DATOS
+## INICIAR LIBRERIA - TOMA DE DATOS
 
-Una vez realizada la configuracion inicial, es posible representar el contenido mediante la utilizacion
-de Typer via consola con los siguientes comandos:
+Una vez realizada la configuracion inicial, tenemos dos posibles formas de utilizar la libreria presente:
+* Realizar **unicamente muestreo y almacenamiento de datos** de los dispositivos presentes en la red.
+* Realizar **muestreo, almacenamiento y envio de los datos** a algun Dashboard externo (Ej: **Tago**)
+
+**ACLARACION:** al momento de la realizacion de esta documentacion, es admite unicamente el uso de Tago.io para la representacion
+del contenido. En futuras versiones se contemplara el agregado de otras herramientas presentes en el mercado y de uso gratuito.
+
+### Inicio del Servidor Local (para uso de API)
+
+Para poder realizar las acciones de almacenamiento, es necesario la utilizacion de una API, la cual servira como medio para dicha accion, ademas de
+proveer la flexibilidad de exponer la informacion, la cual sera utilizada para ser enviada a las herramientas de exposicion de informacion que el
+usuario desee.
+Para lograr esto, es necesario abrir una nueva consola en el IDE donde se encuentre alojada la libreria, o en su defecto, encontrarse
+en la carpeta raiz del proyecto, y abrir dentro de esta una consola (**cabe aclarar que dicha consola no debe de cerrarse, ya que la misma es necesaria
+para que la comunicacion con la API se realice de manera correcta**), y luego ejecutar el siguiente comando dentro de esta:
 
 ```
-python plot_seaborn.py --help
+uvicorn main:app --host 127.0.0.1 --port 8001 --reload
 ```
 
-Dicho comando representara las distintas funciones con las que podamos interactuar, con una salida
-similar a la siguiente por consola: 
- ```
-╭─ Options ─────────────────────────────────────────╮
-│ --install-completion          Install completion  │
-│                               for the current     │
-│                               shell.              │
-│ --show-completion             Show completion for │
-│                               the current shell,  │
-│                               to copy it or       │
-│                               customize the       │
-│                               installation.       │
-│ --help                        Show this message   │
-│                               and exit.           │
-╰───────────────────────────────────────────────────╯
-╭─ Commands ────────────────────────────────────────╮
-│ comando-prueba                                    │
-│                                                   │
-╰───────────────────────────────────────────────────╯
- ```
+Esto hara que se genere un servidor de manera local. Usted puede acceder a los metodos propuestos por la API (**documentacion**), ingresando a su navegador de preferencia
+y colocando dentro de este la siguiente URL:
+
+```
+http://127.0.0.1:8001/docs
+```
+
+**ACLARACION A:** el puerto **8001** fue seleccionado de manera arbitraria, por conflictos existentes a la hora de utilizar otros puertos. Queda a eleccion del
+usuario modificar este puerto si asi lo requiriera (teniendo en cuenta que al momento de la redaccion de esta documentacion, es necesario modificar una serie de 
+parametros para que la libreria tome dicho cambio y funcione de manera correcta, dicha funcion de "automatizacion" de seleccion de puerto sera agregada
+posteriormente).
+
+**ACLARACION B:** la API fue realizada con FastAPI, por si se desea hacer algun uso mas extenso de los metodos existentes. 
+
+### Muestreo y Almacenamiento de Datos
+
+Para comenzar a realizar la toma de muestras y almacenamiento de los datos asociados a los dispositivos locales (cabe aclarar que dichas acciones se realizan de manera
+automatica, sin necesidad de que el usuario tenga que realizar acciones manuales), debera de encontrarse en la raiz del proyecto, en donde
+debera de abrir una consola y correr le siguiente comando:
+
+```
+python typer_controller.py TIME
+```
+En donde **TIME** es el tiempo que usted quiere que la libreria muestree a los dispositivos.
+Una vez realizado esto, la libreria procedera a pedirle los mismos pasos que en el caso anterior (descripto en la seccion de VINCULACION DISPOSITIVOS TUYA), con la excepcion
+de que en este caso, no es necesario ingresar informacion ya que la primera salida por consola tendra el siguiente formato:
+
+```
+Existing settings:
+        API Key=aaaaaaaaaa
+        Secret=bbbbbbbbbbb
+        DeviceID=ccccccccccc
+        Region=us
+
+    Use existing credentials (Y/n): 
+```
+En donde debera selecciona la opcion **"Y"** para que pueda utilizar las credenciales creadas anteriormente. El resto de los pasos tienen el mismo formato que el
+anterior mencionado. 
+Una vez termine de realizar los pasos dichos, la libreria automaticamente comenzara a generar las tablas en la base de datos con los elementos
+necesarios para el muestreo de los dispositivos locales. Para poder acceder a esta informacion, basta con acceder a la documentacion, la cual fue mencionada
+en la seccion anterior.
+
+### Muestreo, Almacenamiento y Envio de Datos
+
 
 

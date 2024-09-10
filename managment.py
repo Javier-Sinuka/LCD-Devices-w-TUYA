@@ -1,3 +1,4 @@
+from connectors.dashboard import DashboardManager
 from local.tuya.tuya_handler import TuyaHandler
 from apscheduler.schedulers.blocking import BlockingScheduler
 import logging, subprocess, time
@@ -5,10 +6,11 @@ import logging, subprocess, time
 logging.basicConfig()
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
 
-class Manager():
+class Manager(DashboardManager):
     __tuya_handler = TuyaHandler
 
     def __init__(self):
+        super().__init__()
         self.devices = []
         self.__tuya_handler = TuyaHandler()
         self.__scheduler = BlockingScheduler()
@@ -62,6 +64,3 @@ class Manager():
                 device.save_content_devices()
         except Exception as e:
             print(f"Error in __run_devices: {e}")
-
-    def send_to_tago(self, token: str):
-        pass
