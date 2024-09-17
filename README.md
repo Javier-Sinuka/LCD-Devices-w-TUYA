@@ -115,33 +115,75 @@ posteriormente).
 
 ### Muestreo y Almacenamiento de Datos
 
+**ACLARACION:** el envio de informacion funciona unicamente para Tago.io, ya que todavia no se desarrollo la incorporacion de alguna funcionalidad
+que permita representar la informacion en otra plataforma parecida a esta. 
+
 Para comenzar a realizar la toma de muestras y almacenamiento de los datos asociados a los dispositivos locales (cabe aclarar que dichas acciones se realizan de manera
 automatica, sin necesidad de que el usuario tenga que realizar acciones manuales), debera de encontrarse en la raiz del proyecto, en donde
 debera de abrir una consola y correr le siguiente comando:
 
 ```
-python typer_controller.py TIME
+python -m typer_controller
 ```
-En donde **TIME** es el tiempo que usted quiere que la libreria muestree a los dispositivos.
-Una vez realizado esto, la libreria procedera a pedirle los mismos pasos que en el caso anterior (descripto en la seccion de VINCULACION DISPOSITIVOS TUYA), con la excepcion
-de que en este caso, no es necesario ingresar informacion ya que la primera salida por consola tendra el siguiente formato:
+Una vez ingresado esto, se encontrara con una interfaz que le realizara una serie de preguntas relacionadas
+al funcionamiento general de la aplicacion, con el siguiente formato:
 
 ```
-Existing settings:
-        API Key=aaaaaaaaaa
-        Secret=bbbbbbbbbbb
-        DeviceID=ccccccccccc
-        Region=us
+Setup Configuration [1.0.0]
 
-    Use existing credentials (Y/n): 
+By default the program performs sampling and storage.
+
+[?] Enter the sampling time in minutes: 
+[?] Do you want to send information to a dashboard? (TAGO unique): (Y/n): 
 ```
-En donde debera selecciona la opcion **"Y"** para que pueda utilizar las credenciales creadas anteriormente. El resto de los pasos tienen el mismo formato que el
-anterior mencionado. 
-Una vez termine de realizar los pasos dichos, la libreria automaticamente comenzara a generar las tablas en la base de datos con los elementos
-necesarios para el muestreo de los dispositivos locales. Para poder acceder a esta informacion, basta con acceder a la documentacion, la cual fue mencionada
-en la seccion anterior.
+
+La informacion solicitada se explica a continuacion:
+
+**[?] Enter the sampling time in minutes:** hace referencia al periodo de muestra de los dispositivos fisicos presentes en la red (no cuenta con una limitacion actualmente
+de rango de valores aceptados), aunque su valor tiene que ser de tipo entero, caso contrario la libreria proporcionara una excepcion.
+
+**[?] Do you want to send information to a dashboard? (TAGO unique): (Y/n):** hace referencia a si desea enviar la informacion a algun
+tipo de dashboard para representar la informacion almacenada. Si no desea realizar dicha accion, unicamente debe de ingresar la letra **"n"** por teclado, observando
+una salida por consola con el siguiente formato (caso contrario, que desee enviar informacion a algu dashboard, avance desde este punto a la seccion
+**Muestreo, Almacenamiento y Envio de Datos**, salteando los siguientes pasos):
+
+```
+Preparing the information...
+
+Initializing TinyTuya Library...
+```
+
+Y donde posteriormente iniciara la libreria de **TinyTuya**, explicada en la seccion de **"Preparacion de Elementos"**. 
+
+Una vez realizado estos pasos, y ejecutada la libreria de **TinyTuya** usted deberia de observar una salida por consola parecido a lo siguiente:
+
+```
+INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+INFO:apscheduler.scheduler:Added job "Manager.run_devices" to job store "default"
+INFO:apscheduler.scheduler:Added job "Manager.run_command_with_confirmation" to job store "default"
+INFO:apscheduler.scheduler:Scheduler started
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:apscheduler.scheduler:Next wakeup is due at YYYY-MM-DD HH:MM:SS.MSMS-(UTC-TIME) (in TIME seconds)
+```
+Si observa una salida parecida a esto, significa que la libreria se ejecuto de manera correcta.
 
 ### Muestreo, Almacenamiento y Envio de Datos
 
+Esta seccion se basa en explicar los pasos a seguir si usted selecciono la opcion de envio de informacion (**"Y"**), presentada en la seccion
+anterior **Muestreo y Almacenamiento de Datos**.
 
+Una vez realizado los pasos mencionados en la seccion anterior, y seleccionado **"Y"** para el envio de informacion a algun dashboard usted observara
+una salida por consola con el siguiente formato:
+
+```
+[?] Enter your Tago Token: 
+[?] Enter time to send to data to Tago Dashboard: 
+```
+En donde la informacion solicitada es la siguiente:
+
+**[?] Enter your Tago Token:** hace referencia al **Token** proveido por el dashboard para el envio de la informacion.
+
+**[?] Enter time to send to data to Tago Dashboard:** hace referencia al intervalo de tiempo en el cual se realizara un envio de la informacion al
+dashboard.
 

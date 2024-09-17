@@ -2,6 +2,7 @@ from connectors.dashboard import DashboardManager
 from local.tuya.tuya_handler import TuyaHandler
 from apscheduler.schedulers.blocking import BlockingScheduler
 import logging, subprocess, time
+from datetime import datetime, timedelta
 
 logging.basicConfig()
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
@@ -23,15 +24,16 @@ class Manager(DashboardManager):
         print("Starting device sampling.")
         self.run_devices()
 
-    def start_and_send(self, sampling_time_in_minutes: int, token: str):
+    def start_and_send(self, sampling_time_in_minutes: int, token: str, time_to_send_dashboard: int):
+        current_time = datetime.now()
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
         self.__scheduler.add_job(self.run_command_with_confirmation, "interval", minutes=60)
-        self.__scheduler.add_job(lambda: self.send_to_tago(token), 'interval', minutes=60)
+        start_time_for_tago = current_time + timedelta(minutes=15)
+        self.__scheduler.add_job(lambda: self.send_to_tago(token), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
         self.__scheduler.start()
         print("Starting device sampling.")
         self.run_devices()
-        self.send_to_tago(token)
-
+        
     def stop(self):
         self.__scheduler.shutdown(wait=False)
         print("Stopping device sampling.")
