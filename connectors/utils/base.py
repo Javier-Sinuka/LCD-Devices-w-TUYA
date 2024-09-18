@@ -148,8 +148,9 @@ class BaseConnector:
             average = 0
             timestamp = ''
             for i in data:
-                average += i['value']
+                value = i['value']
+                average += value
                 timestamp = i['timestamp']
             average /= len(data)
-            result = [{"value": round(average, 4), "timestamp": timestamp}]
+            result = [{"value": round((average/1000), 4), "timestamp": timestamp}]
             return result

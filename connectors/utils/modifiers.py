@@ -61,7 +61,7 @@ class ModifiersConnector(BaseConnector):
         send_data = []
         current_time = datetime.now()
         end_time = current_time
-        start_time = (current_time - timedelta(minutes=time_to_send))
+        start_time = (current_time - timedelta(minutes=time_to_send-1))
 
         for data in data_reading_devices:
             device_id = self.get_id_for_name_device(base_url, data)
