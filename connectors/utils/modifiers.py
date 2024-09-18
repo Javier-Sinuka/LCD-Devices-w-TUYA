@@ -55,12 +55,12 @@ class ModifiersConnector(BaseConnector):
         fetch_values = self.fetch_values_by_device_and_attribute(base_url, device_id, attribute_id, start_date, end_date)
         return self.processed_data(fetch_values, device_name, attribute_name, data_elements, time_to_send)
 
-    def get_values_devices_kwh(self, base_url: str):
+    def get_values_devices_kwh(self, base_url: str, time: int):
         data_reading_devices = self.get_content_file('local_leds.json')
         send_data = []
         current_time = datetime.now()
-        end_time = current_time.replace(minute=0, second=0, microsecond=0)
-        start_time = (current_time - timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
+        end_time = current_time
+        start_time = (current_time - timedelta(minutes=time-1))
 
         for data in data_reading_devices:
             device_id = self.get_id_for_name_device(base_url, data)

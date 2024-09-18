@@ -8,9 +8,13 @@ class BaseConnector:
 
     def fetch_values_by_device_and_attribute(self, base_url: str, device_id: int, attribute_id: int, start_date: datetime, end_date: datetime):
         endpoint = f"{base_url}/values/devices/{device_id}/attributes/{attribute_id}/values"
+        # params = {
+        #     "start_date": start_date.replace(minute=0, second=0, microsecond=0).isoformat(),
+        #     "end_date": end_date.replace(minute=0, second=0, microsecond=0).isoformat(),
+        # }
         params = {
-            "start_date": start_date.replace(minute=0, second=0, microsecond=0).isoformat(),
-            "end_date": end_date.replace(minute=0, second=0, microsecond=0).isoformat(),
+            "start_date": start_date.isoformat(),
+            "end_date": end_date.isoformat(),
         }
 
         try:
