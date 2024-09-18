@@ -103,7 +103,7 @@ class BaseConnector:
             result.append({"value": dominant_value == "True", "timestamp": hour.hour})
         return result
 
-    def analyze_kwh_values(self, data):
+    def analyze_kwh_values(self, data, time_to_send: int):
         """
         Calcula los valores en kWh por hora basado en datos de consumo en mW.
 
@@ -127,7 +127,6 @@ class BaseConnector:
             value_in_kwh = (float(current['value']) / 10000)
             hourly_values[hour] += value_in_kwh * duration_in_hours
 
-        # Procesar la última entrada
         last_item = data[-1]
         last_hour = last_item['timestamp'].replace(minute=0, second=0, microsecond=0)
         end_of_hour = last_hour + timedelta(hours=1)

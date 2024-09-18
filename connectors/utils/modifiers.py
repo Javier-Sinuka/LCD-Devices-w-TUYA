@@ -17,14 +17,11 @@ class ModifiersConnector(BaseConnector):
         except FileNotFoundError as e:
             print(f"Error load file: {e}")
 
-    def get_elements(self, base_url: str, device_id: int, attribute_id: int, start_date: datetime, end_date: datetime, data_elements):
-        attribute_name = self.get_attribute_name(base_url, attribute_id)
-        device_name = (self.get_device_name(base_url, device_id)).lower()
+    def processed_data(self, fetch_values, device_name: str, attribute_name: str, data_elements, time_to_send: int):
         dashboard_data = []
-        fetch_values = self.fetch_values_by_device_and_attribute(base_url, device_id, attribute_id, start_date, end_date)
         if (attribute_name == 'cur_power'):
             try:
-                data = self.analyze_kwh_values(fetch_values)
+                data = self.analyze_kwh_values(fetch_values, time_to_send)
                 for d in data:
                     dashboard_data.append({
                         "variable": f"consumo_{device_name.lower().replace(' ', '_').replace('-', '_')}",
@@ -38,7 +35,10 @@ class ModifiersConnector(BaseConnector):
         elif (attribute_name == 'switch_1'):
             try:
                 data = self.analyze_switch_values(fetch_values)
-                consume_kwh = (data_elements['amount_leds'] * data_elements['watt_consume'])/1000
+                #Esta cuenta se encarga de calcular el consumo de la linea del switch
+                #Obteniendo primero el consumo total en whatts, pasandolo a kW, y luego
+                #transformando este valor en kWh medido en el rango pedido.
+                consume_kwh = ((data_elements['amount_leds'] * data_elements['watt_consume']) / 1000) / (time_to_send/60)
                 for d in data:
                     dashboard_data.append({
                         "variable": f"consumo_{device_name.lower().replace(' ', '_').replace('-', '_')}",
@@ -48,6 +48,12 @@ class ModifiersConnector(BaseConnector):
                 return dashboard_data
             except Exception as e:
                 print(f"Error switch_1: {e}")
+
+    def get_elements(self, base_url: str, device_id: int, attribute_id: int, start_date: datetime, end_date: datetime, data_elements, time_to_send:int = 60):
+        attribute_name = self.get_attribute_name(base_url, attribute_id)
+        device_name = (self.get_device_name(base_url, device_id)).lower()
+        fetch_values = self.fetch_values_by_device_and_attribute(base_url, device_id, attribute_id, start_date, end_date)
+        return self.processed_data(fetch_values, device_name, attribute_name, data_elements, time_to_send)
 
     def get_values_devices_kwh(self, base_url: str):
         data_reading_devices = self.get_content_file('local_leds.json')

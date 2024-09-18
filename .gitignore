@@ -166,6 +166,7 @@ tuya-raw.json
 devices.json
 database.db
 
+content.txt
 decorators.py
 connectors/utils/test.py
 log.txt
