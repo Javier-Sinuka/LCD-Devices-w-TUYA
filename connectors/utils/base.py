@@ -117,26 +117,39 @@ class BaseConnector:
         Returns:
             list: Lista de diccionarios con el valor en kWh y la hora correspondiente.
         """
-        hourly_values = defaultdict(float)
 
-        for i in range(len(data) - 1):
-            if isinstance(data[i]['timestamp'], str):
-                for d in data:
-                    d['timestamp'] = datetime.fromisoformat(d['timestamp'])
+        if time_to_send == 60:
+            hourly_values = defaultdict(float)
 
-            current = data[i]
-            next_item = data[i + 1]
-            hour = current['timestamp'].replace(minute=0, second=0, microsecond=0)
-            duration_in_hours = (next_item['timestamp'] - current['timestamp']).total_seconds() / 3600
-            value_in_kwh = (float(current['value']) / 10000)
-            hourly_values[hour] += value_in_kwh * duration_in_hours
+            for i in range(len(data) - 1):
+                if isinstance(data[i]['timestamp'], str):
+                    for d in data:
+                        d['timestamp'] = datetime.fromisoformat(d['timestamp'])
 
-        last_item = data[-1]
-        last_hour = last_item['timestamp'].replace(minute=0, second=0, microsecond=0)
-        end_of_hour = last_hour + timedelta(hours=1)
-        duration_in_hours = (end_of_hour - last_item['timestamp']).total_seconds() / 3600
-        value_in_kwh = (float(last_item['value']) / 1000) / 1000
-        hourly_values[last_hour] += value_in_kwh * duration_in_hours
+                current = data[i]
+                next_item = data[i + 1]
+                hour = current['timestamp'].replace(minute=0, second=0, microsecond=0)
+                duration_in_hours = (next_item['timestamp'] - current['timestamp']).total_seconds() / 3600
+                value_in_kwh = (float(current['value']) / 10000)
+                hourly_values[hour] += value_in_kwh * duration_in_hours
 
-        result = [{"value": round(value, 4), "timestamp": hour.hour} for hour, value in sorted(hourly_values.items())]
-        return result
+            last_item = data[-1]
+            last_hour = last_item['timestamp'].replace(minute=0, second=0, microsecond=0)
+            end_of_hour = last_hour + timedelta(hours=1)
+            duration_in_hours = (end_of_hour - last_item['timestamp']).total_seconds() / 3600
+            value_in_kwh = (float(last_item['value']) / 1000) / 1000
+            hourly_values[last_hour] += value_in_kwh * duration_in_hours
+
+            result = [{"value": round(value, 4), "timestamp": hour.hour} for hour, value in
+                      sorted(hourly_values.items())]
+            return result
+        else:
+            average = 0
+            timestamp = 0
+            for i in data:
+                average += i['value']
+                timestamp = i['timestamp']
+            average /= len(data)
+            result = [{"value": round(average, 4), "timestamp": timestamp}]
+            return result
+
