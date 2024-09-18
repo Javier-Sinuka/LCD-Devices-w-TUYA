@@ -50,23 +50,23 @@ class ModifiersConnector(BaseConnector):
             except Exception as e:
                 print(f"Error switch_1: {e}")
 
-    def get_elements(self, base_url: str, device_id: int, attribute_id: int, start_date: datetime, end_date: datetime, data_elements, time_to_send:int = 60):
+    def get_elements(self, base_url: str, device_id: int, attribute_id: int, start_date: datetime, end_date: datetime, data_elements, time_to_send:int):
         attribute_name = self.get_attribute_name(base_url, attribute_id)
         device_name = (self.get_device_name(base_url, device_id)).lower()
         fetch_values = self.fetch_values_by_device_and_attribute(base_url, device_id, attribute_id, start_date, end_date)
         return self.processed_data(fetch_values, device_name, attribute_name, data_elements, time_to_send)
 
-    def get_values_devices_kwh(self, base_url: str, time: int):
+    def get_values_devices_kwh(self, base_url: str, time_to_send: int):
         data_reading_devices = self.get_content_file('local_leds.json')
         send_data = []
         current_time = datetime.now()
         end_time = current_time
-        start_time = (current_time - timedelta(minutes=time-1))
+        start_time = (current_time - timedelta(minutes=time_to_send))
 
         for data in data_reading_devices:
             device_id = self.get_id_for_name_device(base_url, data)
             attribute_id = self.get_id_for_name_attribute(base_url, data_reading_devices[data]['type'])
-            element = self.get_elements(base_url, device_id, attribute_id, start_time, end_time, data_reading_devices[data])
+            element = self.get_elements(base_url, device_id, attribute_id, start_time, end_time, data_reading_devices[data], time_to_send)
             if element is not None:
                 send_data.extend(element)
         return send_data
