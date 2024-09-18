@@ -149,7 +149,7 @@ class BaseConnector:
             timestamp = ''
             for i in data:
                 value = i['value']
-                average += value
+                average += int(value)
                 timestamp = i['timestamp']
             average /= len(data)
             result = [{"value": round((average/1000), 4), "timestamp": timestamp}]
