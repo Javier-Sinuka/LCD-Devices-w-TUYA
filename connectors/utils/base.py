@@ -143,13 +143,13 @@ class BaseConnector:
             result = [{"value": round(value, 4), "timestamp": hour.hour} for hour, value in
                       sorted(hourly_values.items())]
             return result
+
         else:
             average = 0
-            timestamp = 0
+            timestamp = ''
             for i in data:
                 average += i['value']
                 timestamp = i['timestamp']
             average /= len(data)
             result = [{"value": round(average, 4), "timestamp": timestamp}]
             return result
-
