@@ -71,7 +71,7 @@ class BaseConnector:
         except Exception as err:
             print(f"An error occurred: {err}")
 
-    def analyze_switch_values(self, data):
+    def analyze_switch_values(self, data, time:int):
         """
         Analiza los cambios de valores por hora, determinando el valor predominante basado en la duración.
 
@@ -81,31 +81,36 @@ class BaseConnector:
         Returns:
             list: Lista de diccionarios con el valor predominante y la hora (timestamp).
         """
-        hourly_values = defaultdict(lambda: {"True": timedelta(0), "False": timedelta(0)})
+        if time == 60:
+            hourly_values = defaultdict(lambda: {"True": timedelta(0), "False": timedelta(0)})
 
-        for i in range(len(data) - 1):
-            if isinstance(data[i]['timestamp'], str):
-                for d in data:
-                    d['timestamp'] = datetime.fromisoformat(d['timestamp'])
+            for i in range(len(data) - 1):
+                if isinstance(data[i]['timestamp'], str):
+                    for d in data:
+                        d['timestamp'] = datetime.fromisoformat(d['timestamp'])
 
-            current = data[i]
-            next_item = data[i + 1]
-            hour = current['timestamp'].replace(minute=0, second=0, microsecond=0)
+                current = data[i]
+                next_item = data[i + 1]
+                hour = current['timestamp'].replace(minute=0, second=0, microsecond=0)
 
-            duration = next_item['timestamp'] - current['timestamp']
-            value_str = str(current['value'])
-            hourly_values[hour][value_str] += duration
+                duration = next_item['timestamp'] - current['timestamp']
+                value_str = str(current['value'])
+                hourly_values[hour][value_str] += duration
 
-        last_item = data[-1]
-        last_hour = last_item['timestamp'].replace(minute=0, second=0, microsecond=0)
-        end_of_hour = last_hour + timedelta(hours=1)
-        hourly_values[last_hour][str(last_item['value'])] += end_of_hour - last_item['timestamp']
+            last_item = data[-1]
+            last_hour = last_item['timestamp'].replace(minute=0, second=0, microsecond=0)
 
-        result = []
-        for hour, durations in sorted(hourly_values.items()):
-            dominant_value = "True" if durations["True"] > durations["False"] else "False"
-            result.append({"value": dominant_value == "True", "timestamp": hour.hour})
-        return result
+            end_of_hour = last_hour + timedelta(hours=1)
+            hourly_values[last_hour][str(last_item['value'])] += end_of_hour - last_item['timestamp']
+
+            result = []
+            for hour, durations in sorted(hourly_values.items()):
+                dominant_value = "True" if durations["True"] > durations["False"] else "False"
+                result.append({"value": dominant_value == "True", "timestamp": hour.hour})
+            return result
+        else:
+            result = [{"value": data[-1]['value'], "timestamp": data[-1]['timestamp']}]
+            return result
 
     def analyze_kwh_values(self, data, time_to_send: int):
         """
@@ -152,5 +157,5 @@ class BaseConnector:
                 average += int(value)
                 timestamp = i['timestamp']
             average /= len(data)
-            result = [{"value": round((average/1000), 4), "timestamp": timestamp}]
+            result = [{"value": round((average/10000), 4), "timestamp": timestamp}]
             return result

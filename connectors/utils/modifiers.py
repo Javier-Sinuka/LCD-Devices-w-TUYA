@@ -34,7 +34,7 @@ class ModifiersConnector(BaseConnector):
 
         elif (attribute_name == 'switch_1'):
             try:
-                data = self.analyze_switch_values(fetch_values)
+                data = self.analyze_switch_values(fetch_values, time_to_send)
                 #Esta cuenta se encarga de calcular el consumo de la linea del switch
                 #Obteniendo primero el consumo total en whatts, pasandolo a kW, y luego
                 #transformando este valor en kWh medido en el rango pedido.
