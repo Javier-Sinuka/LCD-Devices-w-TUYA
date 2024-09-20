@@ -28,7 +28,7 @@ class Manager(DashboardManager):
         current_time = datetime.now()
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
         self.__scheduler.add_job(self.run_command_with_confirmation, "interval", minutes=60)
-        start_time_for_tago = current_time + timedelta(minutes=15)
+        start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
         self.__scheduler.add_job(lambda: self.send_to_tago(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
         # self.__scheduler.add_job(lambda: self.send_to_tago(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard)
         self.__scheduler.start()

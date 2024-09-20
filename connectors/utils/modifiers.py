@@ -39,11 +39,10 @@ class ModifiersConnector(BaseConnector):
                 #Obteniendo primero el consumo total en whatts, pasandolo a kW, y luego
                 #transformando este valor en kWh medido en el rango pedido.
                 consume_kwh = ((data_elements['amount_leds'] * data_elements['watt_consume']) / 1000) * (time_to_send/60)
-                print(f"Switch: {consume_kwh}")
                 for d in data:
                     dashboard_data.append({
                         "variable": f"consumo_{device_name.lower().replace(' ', '_').replace('-', '_')}",
-                        "value": round(consume_kwh, 4) if d['value'] else 0,
+                        "value": round(consume_kwh, 4) if d['value']=='True' else 0,
                         "unit": "kWh",
                     })
                 return dashboard_data
