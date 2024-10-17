@@ -78,5 +78,15 @@ def start_and_send(sampling_time_in_minutes: int, token: str, time_to_send_dashb
     except Exception as e:
         print(f"Unexpected error in START: {e}")
 
+def start_and_send_automatization(sampling_time_in_minutes: int, token: str, time_to_send_dashboard: int):
+    global manager
+    try:
+        if manager is None:
+            manager = Manager()
+        manager.start_and_send_automatization(sampling_time_in_minutes=sampling_time_in_minutes, token=token,
+                               time_to_send_dashboard=time_to_send_dashboard)
+    except Exception as e:
+        print(f"Unexpected error in START: {e}")
+
 if __name__ == "__main__":
     app()
