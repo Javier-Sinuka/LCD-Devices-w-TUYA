@@ -19,7 +19,19 @@ class ModifiersConnector(BaseConnector):
 
     def processed_data(self, fetch_values, device_name: str, attribute_name: str, data_elements, time_to_send: int):
         dashboard_data = []
-        if (attribute_name == 'cur_power'):
+
+        if fetch_values is None:
+            try:
+                dashboard_data.append({
+                    "variable": f"consumo_{device_name.lower().replace(' ', '_').replace('-', '_')}",
+                    "value": "NULL",
+                    "unit": "kWh",
+                })
+                return dashboard_data
+            except Exception as e:
+                print(f"Error fetching data and send NULL: {e}")
+
+        elif (attribute_name == 'cur_power'):
             try:
                 data = self.analyze_kwh_values(fetch_values, time_to_send)
                 for d in data:
@@ -42,7 +54,7 @@ class ModifiersConnector(BaseConnector):
                 for d in data:
                     dashboard_data.append({
                         "variable": f"consumo_{device_name.lower().replace(' ', '_').replace('-', '_')}",
-                        "value": round(consume_kwh, 4) if d['value']=='True' else 0,
+                        "value": round(consume_kwh, 4) if d['value'] == 'True' else 0,
                         "unit": "kWh",
                     })
                 return dashboard_data
