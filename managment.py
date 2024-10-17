@@ -46,7 +46,8 @@ class Manager(DashboardManager):
 
     def run_command_update_scan(self):
         try:
-            subprocess.run(['python', '-m', 'tinytuya', 'scan'], check=True)
+            command = ['python3', '-m', 'tinytuya', 'scan']
+            subprocess.run(command, check=True)
             print("Scan executed successfully.")
         except subprocess.CalledProcessError as e:
             print(f"Error with executed command 'python -m tinituya scan': {e}")
