@@ -77,8 +77,8 @@ class TuyaHandler(ApiClient, ModelDevices):
     def save_content_devices(self):
         url = f"{BASE_URL}/values/create"
         self.__local_connection.safe_to_json()
-        # time.sleep(5)
-        # self.__local_connection.update_devices_ip()
+        time.sleep(5)
+        self.__local_connection.update_devices_ip()
         devices_acces_data = self.__local_connection.get_all_acces_data()
 
         for device_data in devices_acces_data:
