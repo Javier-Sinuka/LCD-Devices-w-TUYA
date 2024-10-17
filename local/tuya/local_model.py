@@ -1,4 +1,3 @@
-import os
 import json
 import tinytuya
 from pathlib import Path
@@ -39,7 +38,7 @@ class LocalModelTuya:
                         'mapping': element['mapping']
                     }
                 else:
-                    print(f"Elemento inválido encontrado y omitido: {element}")
+                    print(f"Invalid element found and skipped: {element}")
 
             with open(self.file_name, 'w') as json_file:
                 json.dump(self.__devices_acces, json_file, indent=4)
@@ -47,6 +46,33 @@ class LocalModelTuya:
                 json.dump(self.__devices_mapping, json_file, indent=4)
         except Exception as e:
             raise e
+
+    def update_devices_ip(self):
+        """
+           Metodo para actualizar las IP de los dispositivos almacenados, teniendo en cuenta
+           que los valores nuevos son tomados del archivo 'snapshot.json' generado por el metodo
+           scan de Tinytuya.
+        """
+        snapshot_data = self.get_file_info("../../snapshot.json")
+        devices_data = self.get_file_info("local_data_devices/acces_tuya.json")
+
+        flag = True
+        for device in snapshot_data["devices"]:
+            device_name = device["name"]
+            device_ip = device["ip"]
+
+            if device_name in devices_data:
+                stored_device = devices_data[device_name]
+                if stored_device["ip"] != device_ip:
+                    devices_data[device_name]["ip"] = device_ip
+                    flag = False
+
+        with open(self.file_name, 'w') as f:
+            json.dump(devices_data, f, indent=4)
+            if flag:
+                print("There are no modified ips.")
+            else:
+                print("IPs updates successful.")
 
     def get_file_info(self, direction_file):
         """

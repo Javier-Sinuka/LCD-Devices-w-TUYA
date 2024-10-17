@@ -168,8 +168,11 @@ database.db
 
 content.txt
 decorators.py
-connectors/utils/test.py
 log.txt
+test.py
+start_typer_controller.sh
+teste.json
+automatizacion.py
 
 ####### IMPORTANT #########
 
