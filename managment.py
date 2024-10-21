@@ -3,6 +3,8 @@ from local.tuya.tuya_handler import TuyaHandler
 from apscheduler.schedulers.blocking import BlockingScheduler
 import logging, subprocess, time
 from datetime import datetime, timedelta
+from connectors.backup.backup_database import GoogleDriveConnector
+import os
 
 logging.basicConfig()
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
@@ -40,6 +42,28 @@ class Manager(DashboardManager):
         self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=60)
         start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
         self.__scheduler.add_job(lambda: self.send_to_tago(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
+        self.__scheduler.start()
+        print("Starting device sampling.")
+        self.run_devices()
+
+    def start_and_send_with_backup(self, sampling_time_in_minutes: int, token: str, time_to_send_dashboard: int, file_path: str, folder_id: str):
+        current_time = datetime.now()
+        self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
+        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=60)
+        start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
+        self.__scheduler.add_job(lambda: self.send_to_tago(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
+        self.__scheduler.add_job(lambda: self.update_backup_database(file_path, folder_id), 'interval', minutes=60)
+        self.__scheduler.start()
+        print("Starting device sampling.")
+        self.run_devices()
+
+    def start_and_send_with_backup_automatization(self, sampling_time_in_minutes: int, token: str, time_to_send_dashboard: int, file_path: str, folder_id: str):
+        current_time = datetime.now()
+        self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
+        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=60)
+        start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
+        self.__scheduler.add_job(lambda: self.send_to_tago(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
+        self.__scheduler.add_job(lambda: self.update_backup_database(file_path, folder_id), 'interval', minutes=60)
         self.__scheduler.start()
         print("Starting device sampling.")
         self.run_devices()
@@ -84,3 +108,16 @@ class Manager(DashboardManager):
                 device.save_content_devices()
         except Exception as e:
             print(f"Error in __run_devices: {e}")
+
+    def get_actual_local_path(self, file_name):
+        actual_directory = os.path.dirname(os.path.abspath(__file__))
+        complet_path = os.path.join(actual_directory, file_name)
+        return complet_path
+
+    def update_backup_database(self, name_file_databes: str, folder_id: str):
+        actual_day = datetime.now().day
+        actual_hour = datetime.now().hour
+        if actual_day % 7 == 0 and (actual_hour % 12 == 0 or actual_hour % 6 == 0):
+            path_database = self.get_actual_local_path(name_file_databes)
+            backup = GoogleDriveConnector(path_database, folder_id)
+            backup.update_backup()
