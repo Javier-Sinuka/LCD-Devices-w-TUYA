@@ -28,8 +28,9 @@ class GoogleDriveConnector:
             if creds and creds.expired and creds.refresh_token:
                 creds.refresh(Request())
             else:
+                credentials_file = self.generate_file_name('credentials_google_cloud.json')
                 flow = InstalledAppFlow.from_client_secrets_file(
-                    'credentials_google_cloud.json', SCOPES)
+                    credentials_file, SCOPES)
                 creds = flow.run_local_server(port=0)
             with open('token.pickle', 'wb') as token:
                 pickle.dump(creds, token)
@@ -66,3 +67,8 @@ class GoogleDriveConnector:
             self.upload_file_to_drive(service, self.__file_name, self.__file_path, self.__folder_id)
         except Exception as error:
             print(f"An error occurred when make BACKUP: {error}")
+
+    def get_actual_local_path(self, file_name):
+        actual_directory = os.path.dirname(os.path.abspath(__file__))
+        complet_path = os.path.join(actual_directory, file_name)
+        return complet_path
