@@ -92,14 +92,18 @@ class ModifiersConnector(BaseConnector):
                 month_consume = self.monthly_device_consumption(base_url, device_id, attribute_id, start_time_m, end_time_m)
                 dashboard_data = []
                 dashboard_data.append({
-                    "variable": f"consumo_{calendar.month_name[month]}_{data.lower().replace(' ', '_').replace('-', '_')}",
+                    "variable": f"consumo_mensual_{data.lower().replace(' ', '_').replace('-', '_')}",
                     "value": month_consume,
                     "unit": "kWh",
+                    "metadata": {
+                        "variable" : f"consumo_{calendar.month_name[month]}_{data.lower().replace(' ', '_').replace('-', '_')}"
+                    }
                 })
                 send_data.extend(dashboard_data)
 
-            elif element is not None:
+            if element is not None:
                 send_data.extend(element)
+
         return send_data
 
     def monthly_device_consumption(self, base_url: str, device_id: int, attribute_id: int, start_date: datetime, end_date: datetime):
