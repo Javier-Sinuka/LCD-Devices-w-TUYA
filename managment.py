@@ -6,7 +6,14 @@ from datetime import datetime, timedelta
 from connectors.backup.backup_database import GoogleDriveConnector
 import os
 
-logging.basicConfig()
+# Basic Configuration for the log in file
+current_time = datetime.now().strftime("%Y_%m_%d_%H%M")
+log_filename = f"logs/record_library_{current_time}.txt"
+logging.basicConfig(level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(log_filename),
+    ])
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
 
 class Manager(DashboardManager):

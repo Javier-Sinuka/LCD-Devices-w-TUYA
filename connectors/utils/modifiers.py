@@ -84,7 +84,8 @@ class ModifiersConnector(BaseConnector):
             device_id = self.get_id_for_name_device(base_url, data)
             attribute_id = self.get_id_for_name_attribute(base_url, data_reading_devices[data]['type'])
             element = self.get_elements(base_url, device_id, attribute_id, start_time, end_time, data_reading_devices[data], time_to_send)
-
+        # Tener en cuenta que esto metodo envia los consumos mensuales de los distintos dispositivos presentes
+        # y no realiza una discriminacion de si esto se pide o no, lo hace cuando es el primero de cada mes.
             if current_time.day == 1:
                 end_time_m = start_time.replace(hour=0, minute=0)
                 month = start_time.month -1
