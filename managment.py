@@ -6,9 +6,15 @@ from datetime import datetime, timedelta
 from connectors.backup.backup_database import GoogleDriveConnector
 import os
 
+def get_actual_local_path(file_name):
+    actual_directory = os.path.dirname(os.path.abspath(__file__))
+    complet_path = os.path.join(actual_directory, file_name)
+    return complet_path
+
 # Basic Configuration for the log in file
+file_path = get_actual_local_path('logs')
 current_time = datetime.now().strftime("%Y_%m_%d_%H%M")
-log_filename = f"logs/record_library_{current_time}.txt"
+log_filename = f"{file_path}/record_library_{current_time}.txt"
 logging.basicConfig(level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
@@ -116,15 +122,10 @@ class Manager(DashboardManager):
         except Exception as e:
             print(f"Error in __run_devices: {e}")
 
-    def get_actual_local_path(self, file_name):
-        actual_directory = os.path.dirname(os.path.abspath(__file__))
-        complet_path = os.path.join(actual_directory, file_name)
-        return complet_path
-
     def update_backup_database(self, name_file_databes: str, folder_id: str):
         actual_day = datetime.now().day
         actual_hour = datetime.now().hour
         if actual_day % 7 == 0 and (actual_hour % 12 == 0 or actual_hour % 6 == 0):
-            path_database = self.get_actual_local_path(name_file_databes)
+            path_database = get_actual_local_path(name_file_databes)
             backup = GoogleDriveConnector(path_database, folder_id)
             backup.update_backup()
