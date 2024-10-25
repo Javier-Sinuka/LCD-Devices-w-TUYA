@@ -79,14 +79,17 @@ class ModifiersConnector(BaseConnector):
         current_time = datetime.now()
         end_time = current_time
         start_time = (current_time - timedelta(minutes=time_to_send-1))
-
+        totally_consume = 0.0
+        beginning_month = False
+        
         for data in data_reading_devices:
             device_id = self.get_id_for_name_device(base_url, data)
             attribute_id = self.get_id_for_name_attribute(base_url, data_reading_devices[data]['type'])
             element = self.get_elements(base_url, device_id, attribute_id, start_time, end_time, data_reading_devices[data], time_to_send)
-        # Tener en cuenta que esto metodo envia los consumos mensuales de los distintos dispositivos presentes
-        # y no realiza una discriminacion de si esto se pide o no, lo hace cuando es el primero de cada mes.
+            # Tener en cuenta que esto metodo envia los consumos mensuales de los distintos dispositivos presentes
+            # y no realiza una discriminacion de si esto se pide o no, lo hace cuando es el primero de cada mes.
             if current_time.day == 1:
+                beginning_month = True
                 end_time_m = start_time.replace(hour=0, minute=0)
                 month = start_time.month -1
                 start_time_m = datetime(start_time.year, month, start_time.day, hour=0, minute=0)
@@ -101,10 +104,19 @@ class ModifiersConnector(BaseConnector):
                     }
                 })
                 send_data.extend(dashboard_data)
-
+                totally_consume += month_consume
+                
             if element is not None:
                 send_data.extend(element)
 
+        if beginning_month:
+            print("Entro")
+            send_data.extend([{
+                "variable": f"consumo_total_lcd",
+                "value": totally_consume,
+                "unit": "kWh",
+            }])
+        print(send_data)
         return send_data
 
     def monthly_device_consumption(self, base_url: str, device_id: int, attribute_id: int, start_date: datetime, end_date: datetime):
