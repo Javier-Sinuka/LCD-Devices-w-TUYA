@@ -125,7 +125,7 @@ class Manager(DashboardManager):
     def update_backup_database(self, name_file_databes: str, folder_id: str):
         actual_day = datetime.now().day
         actual_hour = datetime.now().hour
-        if actual_day % 7 == 0 and (actual_hour % 12 == 0 or actual_hour % 6 == 0):
+        if actual_day % 7 == 0 and (actual_hour % 12 == 0 or actual_hour % 23 == 0):
             path_database = get_actual_local_path(name_file_databes)
             backup = GoogleDriveConnector(path_database, folder_id)
             backup.update_backup()
