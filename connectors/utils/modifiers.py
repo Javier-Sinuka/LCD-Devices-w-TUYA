@@ -110,13 +110,12 @@ class ModifiersConnector(BaseConnector):
                 send_data.extend(element)
 
         if beginning_month:
-            print("Entro")
             send_data.extend([{
                 "variable": f"consumo_total_lcd",
                 "value": totally_consume,
                 "unit": "kWh",
             }])
-        print(send_data)
+
         return send_data
 
     def monthly_device_consumption(self, base_url: str, device_id: int, attribute_id: int, start_date: datetime, end_date: datetime):
