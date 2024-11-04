@@ -28,7 +28,8 @@ class GoogleDriveConnector:
             if creds and creds.expired and creds.refresh_token:
                 creds.refresh(Request())
             else:
-                credentials_file = 'credentials_google_cloud.json'
+                script_dir = os.path.dirname(os.path.abspath(__file__))
+                credentials_file = os.path.join(script_dir, 'credentials_google_cloud.json')
                 flow = InstalledAppFlow.from_client_secrets_file(
                     credentials_file, SCOPES)
                 creds = flow.run_local_server(port=0)
