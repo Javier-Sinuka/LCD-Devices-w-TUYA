@@ -129,23 +129,40 @@ Una vez ingresado esto, se encontrara con una interfaz que le realizara una seri
 al funcionamiento general de la aplicacion, con el siguiente formato:
 
 ```
-Setup Configuration [1.0.0]
+Setup Configuration [1.0.1]
 
 By default the program performs sampling and storage.
 
-[?] Enter the sampling time in minutes: 
-[?] Do you want to send information to a dashboard? (TAGO unique): (Y/n): 
+And by default the program no generate backup (its optional).
+
+[?] Enter the sampling time in minutes: : 
 ```
 
 La informacion solicitada se explica a continuacion:
 
-**[?] Enter the sampling time in minutes:** hace referencia al periodo de muestra de los dispositivos fisicos presentes en la red (no cuenta con una limitacion actualmente
+**[?] Enter the sampling time in minutes:** hace referencia al periodo de muestreo de los dispositivos fisicos presentes en la red (no cuenta con una limitacion actualmente
 de rango de valores aceptados), aunque su valor tiene que ser de tipo entero, caso contrario la libreria proporcionara una excepcion.
+
+Una vez ingresado este valor solicitado, por la consola se representara el siguiente mensaje:
+
+```
+[?] Do you want to send information to a dashboard? (TAGO unique): (Y/n): 
+```
 
 **[?] Do you want to send information to a dashboard? (TAGO unique): (Y/n):** hace referencia a si desea enviar la informacion a algun
 tipo de dashboard para representar la informacion almacenada. Si no desea realizar dicha accion, unicamente debe de ingresar la letra **"n"** por teclado, observando
-una salida por consola con el siguiente formato (caso contrario, que desee enviar informacion a algu dashboard, avance desde este punto a la seccion
+una salida por consola con el siguiente formato (caso contrario, que desee enviar informacion a algun dashboard, avance desde este punto a la seccion
 **Muestreo, Almacenamiento y Envio de Datos**, salteando los siguientes pasos):
+
+```
+[?] Do you want to generate a backup? (Google Drive unique): (y/N): 
+```
+
+**[?] Do you want to generate a backup? (Google Drive unique): (y/N):** este mensaje hace referencia a la copia de seguirdad de la base de datos
+realizada a una carpeta de una cuenta de Google. En este caso se tomara por defecto el **NO ENVIO** de la informacion. Si usted desea realizar un Back Up de la 
+base de datos, avance a la seccion **Muestreo, Almacenamiento y Envio de Datos** en donde se explicaran los pasos necesarios para realizar esta accion.
+
+**[***]** Posteriormente a esto, observara una salida por consola con una salida similar a lo siguiente:
 
 ```
 Preparing the information...
@@ -158,23 +175,32 @@ Y donde posteriormente iniciara la libreria de **TinyTuya**, explicada en la sec
 Una vez realizado estos pasos, y ejecutada la libreria de **TinyTuya** usted deberia de observar una salida por consola parecido a lo siguiente:
 
 ```
-INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
-INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
-INFO:apscheduler.scheduler:Added job "Manager.run_devices" to job store "default"
-INFO:apscheduler.scheduler:Added job "Manager.run_command_with_confirmation" to job store "default"
-INFO:apscheduler.scheduler:Scheduler started
-DEBUG:apscheduler.scheduler:Looking for jobs to run
-DEBUG:apscheduler.scheduler:Next wakeup is due at YYYY-MM-DD HH:MM:SS.MSMS-(UTC-TIME) (in TIME seconds)
+...
+...
+
+>> Saving IP addresses to devices.json
+    X device IP addresses found
+
+Done.
 ```
 Si observa una salida parecida a esto, significa que la libreria se ejecuto de manera correcta.
 
 ### Muestreo, Almacenamiento y Envio de Datos
 
-Esta seccion se basa en explicar los pasos a seguir si usted selecciono la opcion de envio de informacion (**"Y"**), presentada en la seccion
-anterior **Muestreo y Almacenamiento de Datos**.
+Esta seccion se basa en explicar los pasos a seguir si usted selecciono la opcion de envio de informacion en los puntos **[?] Do you want to send information to a dashboard? (TAGO unique): (Y/n):**
+ o **[?] Do you want to generate a backup? (Google Drive unique): (y/N):**, presentada en la seccion anterior **Muestreo y Almacenamiento de Datos**.
 
-Una vez realizado los pasos mencionados en la seccion anterior, y seleccionado **"Y"** para el envio de informacion a algun dashboard usted observara
-una salida por consola con el siguiente formato:
+Una vez realizado los pasos mencionados en la seccion anterior, se procedera a explicar los pasos a seguir para las opciones mencionadas:
+
+**A) _[?] Do you want to send information to a dashboard? (TAGO unique): (Y/n):_** una vez seleccionado de manera afirmativa dicha opcion, usted observara
+una salida con el siguiente formato por consola:
+
+```
+[?] Do you want to generate a backup? (Google Drive unique): (y/N): 
+```
+La cual hace referencia al inciso **B)** tratado en esta seccion. Para este caso puntual, tomaremos que la seleccion de dicha opcion fue seleccionada
+de manera que la misma no se realice, para asi poder ocuparnos unicamente de lo especifico del envio de la informacion a algun Dashboard. Una vez 
+pasada esta impresion por consola, aparecera la siguiente salida:
 
 ```
 [?] Enter your Tago Token: 
@@ -182,8 +208,12 @@ una salida por consola con el siguiente formato:
 ```
 En donde la informacion solicitada es la siguiente:
 
-**[?] Enter your Tago Token:** hace referencia al **Token** proveido por el dashboard para el envio de la informacion.
+**[?] Enter your Tago Token:** hace referencia al **Token** proveido por el dashboard para el envio de la informacion (Si no esta familiarizado con el envio
+de informacion hacia **Tago.io**, puede observar como es la realizacion de esto en el siguiente link ->  https://help.tago.io/portal/en/kb/articles/3-devices#General_Information.
 
 **[?] Enter time to send to data to Tago Dashboard:** hace referencia al intervalo de tiempo en el cual se realizara un envio de la informacion al
 dashboard.
 
+Una vez realizado esto, los pasos son los mismos que los mencionados en el punto **[***]** al final del apartado anterior.
+
+**B) _[?] Do you want to generate a backup? (Google Drive unique): (y/N):_**
