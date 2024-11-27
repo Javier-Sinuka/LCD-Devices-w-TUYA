@@ -12,13 +12,13 @@ A continuacion se explican los pasos necesarios para poder instarlar el presente
 
 ## VINCULACION DISPOSITIVOS TUYA
 
-En Primera instancia los dispositivos deben de ser TUYA Compatible, posteriormente, es necesario realizar la vinculacion de los Dispositivos mediante alguna aplicacion movil como
+En Primera instancia los dispositivos deben de ser **TUYA Compatible**, posteriormente, es necesario realizar la vinculacion de los Dispositivos mediante alguna aplicacion movil como
 **Tuya Smart** o **Smart Life** de manera fisica, luego de esto es necesario realizar los pasos mencionados en el siguiente link, hsata el apartado 
 **STEP 3: DEBUG DEVICE**, ya que dicha vinculacion sera necesaria en un los pasos proximos:
 
-https://developer.tuya.com/en/demo/python-iot-development-practice
+[IoT - Tuya Cloud](https://developer.tuya.com/en/demo/python-iot-development-practice)
 
-**ACLARACION:** TUYA tiene la costumbre de ir modificando su documentacion, y como son los procesos de vinculacion, adquisicion
+**ACLARACION:** **TUYA** tiene la costumbre de ir modificando su documentacion, y como son los procesos de vinculacion, adquisicion
 , etc.. con respecto a los dispositivos. Hasta la fecha 2024-07 se encuentra en perfecto funcionamiento dicha documentacion.
 
 ### INSTALACION DEPENDENCIAS
@@ -81,7 +81,7 @@ Una vez realizado esto, se encuentra todo preparado para avanzar con el siguient
 
 Una vez realizada la configuracion inicial, tenemos dos posibles formas de utilizar la libreria presente:
 * Realizar **unicamente muestreo y almacenamiento de datos** de los dispositivos presentes en la red.
-* Realizar **muestreo, almacenamiento y envio de los datos** a algun Dashboard externo (Ej: **Tago**)
+* Realizar **muestreo, almacenamiento y envio de los datos** a algun Dashboard externo (Ej: **Tago.io**)
 
 **ACLARACION:** al momento de la realizacion de esta documentacion, es admite unicamente el uso de Tago.io para la representacion
 del contenido. En futuras versiones se contemplara el agregado de otras herramientas presentes en el mercado y de uso gratuito.
@@ -111,11 +111,11 @@ usuario modificar este puerto si asi lo requiriera (teniendo en cuenta que al mo
 parametros para que la libreria tome dicho cambio y funcione de manera correcta, dicha funcion de "automatizacion" de seleccion de puerto sera agregada
 posteriormente).
 
-**ACLARACION B:** la API fue realizada con FastAPI, por si se desea hacer algun uso mas extenso de los metodos existentes. 
+**ACLARACION B:** la API fue realizada con [FastAPI](https://fastapi.tiangolo.com/), por si se desea hacer algun uso mas extenso de los metodos existentes. 
 
 ### Muestreo y Almacenamiento de Datos
 
-**ACLARACION:** el envio de informacion funciona unicamente para Tago.io, ya que todavia no se desarrollo la incorporacion de alguna funcionalidad
+**ACLARACION:** el envio de informacion funciona unicamente para [Tago.io](https://tago.io/), ya que todavia no se desarrollo la incorporacion de alguna funcionalidad
 que permita representar la informacion en otra plataforma parecida a esta. 
 
 Para comenzar a realizar la toma de muestras y almacenamiento de los datos asociados a los dispositivos locales (cabe aclarar que dichas acciones se realizan de manera
@@ -209,7 +209,7 @@ pasada esta impresion por consola, aparecera la siguiente salida:
 En donde la informacion solicitada es la siguiente:
 
 **[?] Enter your Tago Token:** hace referencia al **Token** proveido por el dashboard para el envio de la informacion (Si no esta familiarizado con el envio
-de informacion hacia **Tago.io**, puede observar como es la realizacion de esto en el siguiente link ->  https://help.tago.io/portal/en/kb/articles/3-devices#General_Information.
+de informacion hacia **Tago.io**, puede observar como es la realizacion de esto en el siguiente link ->  [Tago - Devices](https://help.tago.io/portal/en/kb/articles/3-devices#General_Information).
 
 **[?] Enter time to send to data to Tago Dashboard:** hace referencia al intervalo de tiempo en el cual se realizara un envio de la informacion al
 dashboard.
