@@ -7,6 +7,7 @@ class LocalModelTuya:
     __devices_mapping = {}
     file_name = ''
     mapping_file_name = ''
+    first_scan = True
 
     def __init__(self, file_name='local_data_devices/acces_tuya.json',
                  mapping_file_name='local_data_devices/mapping_tuya.json'):
@@ -40,8 +41,10 @@ class LocalModelTuya:
                 else:
                     print(f"Invalid element found and skipped: {element}")
 
-            with open(self.file_name, 'w') as json_file:
-                json.dump(self.__devices_acces, json_file, indent=4)
+            if self.first_scan:
+                with open(self.file_name, 'w') as json_file:
+                    json.dump(self.__devices_acces, json_file, indent=4)
+                self.first_scan = False
             with open(self.mapping_file_name, 'w') as json_file:
                 json.dump(self.__devices_mapping, json_file, indent=4)
         except Exception as e:
@@ -57,6 +60,7 @@ class LocalModelTuya:
         devices_data = self.get_file_info("local_data_devices/acces_tuya.json")
 
         flag = True
+        counter = 0
         for device in snapshot_data["devices"]:
             device_name = device["name"]
             device_ip = device["ip"]
@@ -66,13 +70,14 @@ class LocalModelTuya:
                 if stored_device["ip"] != device_ip:
                     devices_data[device_name]["ip"] = device_ip
                     flag = False
+                    counter+=1
 
         with open(self.file_name, 'w') as f:
             json.dump(devices_data, f, indent=4)
             if flag:
                 print("There are no modified ips.")
             else:
-                print("IPs updates successful.")
+                print(f"There a {counter} IPs updates successful.")
 
     def get_file_info(self, direction_file):
         """

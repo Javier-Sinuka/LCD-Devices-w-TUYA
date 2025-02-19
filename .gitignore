@@ -182,3 +182,4 @@ local/tuya/local_data_devices/acces_tuya.json
 local/tuya/local_data_devices/mapping_tuya.json
 connectors/utils/local_leds.json
 logs/*
+diagrams

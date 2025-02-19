@@ -34,7 +34,7 @@ class Manager(DashboardManager):
 
     def start(self, sampling_time_in_minutes: int):
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
-        self.__scheduler.add_job(self.run_command_with_confirmation, "interval", minutes=60)
+        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=sampling_time_in_minutes-1)
         self.__scheduler.start()
         print("Starting device sampling.")
         self.run_devices()
@@ -42,9 +42,9 @@ class Manager(DashboardManager):
     def start_and_send(self, sampling_time_in_minutes: int, token: str, time_to_send_dashboard: int):
         current_time = datetime.now()
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
-        self.__scheduler.add_job(self.run_command_with_confirmation, "interval", minutes=60)
+        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=sampling_time_in_minutes-1)
         start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
-        self.__scheduler.add_job(lambda: self.send_to_tago(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
+        self.__scheduler.add_job(lambda: self.send_to_dashboard(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
         self.__scheduler.start()
         print("Starting device sampling.")
         self.run_devices()
@@ -52,9 +52,9 @@ class Manager(DashboardManager):
     def start_and_send_automatization(self, sampling_time_in_minutes: int, token: str, time_to_send_dashboard: int):
         current_time = datetime.now()
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
-        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=60)
+        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=sampling_time_in_minutes-1)
         start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
-        self.__scheduler.add_job(lambda: self.send_to_tago(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
+        self.__scheduler.add_job(lambda: self.send_to_dashboard(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
         self.__scheduler.start()
         print("Starting device sampling.")
         self.run_devices()
@@ -62,9 +62,9 @@ class Manager(DashboardManager):
     def start_and_send_with_backup(self, sampling_time_in_minutes: int, token: str, time_to_send_dashboard: int, file_path: str, folder_id: str):
         current_time = datetime.now()
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
-        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=60)
+        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=sampling_time_in_minutes-1)
         start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
-        self.__scheduler.add_job(lambda: self.send_to_tago(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
+        self.__scheduler.add_job(lambda: self.send_to_dashboard(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
         self.__scheduler.add_job(lambda: self.update_backup_database(file_path, folder_id), 'interval', minutes=60)
         self.__scheduler.start()
         print("Starting device sampling.")
@@ -73,9 +73,9 @@ class Manager(DashboardManager):
     def start_and_send_with_backup_automatization(self, sampling_time_in_minutes: int, token: str, time_to_send_dashboard: int, file_path: str, folder_id: str):
         current_time = datetime.now()
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
-        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=60)
+        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=sampling_time_in_minutes-1)
         start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
-        self.__scheduler.add_job(lambda: self.send_to_tago(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
+        self.__scheduler.add_job(lambda: self.send_to_dashboard(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
         self.__scheduler.add_job(lambda: self.update_backup_database(file_path, folder_id), 'interval', minutes=60)
         self.__scheduler.start()
         print("Starting device sampling.")
@@ -86,34 +86,14 @@ class Manager(DashboardManager):
             command = ['python3', '-m', 'tinytuya', 'scan']
             subprocess.run(command, check=True)
             print("Scan executed successfully.")
+            print("\nUpdate content.\n")
+
         except subprocess.CalledProcessError as e:
             print(f"Error with executed command 'python -m tinituya scan': {e}")
 
     def stop(self):
         self.__scheduler.shutdown(wait=False)
         print("Stopping device sampling.")
-
-    def run_command_with_confirmation(self, command="python -m tinytuya wizard", confirmations= None, delay=10):
-        if confirmations is None:
-            confirmations = ['Y','Y','Y']
-        try:
-            process = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                       stderr=subprocess.PIPE, text=True)
-
-            for confirmation in confirmations:
-                process.stdin.write(confirmation + '\n')
-                process.stdin.flush()
-                time.sleep(delay)
-
-            stdout, stderr = process.communicate()
-
-            print(stdout)
-
-            if stderr:
-                print(f"Error: {stderr}")
-
-        except subprocess.CalledProcessError as e:
-            print(f"Error al ejecutar el comando: {e}")
 
     def run_devices(self):
         try:
