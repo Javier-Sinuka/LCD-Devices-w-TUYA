@@ -5,6 +5,7 @@ import logging, subprocess, time
 from datetime import datetime, timedelta
 from connectors.backup.backup_database import GoogleDriveConnector
 import os
+import re
 
 def get_actual_local_path(file_name):
     actual_directory = os.path.dirname(os.path.abspath(__file__))
@@ -87,7 +88,6 @@ class Manager(DashboardManager):
             subprocess.run(command, check=True)
             print("Scan executed successfully.")
             print("\nUpdate content.\n")
-
         except subprocess.CalledProcessError as e:
             print(f"Error with executed command 'python -m tinituya scan': {e}")
 

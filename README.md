@@ -88,30 +88,27 @@ del contenido. En futuras versiones se contemplara el agregado de otras herramie
 
 ### Inicio del Servidor Local (para uso de API)
 
-Para poder realizar las acciones de almacenamiento, es necesario la utilizacion de una API, la cual servira como medio para dicha accion, ademas de
+Para poder realizar las acciones referidas al almacenamiento de los datos, es necesario la utilizacion de una API, la cual servira como medio para dicha accion, ademas de
 proveer la flexibilidad de exponer la informacion, la cual sera utilizada para ser enviada a las herramientas de exposicion de informacion que el
 usuario desee.
-Para lograr esto, es necesario abrir una nueva consola en el IDE donde se encuentre alojada la libreria, o en su defecto, encontrarse
+Para lograr esto, es necesario abrir una nueva consola en el IDE (o la terminal de su agrado) donde se encuentre alojada la libreria, o en su defecto, encontrarse
 en la carpeta raiz del proyecto, y abrir dentro de esta una consola (**cabe aclarar que dicha consola no debe de cerrarse, ya que la misma es necesaria
 para que la comunicacion con la API se realice de manera correcta**), y luego ejecutar el siguiente comando dentro de esta:
 
 ```
 uvicorn main:app --host 127.0.0.1 --port 8001 --reload
 ```
-
-Esto hara que se genere un servidor de manera local. Usted puede acceder a los metodos propuestos por la API (**documentacion**), ingresando a su navegador de preferencia
-y colocando dentro de este la siguiente URL:
+La seleccion tanto del **Host** como del **Puerto** quedan a libre eleccion del usuario, para este ejemplo hemos decidido
+utilizar los valores observados en la parte superior. \
+Una vez ejecutado el presente comando en la consola, el mismo generara un servidor de manera local. Usted puede acceder a los metodos propuestos por la API 
+(**documentacion**), ingresando a su navegador de preferencia y colocando dentro de este la siguiente **URL** (en caso de que haya
+colocado otros valores para el **Host** y el **Puerto**, reemplace los valores correspondientes a estos en la **URL**):
 
 ```
 http://127.0.0.1:8001/docs
 ```
 
-**ACLARACION A:** el puerto **8001** fue seleccionado de manera arbitraria, por conflictos existentes a la hora de utilizar otros puertos. Queda a eleccion del
-usuario modificar este puerto si asi lo requiriera (teniendo en cuenta que al momento de la redaccion de esta documentacion, es necesario modificar una serie de 
-parametros para que la libreria tome dicho cambio y funcione de manera correcta, dicha funcion de "automatizacion" de seleccion de puerto sera agregada
-posteriormente).
-
-**ACLARACION B:** la API fue realizada con [FastAPI](https://fastapi.tiangolo.com/), por si se desea hacer algun uso mas extenso de los metodos existentes. 
+**ACLARACION:** la API fue realizada con [FastAPI](https://fastapi.tiangolo.com/), por si se desea hacer algun uso mas extenso de los metodos existentes. 
 
 ### Muestreo y Almacenamiento de Datos
 
@@ -133,7 +130,7 @@ Setup Configuration [1.0.1]
 
 By default the program performs sampling and storage.
 
-And by default the program no generate backup (its optional).
+And by default the program no generate backup (it's optional).
 
 [?] Enter the sampling time in minutes: : 
 ```
@@ -192,15 +189,15 @@ Esta seccion se basa en explicar los pasos a seguir si usted selecciono la opcio
 
 Una vez realizado los pasos mencionados en la seccion anterior, se procedera a explicar los pasos a seguir para las opciones mencionadas:
 
-**A) _[?] Do you want to send information to a dashboard? (TAGO unique): (Y/n):_** una vez seleccionado de manera afirmativa dicha opcion, usted observara
+* **A) _[?] Do you want to send information to a dashboard? (TAGO unique): (Y/n):_** una vez seleccionado de manera afirmativa dicha opcion, usted observara
 una salida con el siguiente formato por consola:
 
 ```
 [?] Do you want to generate a backup? (Google Drive unique): (y/N): 
 ```
 La cual hace referencia al inciso **B)** tratado en esta seccion. Para este caso puntual, tomaremos que la seleccion de dicha opcion fue seleccionada
-de manera que la misma no se realice, para asi poder ocuparnos unicamente de lo especifico del envio de la informacion a algun Dashboard. Una vez 
-pasada esta impresion por consola, aparecera la siguiente salida:
+de manera que la misma no se realice, para asi poder ocuparnos unicamente de lo especifico del envio de la informacion a algun Dashboard (abordando este
+tema en el segunda parte de esta seccion). Una vez pasada esta impresion por consola, aparecera la siguiente salida:
 
 ```
 [?] Enter your Tago Token: 
@@ -209,11 +206,11 @@ pasada esta impresion por consola, aparecera la siguiente salida:
 En donde la informacion solicitada es la siguiente:
 
 **[?] Enter your Tago Token:** hace referencia al **Token** proveido por el dashboard para el envio de la informacion (Si no esta familiarizado con el envio
-de informacion hacia **Tago.io**, puede observar como es la realizacion de esto en el siguiente link ->  [Tago - Devices](https://help.tago.io/portal/en/kb/articles/3-devices#General_Information).
+de informacion hacia **Tago.io**, puede observar como es la realizacion de esto en el siguiente link ->  [Tago - Devices](https://help.tago.io/portal/en/kb/articles/3-devices#Adding_devices).
 
 **[?] Enter time to send to data to Tago Dashboard:** hace referencia al intervalo de tiempo en el cual se realizara un envio de la informacion al
 dashboard.
 
 Una vez realizado esto, los pasos son los mismos que los mencionados en el punto **[***]** al final del apartado anterior.
 
-**B) _[?] Do you want to generate a backup? (Google Drive unique): (y/N):_**
+* **B) _[?] Do you want to generate a backup? (Google Drive unique): (y/N):_**

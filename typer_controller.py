@@ -14,7 +14,7 @@ def start():
     typer.echo(subbold + "\nSetup Configuration [1.0.1]\n")
 
     typer.echo(bold + "By default the program performs sampling and storage.\n")
-    typer.echo(bold + "And by default the program no generate backup (its optional).\n")
+    typer.echo(bold + "And by default the program no generate backup (it's optional).\n")
 
     send_to_dashboard = inquirer.prompt([
         inquirer.Text('sampling_time_in_minutes', message=normal + "Enter the sampling time in minutes: "),
@@ -69,13 +69,7 @@ def start_default(sampling_time_in_minutes: int):
         global manager
         if manager is None:
             manager = Manager()
-        command = [
-            "python3",
-            "-m",
-            "tinytuya",
-            "wizard",
-        ]
-        subprocess.run(command, check=True)
+        run_tinytuya()
         manager.start(sampling_time_in_minutes=sampling_time_in_minutes)
     except Exception as e:
         print(f"Unexpected error in START: {e}")
@@ -86,13 +80,7 @@ def start_and_send(sampling_time_in_minutes: int, token: str, time_to_send_dashb
         global manager
         if manager is None:
             manager = Manager()
-        command = [
-            "python3",
-            "-m",
-            "tinytuya",
-            "wizard",
-        ]
-        subprocess.run(command, check=True)
+        run_tinytuya()
         manager.start_and_send(sampling_time_in_minutes=sampling_time_in_minutes, token=token, time_to_send_dashboard=time_to_send_dashboard)
     except Exception as e:
         print(f"Unexpected error in START: {e}")
@@ -103,13 +91,7 @@ def start_and_send_with_backup(sampling_time_in_minutes: int, token: str, time_t
         global manager
         if manager is None:
             manager = Manager()
-        command = [
-            "python3",
-            "-m",
-            "tinytuya",
-            "wizard",
-        ]
-        subprocess.run(command, check=True)
+        run_tinytuya()
         manager.start_and_send_with_backup(sampling_time_in_minutes=sampling_time_in_minutes, token=token, time_to_send_dashboard=time_to_send_dashboard, file_path='database.db',folder_id=folder_id)
     except Exception as e:
         print(f"Unexpected error in START: {e}")
@@ -134,6 +116,18 @@ def start_and_send_with_backup_automatization(sampling_time_in_minutes: int, tok
                                                           folder_id=folder_id)
     except Exception as e:
         print(f"Unexpected error in START: {e}")
+
+def run_tinytuya():
+    try:
+        command = [
+            "python3",
+            "-m",
+            "tinytuya",
+            "wizard",
+        ]
+        subprocess.run(command, check=True)
+    except Exception as e:
+        print(f"Unexpected error in RUN_TINYTUYA: {e}")
 
 if __name__ == "__main__":
     app()

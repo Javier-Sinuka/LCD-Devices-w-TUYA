@@ -7,7 +7,6 @@ class LocalModelTuya:
     __devices_mapping = {}
     file_name = ''
     mapping_file_name = ''
-    first_scan = True
 
     def __init__(self, file_name='local_data_devices/acces_tuya.json',
                  mapping_file_name='local_data_devices/mapping_tuya.json'):
@@ -41,10 +40,8 @@ class LocalModelTuya:
                 else:
                     print(f"Invalid element found and skipped: {element}")
 
-            if self.first_scan:
-                with open(self.file_name, 'w') as json_file:
-                    json.dump(self.__devices_acces, json_file, indent=4)
-                self.first_scan = False
+            with open(self.file_name, 'w') as json_file:
+                json.dump(self.__devices_acces, json_file, indent=4)
             with open(self.mapping_file_name, 'w') as json_file:
                 json.dump(self.__devices_mapping, json_file, indent=4)
         except Exception as e:
@@ -57,7 +54,7 @@ class LocalModelTuya:
            scan de Tinytuya.
         """
         snapshot_data = self.get_file_info("../../snapshot.json")
-        devices_data = self.get_file_info("local_data_devices/acces_tuya.json")
+        devices_data = self.get_file_info(self.file_name)
 
         flag = True
         counter = 0
@@ -102,14 +99,14 @@ class LocalModelTuya:
         """
             Metodo que devuelve la informacion de acceso local de todos los dispositivos.
         """
-        return self.get_file_info('local_data_devices/acces_tuya.json')
+        return self.get_file_info(self.file_name)
 
     def get_all_mapping_data(self):
         """
             Metodo que devuelve la informacion de mappeo de los codigos de modificacion/lectura
             de los dispositivos TUYA.
         """
-        return self.get_file_info('local_data_devices/mapping_tuya.json')
+        return self.get_file_info(self.mapping_file_name)
 
     def get_code_mapping(self, device_id: str):
         mapping = self.get_all_mapping_data().get(device_id).get('mapping')

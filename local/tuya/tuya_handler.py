@@ -2,11 +2,13 @@ import time
 from api.utils import ApiClient
 from local.model import ModelDevices
 from local.tuya.local_model import LocalConnection
+import os
 
-BASE_URL = "http://127.0.0.1:8001"
+BASE_URL = os.getenv("UVICORN_ADDRESS")
 
 class TuyaHandler(ApiClient, ModelDevices):
     __local_connection = LocalConnection
+    first_step = True
 
     def __init__(self):
         super().__init__()
@@ -76,38 +78,42 @@ class TuyaHandler(ApiClient, ModelDevices):
 
     def save_content_devices(self):
         url = f"{BASE_URL}/values/create"
-        self.__local_connection.safe_to_json()
-        time.sleep(5)
-        self.__local_connection.update_devices_ip()
-        devices_acces_data = self.__local_connection.get_all_acces_data()
 
-        for device_data in devices_acces_data:
-            device_id = devices_acces_data[device_data].get('id')
+        if self.first_step:
+            self.__local_connection.safe_to_json()
+            time.sleep(5)
+            self.first_step = False
+        else:
+            self.__local_connection.update_devices_ip()
+            devices_acces_data = self.__local_connection.get_all_acces_data()
 
-            value_device = self.__local_connection.get_status_device_tuya(device_id=device_id)
+            for device_data in devices_acces_data:
+                device_id = devices_acces_data[device_data].get('id')
 
-            pk_device = self.get_device_id(device_id)
+                value_device = self.__local_connection.get_status_device_tuya(device_id=device_id)
 
-            code_local_device = self.__local_connection.get_code_mapping(device_id)
+                pk_device = self.get_device_id(device_id)
 
-            try:
-                for value in value_device:
-                    if value in code_local_device:
-                        name_value = self.__local_connection.get_name_code_mapping(device_id=device_id, code=value)
-                        pk_attribute = self.get_attribute_id(name_value)
+                code_local_device = self.__local_connection.get_code_mapping(device_id)
 
-                        payload = {
-                            'value': str(value_device[value]),
-                            'device_id': pk_device,
-                            'attribute_id': pk_attribute,
-                        }
+                try:
+                    for value in value_device:
+                        if value in code_local_device:
+                            name_value = self.__local_connection.get_name_code_mapping(device_id=device_id, code=value)
+                            pk_attribute = self.get_attribute_id(name_value)
 
-                        try:
-                            self.post_element(url, payload)
-                            time.sleep(1)
-                        except Exception as e:
-                            print(f"Error save_content_device: {e}")
-                    else:
-                        print(f"Value has no registered: value -> {value}")
-            except Exception as e:
-                print(f"Value device is not iterable: {e}")
+                            payload = {
+                                'value': str(value_device[value]),
+                                'device_id': pk_device,
+                                'attribute_id': pk_attribute,
+                            }
+
+                            try:
+                                self.post_element(url, payload)
+                                time.sleep(1)
+                            except Exception as e:
+                                print(f"Error save_content_device: {e}")
+                        else:
+                            print(f"Value has no registered: value -> {value}")
+                except Exception as e:
+                    print(f"Value device is not iterable: {e}")

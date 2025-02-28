@@ -1,10 +1,14 @@
 import requests
+import subprocess
+import os
+import re
 from datetime import datetime, timedelta
 from collections import defaultdict
 
 class BaseConnector:
     def __init__(self):
-        pass
+        # Get Uvicorn Local Port and IP, and make that how Local Variable
+        self.get_uvicorn_address()
 
     def fetch_values_by_device_and_attribute(self, base_url: str, device_id: int, attribute_id: int, start_date: datetime, end_date: datetime):
         endpoint = f"{base_url}/values/devices/{device_id}/attributes/{attribute_id}/values"
@@ -155,3 +159,19 @@ class BaseConnector:
             average /= len(data)
             result = [{"value": round((average/10000), 4), "timestamp": timestamp}]
             return result
+
+    def get_uvicorn_address(self):
+        try:
+            result = subprocess.run(['lsof', '-i', '-P', '-n'], capture_output=True, text=True)
+            lines = [line for line in result.stdout.split('\n') if 'uvicorn' in line]
+
+            for line in lines:
+                match = re.search(r'(\d+\.\d+\.\d+\.\d+):(\d+)', line)
+                if match:
+                    uvicorn_address = f"http://{match.group(1)}:{match.group(2)}"
+                    os.environ["UVICORN_ADDRESS"] = uvicorn_address
+                    return uvicorn_address
+
+            return "Not found Uvicorn run \n"
+        except Exception as e:
+            return f"Error found port: {e}"
