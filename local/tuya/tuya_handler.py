@@ -85,35 +85,33 @@ class TuyaHandler(ApiClient, ModelDevices):
             self.first_step = False
         else:
             self.__local_connection.update_devices_ip()
-            devices_acces_data = self.__local_connection.get_all_acces_data()
 
-            for device_data in devices_acces_data:
-                device_id = devices_acces_data[device_data].get('id')
+        devices_acces_data = self.__local_connection.get_all_acces_data()
+        for device_data in devices_acces_data:
+            device_id = devices_acces_data[device_data].get('id')
+            value_device = self.__local_connection.get_status_device_tuya(device_id=device_id)
+            pk_device = self.get_device_id(device_id)
 
-                value_device = self.__local_connection.get_status_device_tuya(device_id=device_id)
+            code_local_device = self.__local_connection.get_code_mapping(device_id)
 
-                pk_device = self.get_device_id(device_id)
+            try:
+                for value in value_device:
+                    if value in code_local_device:
+                        name_value = self.__local_connection.get_name_code_mapping(device_id=device_id, code=value)
+                        pk_attribute = self.get_attribute_id(name_value)
 
-                code_local_device = self.__local_connection.get_code_mapping(device_id)
+                        payload = {
+                            'value': str(value_device[value]),
+                            'device_id': pk_device,
+                            'attribute_id': pk_attribute,
+                        }
 
-                try:
-                    for value in value_device:
-                        if value in code_local_device:
-                            name_value = self.__local_connection.get_name_code_mapping(device_id=device_id, code=value)
-                            pk_attribute = self.get_attribute_id(name_value)
-
-                            payload = {
-                                'value': str(value_device[value]),
-                                'device_id': pk_device,
-                                'attribute_id': pk_attribute,
-                            }
-
-                            try:
-                                self.post_element(url, payload)
-                                time.sleep(1)
-                            except Exception as e:
-                                print(f"Error save_content_device: {e}")
-                        else:
-                            print(f"Value has no registered: value -> {value}")
-                except Exception as e:
-                    print(f"Value device is not iterable: {e}")
+                        try:
+                            self.post_element(url, payload)
+                            time.sleep(1)
+                        except Exception as e:
+                            print(f"Error save_content_device: {e}")
+                    else:
+                        print(f"Value has no registered: value -> {value}")
+            except Exception as e:
+                print(f"Value device is not iterable: {e}")

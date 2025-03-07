@@ -16,7 +16,6 @@ class LocalModelTuya:
 
         self.__devices_acces = {}
         self.__devices_mapping = {}
-        self.safe_to_json()
 
     def safe_to_json(self):
         """
@@ -125,11 +124,16 @@ class LocalModelTuya:
             Metodo que devuelve el la informacion de acceso de un dispositivo especifico, solicitado
             por su ID.
         """
-        data = {}
-        for acces in self.__devices_acces.values():
-            if acces['id'] == device_id:
-                data = acces
-        return data
+        file_data = self.get_file_info(self.file_name)
+        if not file_data:
+            return None
+
+        for device_name, device_info in file_data.items():
+            if device_info.get("id") == device_id:
+                return device_info
+
+        print(f"Device with ID '{device_id}' not found.")
+        return None
 
     def get_device_individual_info(self, device_id):
         """
