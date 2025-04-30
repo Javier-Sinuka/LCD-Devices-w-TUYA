@@ -19,7 +19,8 @@ current_time = datetime.now().strftime("%Y_%m_%d_%H%M")
 log_filename = f"{file_path}/record_library_{current_time}.txt"
 logging.basicConfig(level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
+    handlers=[    # Establecer la variable de entorno COMPOSE_FILE si se usa un archivo distinto al por defecto
+
         logging.FileHandler(log_filename),
     ])
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
@@ -38,8 +39,8 @@ class Manager(DashboardManager):
 
     def start(self, sampling_time_in_minutes: int):
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
-        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=sampling_time_in_minutes-2)
-        self.__scheduler.add_job(self.update_devices_ip, "interval", minutes=sampling_time_in_minutes-1)
+        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=120)
+        self.__scheduler.add_job(self.update_devices_ip, "interval", minutes=122)
         self.__scheduler.start()
         print("Starting device sampling.")
         self.run_devices()
@@ -47,8 +48,8 @@ class Manager(DashboardManager):
     def start_and_send(self, sampling_time_in_minutes: int, token: str, time_to_send_dashboard: int):
         current_time = datetime.now()
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
-        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=sampling_time_in_minutes-2)
-        self.__scheduler.add_job(self.update_devices_ip, "interval", minutes=sampling_time_in_minutes-1)
+        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=120)
+        self.__scheduler.add_job(self.update_devices_ip, "interval", minutes=122)
         start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
         self.__scheduler.add_job(lambda: self.send_to_dashboard(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
         self.__scheduler.start()
@@ -58,8 +59,8 @@ class Manager(DashboardManager):
     def start_and_send_automatization(self, sampling_time_in_minutes: int, token: str, time_to_send_dashboard: int):
         current_time = datetime.now()
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
-        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=sampling_time_in_minutes-2)
-        self.__scheduler.add_job(self.update_devices_ip, "interval", minutes=sampling_time_in_minutes-1)
+        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=120)
+        self.__scheduler.add_job(self.update_devices_ip, "interval", minutes=122)
         start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
         self.__scheduler.add_job(lambda: self.send_to_dashboard(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
         self.__scheduler.start()
@@ -69,8 +70,8 @@ class Manager(DashboardManager):
     def start_and_send_with_backup(self, sampling_time_in_minutes: int, token: str, time_to_send_dashboard: int, file_path: str, folder_id: str):
         current_time = datetime.now()
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
-        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=sampling_time_in_minutes-2)
-        self.__scheduler.add_job(self.update_devices_ip, "interval", minutes=sampling_time_in_minutes-1)
+        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=120)
+        self.__scheduler.add_job(self.update_devices_ip, "interval", minutes=122)
         start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
         self.__scheduler.add_job(lambda: self.send_to_dashboard(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
         self.__scheduler.add_job(lambda: self.update_backup_database(file_path, folder_id), 'interval', minutes=60)
@@ -81,8 +82,8 @@ class Manager(DashboardManager):
     def start_and_send_with_backup_automatization(self, sampling_time_in_minutes: int, token: str, time_to_send_dashboard: int, file_path: str, folder_id: str):
         current_time = datetime.now()
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
-        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=sampling_time_in_minutes-2)
-        self.__scheduler.add_job(self.update_devices_ip, "interval", minutes=sampling_time_in_minutes-1)
+        self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=120)
+        self.__scheduler.add_job(self.update_devices_ip, "interval", minutes=122)
         start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
         self.__scheduler.add_job(lambda: self.send_to_dashboard(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
         self.__scheduler.add_job(lambda: self.update_backup_database(file_path, folder_id), 'interval', minutes=60)

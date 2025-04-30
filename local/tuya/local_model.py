@@ -1,4 +1,6 @@
 import json
+import time
+
 import tinytuya
 from pathlib import Path
 
@@ -171,6 +173,7 @@ class LocalConnection(LocalModelTuya):
                                     cred['key'])
         dev.set_version(float(cred['version']))
         data = {}
+        time.sleep(5)
         try:
             data = dev.status()
         except KeyboardInterrupt:
