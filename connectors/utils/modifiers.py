@@ -1,5 +1,7 @@
 import json
 import os
+import time
+
 from connectors.utils.base import BaseConnector
 from datetime import datetime, timedelta
 import numpy as np
@@ -81,7 +83,11 @@ class ModifiersConnector(BaseConnector):
         start_time = (current_time - timedelta(minutes=time_to_send-1))
         totally_consume = 0.0
         beginning_month = False
-        
+        weekend = 0
+
+        if datetime.today().weekday() is 5 or 6:
+            weekend = 1
+
         for data in data_reading_devices:
             device_id = self.get_id_for_name_device(base_url, data)
             attribute_id = self.get_id_for_name_attribute(base_url, data_reading_devices[data]['type'])
@@ -100,7 +106,8 @@ class ModifiersConnector(BaseConnector):
                     "value": month_consume,
                     "unit": "kWh",
                     "metadata": {
-                        "variable" : f"consumo_{calendar.month_name[month]}_{data.lower().replace(' ', '_').replace('-', '_')}"
+                        "variable" : f"consumo_{calendar.month_name[month]}_{data.lower().replace(' ', '_').replace('-', '_')}",
+                        "weekend" : weekend,
                     }
                 })
                 send_data.extend(dashboard_data)
@@ -114,6 +121,9 @@ class ModifiersConnector(BaseConnector):
                 "variable": f"consumo_total_lcd",
                 "value": totally_consume,
                 "unit": "kWh",
+                "metadata":{
+                    "weekend" : weekend,
+                }
             }])
 
         return send_data
