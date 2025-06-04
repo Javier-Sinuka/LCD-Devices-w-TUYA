@@ -28,8 +28,8 @@ class ModifiersConnector(BaseConnector):
     def processed_data(self, fetch_values, device_name: str, attribute_name: str, data_elements, time_to_send: int):
         dashboard_data = []
         weekend = 0
-
-        if datetime.today().weekday() is 5 or 6:
+        date = datetime.today().weekday()
+        if date == 5 or date == 6:
             weekend = 1
 
         if fetch_values is None:
