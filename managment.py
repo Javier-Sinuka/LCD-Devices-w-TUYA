@@ -7,11 +7,33 @@ from datetime import datetime, timedelta
 from connectors.backup.backup_database import GoogleDriveConnector
 import os
 import re
+import json
 
 def get_actual_local_path(file_name):
     actual_directory = os.path.dirname(os.path.abspath(__file__))
     complet_path = os.path.join(actual_directory, file_name)
     return complet_path
+
+def _load_tinytuya_credentials():
+    config_path = get_actual_local_path("tinytuya.json")
+    with open(config_path, "r") as f:
+        data = json.load(f)
+    return {
+        "apiKey": data.get("apiKey", ""),
+        "apiSecret": data.get("apiSecret", ""),
+        "apiDeviceID": data.get("apiDeviceID", ""),
+        "apiRegion": data.get("apiRegion", ""),
+    }
+
+def build_tinytuya_wizard_input(yes_count: int = 3):
+    creds = _load_tinytuya_credentials()
+    lines = [
+        creds["apiKey"],
+        creds["apiSecret"],
+        creds["apiDeviceID"],
+        creds["apiRegion"],
+    ] + (["y"] * yes_count)
+    return "\n".join(lines) + "\n"
 
 # Basic Configuration for the log in file
 file_path = get_actual_local_path('logs')
@@ -109,11 +131,16 @@ class Manager(DashboardManager):
     def run_command_update_wizard(self):
         try:
             command = ['python3', '-m', 'tinytuya', 'wizard']
-            subprocess.run(command, check=True)
+            wizard_input = build_tinytuya_wizard_input(yes_count=3)
+            subprocess.run(command, check=True, input=wizard_input, text=True)
             print("Wizard executed successfully.")
             print("\nUpdate devices.json content.\n")
         except subprocess.CalledProcessError as e:
             print(f"Error with executed command 'python -m tinituya wizard': {e}")
+        except FileNotFoundError as e:
+            print(f"Error loading tinytuya.json: {e}")
+        except json.JSONDecodeError as e:
+            print(f"Invalid tinytuya.json format: {e}")
 
     def stop(self):
         self.__scheduler.shutdown(wait=False)

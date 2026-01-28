@@ -1,4 +1,4 @@
-from managment import Manager
+from managment import Manager, build_tinytuya_wizard_input
 import subprocess
 import typer
 import inquirer
@@ -125,7 +125,8 @@ def run_tinytuya():
             "tinytuya",
             "wizard",
         ]
-        subprocess.run(command, check=True)
+        wizard_input = build_tinytuya_wizard_input(yes_count=3)
+        subprocess.run(command, check=True, input=wizard_input, text=True)
     except Exception as e:
         print(f"Unexpected error in RUN_TINYTUYA: {e}")
 
