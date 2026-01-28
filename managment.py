@@ -88,6 +88,7 @@ class Manager(DashboardManager):
         self.__scheduler.add_job(self.run_devices, 'interval', minutes=sampling_time_in_minutes)
         self.__scheduler.add_job(self.run_command_update_scan, "interval", minutes=120)
         self.__scheduler.add_job(self.update_dev_ip_w_scan, "interval", minutes=122)
+        self.__scheduler.add_job(self.run_command_update_wizard, "interval", hours=24)
         start_time_for_tago = current_time + timedelta(minutes=sampling_time_in_minutes+5)
         self.__scheduler.add_job(lambda: self.send_to_dashboard(token, time_to_send_dashboard), 'interval', minutes=time_to_send_dashboard, start_date=start_time_for_tago)
         self.__scheduler.add_job(lambda: self.update_backup_database(file_path, folder_id), 'interval', minutes=60)
@@ -104,6 +105,15 @@ class Manager(DashboardManager):
             print("\nUpdate content.\n")
         except subprocess.CalledProcessError as e:
             print(f"Error with executed command 'python -m tinituya scan': {e}")
+
+    def run_command_update_wizard(self):
+        try:
+            command = ['python3', '-m', 'tinytuya', 'wizard']
+            subprocess.run(command, check=True)
+            print("Wizard executed successfully.")
+            print("\nUpdate devices.json content.\n")
+        except subprocess.CalledProcessError as e:
+            print(f"Error with executed command 'python -m tinituya wizard': {e}")
 
     def stop(self):
         self.__scheduler.shutdown(wait=False)
