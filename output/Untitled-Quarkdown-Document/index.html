@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="generator" content="Quarkdown">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="quarkdown:root-path" content=".">
+    <title>Quarkdown</title>
+    <script src="./script/quarkdown.js"></script>
+    <script>const capabilities = window.quarkdownCapabilities</script>
+    <script>window.PagedConfig = {auto: false};</script>
+    <script src="https://unpkg.com/pagedjs@0.4.3/dist/paged.polyfill.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="./theme/theme.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.9.0/highlightjs-line-numbers.min.js"></script>
+    <script src="https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.js"></script>
+    <link href="https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.css" rel="stylesheet">
+    <script>capabilities.code = true;</script>
+    <link href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" rel="stylesheet" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" defer="true" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
+    <script>capabilities.math = true;
+
+window.texMacros = {}</script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script>capabilities.mermaid = true;</script>
+    <style>
+
+body {
+    --qd-content-width: 210.0mm;}
+
+body.quarkdown-plain.quarkdown-plain,
+body.quarkdown-docs.quarkdown-docs {
+}
+
+body.quarkdown-slides.quarkdown-slides .reveal {
+    width: 210.0mm;
+    height: 297.0mm;}
+
+@page {
+    size: 210.0mm 297.0mm;}
+
+p {
+}</style>
+    <script>prepare(new PagedDocument());</script>
+<template id="sidebar-template"><nav class="sidebar" role="doc-toc"><ol><li data-target-id="informe-final-de-control-secadero-de-yerba-mate" data-depth="1" data-location="1"><a href="#informe-final-de-control-secadero-de-yerba-mate">Informe Final de Control: Secadero de Yerba Mate</a><ol><li data-target-id="definición-del-problema" data-depth="2" data-location="1.1"><a href="#definición-del-problema">Definición del problema</a><ol><li data-target-id="descripción-general-del-proceso" data-depth="3" data-location="1.1.1"><a href="#descripción-general-del-proceso">Descripción general del proceso</a></li><li data-target-id="principio-de-funcionamiento-del-sistema" data-depth="3" data-location="1.1.2"><a href="#principio-de-funcionamiento-del-sistema">Principio de funcionamiento del sistema</a></li><li data-target-id="determinación-de-qué-se-busca-controlar" data-depth="3" data-location="1.1.3"><a href="#determinación-de-qué-se-busca-controlar">Determinación de qué se busca controlar</a></li><li data-target-id="determinación-de-medicion-variable-de-salida" data-depth="3" data-location="1.1.4"><a href="#determinación-de-medicion-variable-de-salida">Determinación de Medicion Variable de Salida</a></li><li data-target-id="determinación-ejecucion-de-acción-de-control" data-depth="3" data-location="1.1.5"><a href="#determinación-ejecucion-de-acción-de-control">Determinación Ejecucion de Acción de Control</a></li><li data-target-id="determinación-de-las-variables-del-sistema-y-sus-unidades-de-medida" data-depth="3" data-location="1.1.6"><a href="#determinación-de-las-variables-del-sistema-y-sus-unidades-de-medida">Determinación de las variables del sistema y sus unidades de medida</a></li><li data-target-id="determinación-de-posibles-perturbaciones" data-depth="3" data-location="1.1.7"><a href="#determinación-de-posibles-perturbaciones">Determinación de Posibles Perturbaciones</a></li><li data-target-id="identificación-de-las-no-linealidades-involucradas" data-depth="3" data-location="1.1.8"><a href="#identificación-de-las-no-linealidades-involucradas">Identificación de las no linealidades involucradas</a></li><li data-target-id="nivel-de-las-señales-de-entrada-y-salida" data-depth="3" data-location="1.1.9"><a href="#nivel-de-las-señales-de-entrada-y-salida">Nivel de las señales de entrada y salida</a></li><li data-target-id="formulación-del-problema-de-control" data-depth="3" data-location="1.1.10"><a href="#formulación-del-problema-de-control">Formulación del problema de control</a></li></ol></li><li data-target-id="análisis-de-la-planta" data-depth="2" data-location="1.2"><a href="#análisis-de-la-planta">Análisis de la planta</a><ol><li data-target-id="diagrama-de-bloques-del-sistema" data-depth="3" data-location="1.2.1"><a href="#diagrama-de-bloques-del-sistema">Diagrama de bloques del sistema</a></li><li data-target-id="modelo-matemático-de-los-elementos" data-depth="3" data-location="1.2.2"><a href="#modelo-matemático-de-los-elementos">Modelo matemático de los elementos</a></li><li data-target-id="parámetros-nominales-y-sugerencia-experimental" data-depth="3" data-location="1.2.3"><a href="#parámetros-nominales-y-sugerencia-experimental">Parámetros nominales y sugerencia experimental</a></li><li data-target-id="cómo-validar-y-ajustar-el-modelo" data-depth="3" data-location="1.2.4"><a href="#cómo-validar-y-ajustar-el-modelo">Cómo validar y ajustar el modelo</a></li></ol></li><li data-target-id="análisis-del-comportamiento-dinámico" data-depth="2" data-location="1.3"><a href="#análisis-del-comportamiento-dinámico">Análisis del comportamiento dinámico</a><ol><li data-target-id="análisis-de-estabilidad-absoluta" data-depth="3" data-location="1.3.1"><a href="#análisis-de-estabilidad-absoluta">Análisis de estabilidad absoluta</a></li><li data-target-id="análisis-de-la-respuesta-temporal" data-depth="3" data-location="1.3.2"><a href="#análisis-de-la-respuesta-temporal">Análisis de la respuesta temporal</a></li><li data-target-id="verificación-del-modelo-matemático-a-partir-de-la-respuesta-temporal" data-depth="3" data-location="1.3.3"><a href="#verificación-del-modelo-matemático-a-partir-de-la-respuesta-temporal">Verificación del modelo matemático a partir de la respuesta temporal</a></li><li data-target-id="determinación-del-tipo-de-sistema" data-depth="3" data-location="1.3.4"><a href="#determinación-del-tipo-de-sistema">Determinación del tipo de sistema</a></li><li data-target-id="polos-dominantes" data-depth="3" data-location="1.3.5"><a href="#polos-dominantes">Polos dominantes</a></li></ol></li><li data-target-id="especificaciones-de-diseño" data-depth="2" data-location="1.4"><a href="#especificaciones-de-diseño">Especificaciones de diseño</a><ol><li data-target-id="elección-del-dominio-de-especificación" data-depth="3" data-location="1.4.1"><a href="#elección-del-dominio-de-especificación">Elección del dominio de especificación</a></li><li data-target-id="especificaciones-adoptadas" data-depth="3" data-location="1.4.2"><a href="#especificaciones-adoptadas">Especificaciones adoptadas</a></li><li data-target-id="definición-de-cada-especificación" data-depth="3" data-location="1.4.3"><a href="#definición-de-cada-especificación">Definición de cada especificación</a></li><li data-target-id="verificación-de-realizabilidad" data-depth="3" data-location="1.4.4"><a href="#verificación-de-realizabilidad">Verificación de realizabilidad</a></li></ol></li><li data-target-id="diseño-del-controlador" data-depth="2" data-location="1.5"><a href="#diseño-del-controlador">Diseño del controlador</a><ol><li data-target-id="criterio-general-de-diseño" data-depth="3" data-location="1.5.1"><a href="#criterio-general-de-diseño">Criterio general de diseño</a></li><li data-target-id="método-de-cancelación-de-polos-dominantes" data-depth="3" data-location="1.5.2"><a href="#método-de-cancelación-de-polos-dominantes">Método de cancelación de polos dominantes</a></li><li data-target-id="método-de-la-bisectriz" data-depth="3" data-location="1.5.3"><a href="#método-de-la-bisectriz">Método de la bisectriz</a></li><li data-target-id="métodos-de-compensación-en-frecuencia" data-depth="3" data-location="1.5.4"><a href="#métodos-de-compensación-en-frecuencia">Métodos de compensación en frecuencia</a></li><li data-target-id="diseño-de-un-controlador-pid" data-depth="3" data-location="1.5.5"><a href="#diseño-de-un-controlador-pid">Diseño de un controlador PID</a></li><li data-target-id="controlador-seleccionado" data-depth="3" data-location="1.5.6"><a href="#controlador-seleccionado">Controlador seleccionado</a></li></ol></li><li data-target-id="simulación" data-depth="2" data-location="1.6"><a href="#simulación">Simulación</a><ol><li data-target-id="objetivo-de-la-simulación" data-depth="3" data-location="1.6.1"><a href="#objetivo-de-la-simulación">Objetivo de la simulación</a></li><li data-target-id="modelo-simulado" data-depth="3" data-location="1.6.2"><a href="#modelo-simulado">Modelo simulado</a></li><li data-target-id="código-de-simulación-en-octave" data-depth="3" data-location="1.6.3"><a href="#código-de-simulación-en-octave">Código de simulación en Octave</a></li><li data-target-id="verificación-de-las-especificaciones-de-diseño" data-depth="3" data-location="1.6.4"><a href="#verificación-de-las-especificaciones-de-diseño">Verificación de las especificaciones de diseño</a></li><li data-target-id="respuesta-temporal-comparativa" data-depth="3" data-location="1.6.5"><a href="#respuesta-temporal-comparativa">Respuesta temporal comparativa</a></li><li data-target-id="análisis-con-perturbaciones-y-no-linealidades" data-depth="3" data-location="1.6.6"><a href="#análisis-con-perturbaciones-y-no-linealidades">Análisis con perturbaciones y no linealidades</a></li><li data-target-id="análisis-de-la-acción-de-control" data-depth="3" data-location="1.6.7"><a href="#análisis-de-la-acción-de-control">Análisis de la acción de control</a></li><li data-target-id="incorporación-de-no-linealidades-al-modelo" data-depth="3" data-location="1.6.8"><a href="#incorporación-de-no-linealidades-al-modelo">Incorporación de no linealidades al modelo</a></li></ol></li><li data-target-id="conclusiones" data-depth="2" data-location="1.7"><a href="#conclusiones">Conclusiones</a></li></ol></li></ol></nav>
+</template>  </head>
+  <body class="quarkdown quarkdown-paged"><div class="page-break" data-hidden=""></div><h1 id="informe-final-de-control-secadero-de-yerba-mate" data-location="1">Informe Final de Control: Secadero de Yerba Mate</h1><div class="page-break" data-hidden=""></div><h1 id="table-of-contents"></h1><nav role="table-of-contents" data-role="table-of-contents"><ol><li data-target-id="informe-final-de-control-secadero-de-yerba-mate" data-depth="1" data-location="1"><a href="#informe-final-de-control-secadero-de-yerba-mate">Informe Final de Control: Secadero de Yerba Mate</a><ol><li data-target-id="definición-del-problema" data-depth="2" data-location="1.1"><a href="#definición-del-problema">Definición del problema</a><ol><li data-target-id="descripción-general-del-proceso" data-depth="3" data-location="1.1.1"><a href="#descripción-general-del-proceso">Descripción general del proceso</a></li><li data-target-id="principio-de-funcionamiento-del-sistema" data-depth="3" data-location="1.1.2"><a href="#principio-de-funcionamiento-del-sistema">Principio de funcionamiento del sistema</a></li><li data-target-id="determinación-de-qué-se-busca-controlar" data-depth="3" data-location="1.1.3"><a href="#determinación-de-qué-se-busca-controlar">Determinación de qué se busca controlar</a></li><li data-target-id="determinación-de-medicion-variable-de-salida" data-depth="3" data-location="1.1.4"><a href="#determinación-de-medicion-variable-de-salida">Determinación de Medicion Variable de Salida</a></li><li data-target-id="determinación-ejecucion-de-acción-de-control" data-depth="3" data-location="1.1.5"><a href="#determinación-ejecucion-de-acción-de-control">Determinación Ejecucion de Acción de Control</a></li><li data-target-id="determinación-de-las-variables-del-sistema-y-sus-unidades-de-medida" data-depth="3" data-location="1.1.6"><a href="#determinación-de-las-variables-del-sistema-y-sus-unidades-de-medida">Determinación de las variables del sistema y sus unidades de medida</a></li><li data-target-id="determinación-de-posibles-perturbaciones" data-depth="3" data-location="1.1.7"><a href="#determinación-de-posibles-perturbaciones">Determinación de Posibles Perturbaciones</a></li><li data-target-id="identificación-de-las-no-linealidades-involucradas" data-depth="3" data-location="1.1.8"><a href="#identificación-de-las-no-linealidades-involucradas">Identificación de las no linealidades involucradas</a></li><li data-target-id="nivel-de-las-señales-de-entrada-y-salida" data-depth="3" data-location="1.1.9"><a href="#nivel-de-las-señales-de-entrada-y-salida">Nivel de las señales de entrada y salida</a></li><li data-target-id="formulación-del-problema-de-control" data-depth="3" data-location="1.1.10"><a href="#formulación-del-problema-de-control">Formulación del problema de control</a></li></ol></li><li data-target-id="análisis-de-la-planta" data-depth="2" data-location="1.2"><a href="#análisis-de-la-planta">Análisis de la planta</a><ol><li data-target-id="diagrama-de-bloques-del-sistema" data-depth="3" data-location="1.2.1"><a href="#diagrama-de-bloques-del-sistema">Diagrama de bloques del sistema</a></li><li data-target-id="modelo-matemático-de-los-elementos" data-depth="3" data-location="1.2.2"><a href="#modelo-matemático-de-los-elementos">Modelo matemático de los elementos</a></li><li data-target-id="parámetros-nominales-y-sugerencia-experimental" data-depth="3" data-location="1.2.3"><a href="#parámetros-nominales-y-sugerencia-experimental">Parámetros nominales y sugerencia experimental</a></li><li data-target-id="cómo-validar-y-ajustar-el-modelo" data-depth="3" data-location="1.2.4"><a href="#cómo-validar-y-ajustar-el-modelo">Cómo validar y ajustar el modelo</a></li></ol></li><li data-target-id="análisis-del-comportamiento-dinámico" data-depth="2" data-location="1.3"><a href="#análisis-del-comportamiento-dinámico">Análisis del comportamiento dinámico</a><ol><li data-target-id="análisis-de-estabilidad-absoluta" data-depth="3" data-location="1.3.1"><a href="#análisis-de-estabilidad-absoluta">Análisis de estabilidad absoluta</a></li><li data-target-id="análisis-de-la-respuesta-temporal" data-depth="3" data-location="1.3.2"><a href="#análisis-de-la-respuesta-temporal">Análisis de la respuesta temporal</a></li><li data-target-id="verificación-del-modelo-matemático-a-partir-de-la-respuesta-temporal" data-depth="3" data-location="1.3.3"><a href="#verificación-del-modelo-matemático-a-partir-de-la-respuesta-temporal">Verificación del modelo matemático a partir de la respuesta temporal</a></li><li data-target-id="determinación-del-tipo-de-sistema" data-depth="3" data-location="1.3.4"><a href="#determinación-del-tipo-de-sistema">Determinación del tipo de sistema</a></li><li data-target-id="polos-dominantes" data-depth="3" data-location="1.3.5"><a href="#polos-dominantes">Polos dominantes</a></li></ol></li><li data-target-id="especificaciones-de-diseño" data-depth="2" data-location="1.4"><a href="#especificaciones-de-diseño">Especificaciones de diseño</a><ol><li data-target-id="elección-del-dominio-de-especificación" data-depth="3" data-location="1.4.1"><a href="#elección-del-dominio-de-especificación">Elección del dominio de especificación</a></li><li data-target-id="especificaciones-adoptadas" data-depth="3" data-location="1.4.2"><a href="#especificaciones-adoptadas">Especificaciones adoptadas</a></li><li data-target-id="definición-de-cada-especificación" data-depth="3" data-location="1.4.3"><a href="#definición-de-cada-especificación">Definición de cada especificación</a></li><li data-target-id="verificación-de-realizabilidad" data-depth="3" data-location="1.4.4"><a href="#verificación-de-realizabilidad">Verificación de realizabilidad</a></li></ol></li><li data-target-id="diseño-del-controlador" data-depth="2" data-location="1.5"><a href="#diseño-del-controlador">Diseño del controlador</a><ol><li data-target-id="criterio-general-de-diseño" data-depth="3" data-location="1.5.1"><a href="#criterio-general-de-diseño">Criterio general de diseño</a></li><li data-target-id="método-de-cancelación-de-polos-dominantes" data-depth="3" data-location="1.5.2"><a href="#método-de-cancelación-de-polos-dominantes">Método de cancelación de polos dominantes</a></li><li data-target-id="método-de-la-bisectriz" data-depth="3" data-location="1.5.3"><a href="#método-de-la-bisectriz">Método de la bisectriz</a></li><li data-target-id="métodos-de-compensación-en-frecuencia" data-depth="3" data-location="1.5.4"><a href="#métodos-de-compensación-en-frecuencia">Métodos de compensación en frecuencia</a></li><li data-target-id="diseño-de-un-controlador-pid" data-depth="3" data-location="1.5.5"><a href="#diseño-de-un-controlador-pid">Diseño de un controlador PID</a></li><li data-target-id="controlador-seleccionado" data-depth="3" data-location="1.5.6"><a href="#controlador-seleccionado">Controlador seleccionado</a></li></ol></li><li data-target-id="simulación" data-depth="2" data-location="1.6"><a href="#simulación">Simulación</a><ol><li data-target-id="objetivo-de-la-simulación" data-depth="3" data-location="1.6.1"><a href="#objetivo-de-la-simulación">Objetivo de la simulación</a></li><li data-target-id="modelo-simulado" data-depth="3" data-location="1.6.2"><a href="#modelo-simulado">Modelo simulado</a></li><li data-target-id="código-de-simulación-en-octave" data-depth="3" data-location="1.6.3"><a href="#código-de-simulación-en-octave">Código de simulación en Octave</a></li><li data-target-id="verificación-de-las-especificaciones-de-diseño" data-depth="3" data-location="1.6.4"><a href="#verificación-de-las-especificaciones-de-diseño">Verificación de las especificaciones de diseño</a></li><li data-target-id="respuesta-temporal-comparativa" data-depth="3" data-location="1.6.5"><a href="#respuesta-temporal-comparativa">Respuesta temporal comparativa</a></li><li data-target-id="análisis-con-perturbaciones-y-no-linealidades" data-depth="3" data-location="1.6.6"><a href="#análisis-con-perturbaciones-y-no-linealidades">Análisis con perturbaciones y no linealidades</a></li><li data-target-id="análisis-de-la-acción-de-control" data-depth="3" data-location="1.6.7"><a href="#análisis-de-la-acción-de-control">Análisis de la acción de control</a></li><li data-target-id="incorporación-de-no-linealidades-al-modelo" data-depth="3" data-location="1.6.8"><a href="#incorporación-de-no-linealidades-al-modelo">Incorporación de no linealidades al modelo</a></li></ol></li><li data-target-id="conclusiones" data-depth="2" data-location="1.7"><a href="#conclusiones">Conclusiones</a></li></ol></li></ol></nav><hr /><div class="page-break" data-hidden=""></div><h2 id="definición-del-problema" data-location="1.1">Definición del problema</h2><h3 id="descripción-general-del-proceso" data-location="1.1.1">Descripción general del proceso</h3><p>La yerba mate constituye una de las producciones agroindustriales más representativas del noreste argentino, con fuerte
+concentración en la provincia de Misiones y, en menor medida, en el nordeste de Corrientes. Su elaboración industrial comprende
+una secuencia de etapas que transforma la hoja verde cosechada en un producto estable y apto para su posterior canchado,
+estacionamiento, molienda y envasado. Entre dichas etapas, el <strong>sapecado</strong> y el <strong>secado</strong> resultan determinantes, ya que permiten
+disminuir el contenido de agua del material vegetal y detener los procesos biológicos que degradarían el producto.</p><p>A continuacion se describe cada uno de estos procesos nombrados:</p><ul><li><strong>Sapecado</strong>: Tratamiento térmico rápido e intenso aplicado inmediatamente después de la cosecha, que genera un choque térmico a alta
+temperatura con el objetivo de inactivar enzimas, detener procesos biológicos y lograr la estabilización bioquímica inicial del material.</li><li><strong>Secado</strong>: Proceso térmico controlado y progresivo, realizado posteriormente al sapecado, orientado a la eliminación de humedad del material
+hasta alcanzar condiciones estables de conservación, permitiendo su adecuado almacenamiento y asegurando la calidad final del producto.</li></ul><p>Conociendo estas diferencias, es necesario comprender el flujo de trabajo en un secadero de Yerba Mate: una vez arribada la materia prima al
+establecimiento se procede a realizar el sapecado, posterior a esto la yerba mate ingresa al proceso de secado,
+donde mediante aire caliente se elimina gran parte de la humedad remanente. En secaderos continuos, este proceso suele
+realizarse mediante cintas transportadoras, sobre las cuales el material vegetal avanza mientras recibe el efecto del flujo
+de aire caliente. El objetivo tecnológico es reducir la humedad del producto hasta valores compatibles con su conservación
+y procesamiento posterior; en el siguiente articulo [1] se ubica esta reducción, según el criterio considerado, en torno
+al 4–6 % respecto del peso verde original o bien en valores finales de humedad regulados para la yerba canchada.</p><p>Desde el punto de vista de la teoría de control, el secadero puede interpretarse como una planta térmica con transporte de
+materia, en la que existe una variable de proceso que debe mantenerse dentro de un rango adecuado para asegurar la calidad
+del producto y la eficiencia energética del sistema. Entre las magnitudes potencialmente controlables se encuentran la
+temperatura del aire de secado, la humedad final del producto, el caudal de aire caliente y la velocidad de avance de la cinta.
+Para el presente trabajo se selecciona como <strong>variable principal de control la temperatura del aire en la cámara de secado</strong>, por
+tratarse de una variable físicamente relevante, medible en forma continua y directamente vinculada con la evolución térmica
+del proceso. Esta elección, además, permite formular un modelo de planta razonable y abordar el diseño de un controlador con
+las herramientas clásicas de la asignatura.</p><h3 id="principio-de-funcionamiento-del-sistema" data-location="1.1.2">Principio de funcionamiento del sistema</h3><p>El sistema considerado corresponde a un secadero continuo a cinta. Su funcionamiento puede describirse del siguiente modo: la
+yerba previamente cosechada y sapecada ingresa al secadero y es distribuida sobre una cinta transportadora. Mientras avanza,
+el material vegetal es sometido a una corriente de aire caliente generada por un sistema térmico, típicamente asociado a una
+cámara de combustión e intercambio de calor. La transferencia de energía desde el aire al producto promueve la evaporación
+de la humedad contenida en las hojas y ramas finas. La permanencia del material dentro del secadero, junto con la temperatura
+del aire y el régimen de circulación, determinan el grado de secado alcanzado a la salida.</p><p>En términos de control automático, el sistema opera bajo la lógica clásica de <strong>lazo cerrado</strong>. Se fija una temperatura de
+referencia para el aire de secado; un sensor mide la temperatura real dentro de la cámara; esa medición se acondiciona
+y se compara con la consigna; el error resultante alimenta a un controlador; y el controlador actúa sobre el elemento
+final de control, modificando la potencia térmica suministrada al secadero. De esta forma, el sistema intenta rechazar
+perturbaciones y mantener la temperatura del proceso cercana al valor deseado.</p><h3 id="determinación-de-qué-se-busca-controlar" data-location="1.1.3">Determinación de qué se busca controlar</h3><p>En este trabajo se busca controlar la <strong>temperatura del aire de secado en el interior del secadero</strong>.</p><p>La elección de esta variable responde a razones técnicas y metodológicas. En primer lugar, la temperatura del aire influye
+de manera directa sobre la transferencia de calor al producto y, por ende, sobre la rapidez con la que se elimina la humedad.
+En segundo lugar, se trata de una variable que puede medirse en línea mediante instrumentación industrial estándar.
+Finalmente, su control es compatible con el uso de modelos dinámicos térmicos de complejidad moderada.</p><p>El objetivo del sistema de control será entonces mantener la temperatura del aire en torno a un valor de consigna previamente
+establecido, pese a la presencia de perturbaciones tales como cambios en la carga de yerba, variaciones de humedad inicial
+o fluctuaciones de las condiciones ambientales. Desde una perspectiva de ingeniería, esto persigue simultáneamente tres fines:</p><ul><li>Mejorar la uniformidad del proceso de secado,</li><li>Preservar la calidad del producto final, y</li><li>Evitar un consumo energético excesivo.</li></ul><h3 id="determinación-de-medicion-variable-de-salida" data-location="1.1.4">Determinación de Medicion Variable de Salida</h3><p>La variable de salida seleccionada, esto es, la temperatura del aire de secado, puede medirse mediante una <strong>termocupla industrial</strong>,
+preferentemente de tipo K por su amplio rango de operación y uso extendido en procesos térmicos. Las termocuplas generan
+una pequeña tensión termoeléctrica dependiente de la temperatura; ese principio de funcionamiento está basado en el
+efecto Seebeck (fenómeno termoeléctrico por el cual se genera una diferencia de potencial eléctrico cuando existe un gradiente de temperatura
+entre dos uniones de materiales conductores o semiconductores distintos, debido al movimiento de portadores de carga desde la zona caliente
+hacia la fría.). La fuente técnica consultada [2] destacan que este tipo de sensores produce señales de muy bajo nivel y que su comportamiento
+no es estrictamente lineal respecto de la temperatura.</p><p>Debido a ello, la medición requiere una etapa de <strong>acondicionamiento de señal</strong>. En una implementación industrial típica,
+la señal de la termocupla se ingresa a un transmisor de temperatura, cuya función es:</p><ul><li>Amplificar la señal de entrada.</li><li>Compensar la unión fría.</li><li>Linealizar la relación temperatura-señal.</li><li>Filtrar perturbaciones eléctricas.</li><li>Convertir la medición a una señal normalizada de instrumentación, como 4–20 mA o 0–10 V.</li></ul><p>Para fines de modelado y simulación, se asumirá que el conjunto <strong>sensor + transmisor</strong> puede representarse, en primera
+aproximación, como un <strong>bloque de ganancia estática</strong>, o eventualmente como un <strong>sistema de primer orden</strong> si se desea contemplar
+la dinámica propia del elemento de medición. La salida acondicionada será la señal de realimentación que ingresará al
+comparador del lazo de control. A continuacion se puede observar el diagrama de bloques a modo de ejemplo correspondiente a esta
+parte del sistema:</p><figure id="figure-1.1"><pre class="mermaid fill-height">flowchart LR
+  Treal[Temperatura real T_t -°C-]
+  Sensor[Termocupla]
+  Acond[Transmisor / acondicionador T_m -°C / V-]
+  Comp[Comparador del lazo]
+  Treal --&gt; Sensor --&gt; Acond --&gt; Comp</pre><figcaption class="caption-bottom" data-location="1.1">Camino de medición y realimentación de la temperatura.</figcaption></figure><h3 id="determinación-ejecucion-de-acción-de-control" data-location="1.1.5">Determinación Ejecucion de Acción de Control</h3><p>La acción de control se ejecutará actuando sobre <strong>la potencia térmica suministrada al secadero</strong>. Conceptualmente,
+esto puede implementarse mediante distintos dispositivos, según la arquitectura adoptada por la planta industrial:</p><ul><li>Modulación del caudal de combustible hacia el quemador.</li><li>Regulación del flujo de aire de combustión.</li><li>Accionamiento de una válvula de control.</li><li>Variación de la potencia en resistencias eléctricas.</li><li>Control de velocidad de ventiladores que intervienen en la transferencia térmica.</li></ul><p>Para este trabajo se considerará que la variable manipulada es la <strong>potencia térmica entregada al aire de secado</strong>, representada
+de manera simplificada por una señal de mando proveniente del controlador. En términos físicos, el actuador será el
+conjunto formado por el elemento final de control y el sistema generador de calor. Su misión será modificar
+la energía térmica ingresada al proceso para compensar desviaciones de temperatura respecto de la consigna.</p><h3 id="determinación-de-las-variables-del-sistema-y-sus-unidades-de-medida" data-location="1.1.6">Determinación de las variables del sistema y sus unidades de medida</h3><p>A continuación se identifican las variables principales del sistema propuesto:</p><table id="table-1.1"><thead><tr><th>Variable</th><th>Descripción</th><th>Unidad</th></tr></thead><tbody><tr><td><formula>T_{ref}</formula></td><td>Temperatura de referencia o consigna</td><td><formula>^\circ</formula> C</td></tr><tr><td><formula>T(t)</formula></td><td>Temperatura real del aire en la cámara de secado</td><td><formula>^\circ</formula> C</td></tr><tr><td><formula>T_m(t)</formula></td><td>Temperatura medida por el sistema sensor-acondicionador</td><td><formula>^\circ</formula> C</td></tr><tr><td><formula>e(t)=T_{ref}-T_m</formula></td><td>Error de control</td><td><formula>^\circ</formula> C</td></tr><tr><td><formula>u(t)</formula></td><td>Señal de control aplicada al actuador</td><td>%</td></tr><tr><td><formula>Q(t)</formula></td><td>Potencia térmica suministrada al secadero</td><td>kW</td></tr><tr><td><formula>m_p(t)</formula></td><td>Flujo másico de producto que ingresa al secadero</td><td>kg/s</td></tr><tr><td><formula>H_i(t)</formula></td><td>Humedad inicial del producto</td><td>% b.h.</td></tr><tr><td><formula>H_f(t)</formula></td><td>Humedad final del producto</td><td>% b.h.</td></tr><tr><td><formula>T_{amb}(t)</formula></td><td>Temperatura ambiente</td><td><formula>^\circ</formula> C</td></tr><tr><td><formula>q_a(t)</formula></td><td>Caudal de aire de secado</td><td>m <formula>^3</formula> /s</td></tr></tbody><caption class="caption-bottom" data-location="1.1"></caption></table><p>En el presente estudio, las variables definidas anteriormente se utilizarán como base para describir formalmente el sistema de
+control propuesto. En particular, se distinguirán aquellas asociadas directamente al objetivo de regulación, a la acción del
+controlador y a la medición empleada en la realimentación. De este modo, la formulación del problema y el desarrollo posterior
+del modelo matemático se apoyarán en las siguientes variables principales:</p><ul><li><strong>Variable controlada</strong>: <formula>T(t)</formula></li><li><strong>Variable manipulada</strong>: <formula>Q(t)</formula> o, en forma equivalente, la señal <formula>u(t)</formula> aplicada al actuador</li><li><strong>Variable medida</strong>: <formula>T_m(t)</formula></li></ul><h3 id="determinación-de-posibles-perturbaciones" data-location="1.1.7">Determinación de Posibles Perturbaciones</h3><p>Todo sistema real de secado está sometido a perturbaciones que modifican su respuesta y pueden alejarlo del punto
+de operación deseado. En el caso del secadero de yerba mate, las perturbaciones más relevantes son las siguientes:</p><p>a) <strong>Variación de la humedad inicial de la materia prima.</strong>
+La yerba ingresada al secadero no presenta siempre el mismo contenido de agua. Un aumento de humedad implica mayor
+demanda energética para alcanzar el mismo grado de secado, lo que tiende a reducir la temperatura del aire si la
+potencia térmica no se ajusta adecuadamente.</p><p>b) <strong>Variación del caudal o de la masa de producto alimentado.</strong>
+Cambios en la cantidad de material sobre la cinta modifican la carga térmica del sistema. Una mayor masa de yerba
+absorbe más energía y altera la dinámica del proceso.</p><p>c) <strong>Variaciones de la temperatura ambiente.</strong>
+Las condiciones externas influyen sobre las pérdidas térmicas del secadero y sobre la temperatura inicial del aire de entrada.</p><p>d) <strong>Variaciones del flujo de aire caliente.</strong>
+Cambios en ventiladores, compuertas o pérdidas de carga alteran la convección y, por lo tanto, la transferencia de calor hacia el producto.</p><p>e) <strong>Variaciones en la fuente de calor.</strong>
+En secaderos basados en combustión, las fluctuaciones del combustible o del régimen de combustión pueden traducirse
+en cambios de potencia térmica efectiva.</p><p>Estas perturbaciones justifican la necesidad de emplear un <strong>sistema de control realimentado</strong> en lugar de una estrategia
+puramente manual o a lazo abierto.</p><h3 id="identificación-de-las-no-linealidades-involucradas" data-location="1.1.8">Identificación de las no linealidades involucradas</h3><p>El secadero de yerba mate <strong>no constituye una planta estrictamente lineal.</strong> Aun cuando en etapas posteriores del trabajo
+se adopte una aproximación lineal para su análisis y diseño, es importante reconocer las principales no linealidades
+físicas presentes en el sistema:</p><p>a) <strong>Relación no lineal entre la temperatura y la transferencia de calor.</strong>
+Los fenómenos de convección, radiación e intercambio térmico con el producto no evolucionan linealmente en todo el rango operativo.</p><p>b) <strong>Relación no lineal entre temperatura y evaporación de humedad.</strong>
+La cinética de secado del material vegetal depende de la temperatura, del contenido de humedad y de las condiciones
+de transporte de masa, por lo que la respuesta del sistema varía con el punto de operación.</p><p>c) <strong>No linealidad del sensor.</strong>
+Las termocuplas presentan una relación tensión-temperatura no perfectamente lineal, razón por la cual se requiere
+linealización en el acondicionamiento de señal.</p><p>d) <strong>Saturación del actuador.</strong>
+La potencia térmica disponible no puede aumentar indefinidamente; el actuador presenta límites físicos máximos y mínimos.</p><p>e) <strong>Dependencia de parámetros con la carga del proceso.</strong>
+La constante de tiempo térmica efectiva del secadero puede variar con la cantidad de yerba sobre la cinta, con el caudal
+de aire y con el estado de operación general.</p><p>En consecuencia, para el diseño del controlador será razonable trabajar con un modelo linealizado alrededor de un
+punto nominal de operación, dejando explícito que dicho modelo es una aproximación válida en un entorno de funcionamiento acotado.</p><h3 id="nivel-de-las-señales-de-entrada-y-salida" data-location="1.1.9">Nivel de las señales de entrada y salida</h3><p>Para el caso propuesto, puede adoptarse una normalización compatible con instrumentación industrial, que se especifican
+acontinuacion:</p><p><strong>Señal de entrada o consigna:</strong> temperatura de referencia <formula>T_{ref}</formula>, expresada en °C.
+Esta señal representa el valor deseado de temperatura para el aire de secado dentro de la cámara y constituye la referencia
+que el sistema debe seguir. Desde el punto de vista funcional, fija el punto de operación del proceso y permite definir el
+objetivo de regulación térmica en cada condición de trabajo. En una implementación industrial real, esa consigna puede ser
+generada por un operador, por una interfaz de supervisión o por un sistema automático de mayor jerarquía. En el presente
+trabajo, dicha consigna se representa directamente en °C, ya que la variable controlada del sistema es la temperatura del
+aire de secado y el análisis se desarrolla en términos físicos. De este modo, la referencia queda asociada en forma directa
+al valor térmico que se desea mantener dentro de la cámara.</p><p><strong>Señal de salida medida:</strong> temperatura acondicionada <formula>T_m</formula>, proveniente del transmisor de temperatura.
+Esta señal corresponde a la variable efectivamente realimentada al comparador. Su origen es la temperatura real del proceso,
+captada por la termocupla instalada en la cámara de secado y posteriormente acondicionada por el transmisor. Dado que la
+termocupla entrega una tensión muy pequeña y no estrictamente lineal con la temperatura, el transmisor cumple la función de
+amplificar, compensar y linealizar esa medición para obtener una señal confiable de proceso. En el modelo desarrollado en
+este informe, <formula>T_m</formula> se interpreta como una temperatura medida equivalente en °C, de modo que pueda compararse directamente
+con la consigna y obtener el error de control. Así, aunque físicamente exista una etapa de acondicionamiento instrumental,
+la señal de realimentación se expresa en la misma unidad que la variable controlada.</p><p><strong>Señal de control:</strong> salida del controlador hacia el actuador, normalmente expresada como señal eléctrica o neumática
+equivalente a un porcentaje de apertura, caudal o potencia. En este caso particular, la acción de control se vincula con la
+potencia térmica suministrada al secadero, ya que esa es la magnitud manipulada que permite modificar la temperatura del aire
+de secado. Por lo tanto, la señal de control puede interpretarse como una orden de mando enviada al sistema generador de calor,
+indicando cuánto debe aumentar o disminuir la energía térmica entregada al proceso. Para mantener coherencia con la tabla de
+variables adoptada en el informe, esta señal puede considerarse expresada en porcentaje de actuación, mientras que su efecto
+físico se manifiesta en la variación de la potencia térmica <formula>Q(t)</formula> medida en kW. Así, el controlador no actúa directamente
+sobre la temperatura, sino sobre el actuador, que a su vez modifica la dinámica térmica del secadero.</p><h3 id="formulación-del-problema-de-control" data-location="1.1.10">Formulación del problema de control</h3><p>En función de lo expuesto, se desea diseñar un sistema de control automático para regular la temperatura del aire en un secadero
+continuo a cinta de yerba mate, de modo que dicha temperatura siga una consigna preestablecida con adecuado rechazo a perturbaciones,
+garantizando condiciones apropiadas para el secado del producto.</p><div class="page-break" data-hidden=""></div><h2 id="análisis-de-la-planta" data-location="1.2">Análisis de la planta</h2><h3 id="diagrama-de-bloques-del-sistema" data-location="1.2.1">Diagrama de bloques del sistema</h3><p>El siguiente diagrama de bloques representa los elementos principales del lazo de control: sensor y acondicionador,
+comparador, controlador, actuador, planta (secadero) y las perturbaciones externas. En las conexiones se indican
+la variable física y su unidad.</p><figure id="figure-1.2"><pre class="mermaid fill-height">flowchart TD
+  Tref[( Consigna )]
+  Ts[Termocupla]
+  Tm[Transmisor]
+  Comp[Comparador]
+  Ctrl[Controlador]
+  Act[Generador de calor]
+  Plant[Secadero]
+  Tamb((Perturbaciones))
+  Tref -- [°C] --&gt; Comp
+  Ts --&gt; Comp
+  Comp --&gt; Ctrl --&gt; Act --&gt; Plant
+  Tamb --&gt; Plant
+  Plant --&gt; Ts
+  Ts --&gt; Tm</pre><figcaption class="caption-bottom" data-location="1.2">Diagrama de bloques del secadero (variables y unidades).</figcaption></figure><div class="page-break" data-hidden=""></div><p>A continuación se presenta una tabla que resume los bloques del sistema, su contenido y una breve descripción de cada uno:</p><table id="table-1.2"><thead><tr><th>Nombre Bloque</th><th>Contenido</th><th>Descripcion</th></tr></thead><tbody><tr><td>Consigna</td><td><formula>T_r °C</formula></td><td><formula>T_r</formula>: Temperatura de referencia</td></tr><tr><td>Transmisor</td><td><formula>Tm °C / V</formula></td><td>$T_m$: Temperatura medida</td></tr><tr><td>Comparador</td><td><formula>e_t = T_r - Tm</formula></td><td><formula>e_t</formula>:</td></tr><tr><td>Controlador</td><td><formula>C_s</formula></td><td><formula>C_s</formula>:</td></tr><tr><td>Generador de calor</td><td><formula>Q_t</formula> -W / kW-</td><td><formula>Q_t</formula>:</td></tr><tr><td>Secadero</td><td><formula>T_t</formula> °C</td><td><formula>T_t</formula>:</td></tr><tr><td>Perturbaciones</td><td><formula>T_a, m_p, H_i</formula></td><td><formula>T_a</formula>: , <formula>m_p</formula>: , <formula>H_i</formula>:</td></tr></tbody><caption class="caption-bottom" data-location="1.2"></caption></table><h3 id="modelo-matemático-de-los-elementos" data-location="1.2.2">Modelo matemático de los elementos</h3><p>Se proponen modelos razonables (teóricos/experimentales) de orden bajo para cada bloque. Estas aproximaciones son comunes
+en modelado térmico y facilitan el diseño de controladores. El criterio adoptado es representar cada subsistema mediante una
+dinámica suficientemente simple como para permitir el análisis en el dominio del tiempo y de Laplace, pero conservando los
+efectos físicos más relevantes del proceso: la inercia térmica del secadero, la dinámica del sistema de medición y la respuesta
+del elemento actuador que regula el aporte de calor. Dado que el objetivo principal del trabajo es estudiar el comportamiento
+del lazo de control alrededor de un punto nominal de operación, se considera apropiado utilizar modelos linealizados de orden bajo.</p><p>Desde esta perspectiva, el sistema completo puede interpretarse como la interconexión de tres bloques dinámicos principales.
+En primer lugar, la planta térmica, que describe cómo la potencia térmica suministrada se traduce en una variación de la
+temperatura del aire en la cámara. En segundo lugar, el conjunto sensor + acondicionador, que transforma la temperatura real
+del proceso en una señal utilizable para la realimentación. Finalmente, el actuador, que representa la forma en que la señal
+de control del regulador modifica efectivamente la potencia entregada al secadero. La presencia de perturbaciones, como la
+humedad inicial del producto, la variación de masa alimentada o la temperatura ambiente, se incorpora como una entrada externa
+adicional que altera el balance térmico de la planta.</p><table id="table-1.3"><thead><tr><th>Elemento</th><th align="right">Modelo sugerido</th><th>Comentarios</th></tr></thead><tbody><tr><td>Sensor + Acondicionador</td><td align="right"><formula>G_s(s) = K_s</formula> (ganancia) o <formula>\dfrac{K_s}{\tau_s s + 1}</formula></td><td>Si el transmisor introduce dinámica usar primer orden.</td></tr><tr><td>Actuador (generador de calor)</td><td align="right"><formula>G_a(s) = \dfrac{K_a}{\tau_a s + 1}</formula></td><td>Saturación: <formula>0 \le Q \le Q_{max}</formula>.</td></tr><tr><td>Planta térmica (secadero)</td><td align="right"><formula>G_p(s) = \dfrac{K_p}{\tau_p s + 1}</formula></td><td>Modelo linealizado alrededor del punto de operación.</td></tr></tbody><caption class="caption-bottom" data-location="1.3"></caption></table><h4 id="modelo-de-la-planta-primer-orden">Modelo de la planta (primer orden)</h4><p>Considerando un balance de energía linealizado alrededor del punto de operación, la dinámica de la temperatura del
+aire en la cámara se puede aproximar por:</p><formula data-block="">\tau_p \frac{d T(t)}{dt} + T(t) = K_p\,Q(t) + K_{d}\,d(t)</formula><p>donde <formula>\tau_p</formula> es la constante de tiempo efectiva de la planta, <formula>K_p</formula> la ganancia térmica (°C/W), y <formula>d(t)</formula>
+representa perturbaciones combinadas (variaciones de carga <formula>m_p</formula>, humedad <formula>H_i</formula>, temperatura ambiente <formula>T_{amb}</formula>)
+con sensibilidad <formula>K_d</formula>.</p><p>Este modelo resume la idea física de que el secadero no responde de manera instantánea frente a cambios en la potencia de
+calentamiento. La temperatura del aire evoluciona con una determinada inercia térmica, asociada a la capacidad calorífica del
+sistema, a las pérdidas hacia el entorno y al intercambio de calor con el producto transportado por la cinta. Por esa razón,
+una representación de primer orden resulta razonable como aproximación inicial, especialmente cuando el análisis se realiza en
+torno a un régimen operativo relativamente acotado.</p><p>La inclusión del término de perturbación <formula>d(t)</formula> permite reflejar que la dinámica térmica no depende exclusivamente de la
+acción del actuador. Si ingresa una mayor masa de yerba o si aumenta su humedad inicial, una parte mayor de la energía térmica
+disponible se destina al calentamiento y evaporación del agua, produciendo una disminución relativa de la temperatura si el
+controlador no compensa ese efecto. De manera análoga, cambios en la temperatura ambiente o en el caudal de aire también
+modifican el equilibrio energético del proceso.</p><p>En Laplace:</p><formula data-block="">G_p(s) = \dfrac{T(s)}{Q(s)} = \dfrac{K_p}{\tau_p s + 1}</formula><h4 id="sensor-y-acondicionador">Sensor y acondicionador</h4><p>Para el presente trabajo se adoptará un modelo de ganancia, ya que la dinámica del sensor y del transmisor es mucho más rápida
+que la dinámica térmica del secadero y, en consecuencia, su efecto puede considerarse despreciable dentro del nivel de aproximación
+utilizado:</p><formula data-block="">G_s(s) = K_s</formula><p>No obstante, si se quisiera incorporar mayor detalle en la representación del sistema de medición, también podría emplearse
+un modelo de primer orden razonable:</p><formula data-block="">G_s(s)=\dfrac{K_s}{\tau_s s + 1}</formula><p>La elección entre uno u otro modelo depende del nivel de detalle que se desee incorporar. En este informe se selecciona la
+aproximación por ganancia estática porque permite representar adecuadamente la medición sin complejizar innecesariamente el modelo.
+En cambio, si se deseara contemplar retardos de medición, filtrado o tiempos propios del transmisor, resultaría más apropiado
+introducir la dinámica de primer orden.</p><p>En ambos casos, la función del bloque es representar la conversión desde la temperatura real del proceso hacia la señal medida
+<formula>T_m(t)</formula>, utilizada por el comparador. Dado que en este informe se adoptó un criterio de modelado en unidades físicas, se asume
+que la salida del bloque puede interpretarse directamente en °C, aunque en la implementación real exista una conversión intermedia
+de la señal termoeléctrica de la termocupla.</p><h4 id="actuador">Actuador</h4><p>El actuador (modulación de potencia) puede modelarse mediante un primer orden sujeto a saturación:</p><formula data-block="">G_a(s)=\dfrac{K_a}{\tau_a s + 1},\qquad Q(t)=\text{sat}\{K_a u(t)\}</formula><p>donde <formula>u(t)</formula> es la señal de control expresada como porcentaje de actuación, y <formula>\text{sat}\{\cdot\}</formula> indica límites físicos.</p><p>Este bloque representa el conjunto formado por el elemento final de control y el sistema generador de calor. Su papel dentro
+del lazo es transformar la señal enviada por el controlador en una modificación efectiva de la potencia térmica disponible para
+el secado. La dinámica del actuador puede deberse, por ejemplo, a la apertura progresiva de una válvula de combustible, a la
+respuesta del sistema de combustión o al tiempo requerido para que el generador de calor modifique su régimen de operación.</p><p>La saturación introducida en la expresión anterior resulta físicamente necesaria, ya que la potencia no puede crecer ni decrecer
+sin límite. En términos de control, esta restricción es importante porque condiciona la respuesta ante grandes errores de temperatura
+y puede producir comportamientos no lineales cuando el actuador opera cerca de sus límites mínimos o máximos.</p><h3 id="parámetros-nominales-y-sugerencia-experimental" data-location="1.2.3">Parámetros nominales y sugerencia experimental</h3><p>Para llevar los modelos a valores numéricos no debe asumirse que existe un único conjunto de parámetros válido para todos
+los secaderos de yerba mate, ya que dichos parámetros dependen del punto de operación, de la carga de producto, de las
+condiciones térmicas y del esquema constructivo particular de cada equipo. Por esta razón, en ingeniería de control se
+recomienda obtener modelos empíricos alrededor del régimen nominal mediante ensayos de paso o impulso y ajustar sus
+parámetros a partir de la respuesta temporal medida [3]. En el presente informe, los valores indicados a
+continuación se adoptan como un punto de partida para la simulación y el análisis del lazo de control. En particular, los
+parámetros de la planta se eligieron de manera compatible con el comportamiento lento reportado para secaderos continuos de
+yerba mate en la bibliografía técnica, mientras que los del sensor y del acondicionador se tomaron con dinámica mucho más
+rápida que la planta, de acuerdo con el criterio de modelado adoptado para instrumentación térmica [4] y
+ [2].</p><p>Valores nominales adoptados como ejemplo inicial para simulación:</p><div class="page-break" data-hidden=""></div><table id="table-1.4"><thead><tr><th>Valores nominales</th></tr></thead><tbody><tr><td><formula>K_p \approx 0.02\ \mathrm{^{\circ}C/W}</formula></td></tr><tr><td><formula>\tau_p \approx 200\ \mathrm{s}</formula></td></tr><tr><td><formula>K_s \approx 1</formula> (si la salida del transmisor se expresa en °C)</td></tr><tr><td><formula>\tau_s \approx 1\ \mathrm{s}</formula> (si existe dinámica apreciable)</td></tr><tr><td><formula>K_a \approx 1</formula> (relación <formula>u \to Q</formula> en lazo lineal)</td></tr><tr><td><formula>\tau_a \approx 5\ \mathrm{s}</formula></td></tr></tbody><caption class="caption-bottom" data-location="1.4"></caption></table><p>Estos valores deben interpretarse como nominales y orientativos. En particular, <formula>K_p</formula> y <formula>\tau_p</formula> no constituyen
+constantes universales del proceso, sino parámetros de ajuste que deben identificarse experimentalmente sobre la planta real
+mediante una prueba de escalón en potencia y registro de la respuesta temporal de <formula>T(t)</formula> [3] y
+[4].</p><h3 id="cómo-validar-y-ajustar-el-modelo" data-location="1.2.4">Cómo validar y ajustar el modelo</h3><p>La validación y el ajuste del modelo constituyen la etapa en la que se verifica si la representación matemática propuesta
+describe con suficiente fidelidad el comportamiento real del secadero en el entorno del punto de operación seleccionado. Dado
+que el modelo adoptado para la planta es de primer orden y linealizado, su validez no debe asumirse a priori, sino comprobarse
+experimentalmente mediante ensayos controlados sobre la variable manipulada y observación de la respuesta de la variable
+controlada [3].</p><p>El procedimiento más apropiado para este tipo de sistema consiste en aplicar una prueba de escalón sobre el actuador, es decir,
+introducir una variación conocida y acotada en la potencia térmica <formula>Q(t)</formula> o en la señal equivalente de mando <formula>u(t)</formula>, y
+registrar la evolución temporal de la temperatura del aire en la cámara, representada por <formula>T(t)</formula>. Para que el ensayo sea
+representativo del modelo lineal propuesto, la planta debe operar inicialmente en un régimen estacionario cercano al punto
+nominal, de modo que la perturbación introducida no aleje al sistema de la zona donde la linealización resulta válida.</p><p>A partir de la respuesta obtenida, el primer parámetro a identificar es la ganancia estática de la planta <formula>K_p</formula>. Desde el
+punto de vista físico, este parámetro cuantifica cuánto cambia la temperatura en estado estacionario ante una variación dada
+de la potencia térmica aplicada. Por ello, puede estimarse como el cociente entre el incremento final de temperatura y el
+incremento de potencia introducido durante el ensayo:</p><formula data-block="">K_p \approx \dfrac{\Delta T_{ss}}{\Delta Q}</formula><p>donde <formula>\Delta T_{ss}</formula> es la variación de temperatura observada una vez alcanzado el nuevo estado estacionario, y
+<formula>\Delta Q</formula> es la variación aplicada en la entrada. Esta estimación permite justificar el valor adoptado para <formula>K_p</formula>
+en el modelo de planta.</p><p>El segundo parámetro clave es la constante de tiempo <formula>\tau_p</formula>, asociada a la rapidez con que responde el secadero frente
+a un cambio de entrada. En un sistema de primer orden, dicho parámetro puede obtenerse identificando el instante en que la
+respuesta alcanza aproximadamente el 63,2 % del valor final del cambio producido por el escalón. Ese criterio proviene
+directamente de la solución temporal del modelo de primer orden y constituye una herramienta estándar de identificación en
+procesos térmicos [3]. Si la respuesta experimental presenta cierto ruido o perturbaciones superpuestas,
+puede resultar conveniente suavizar la señal medida o realizar varios ensayos y promediar los resultados.</p><p>Una vez estimados <formula>K_p</formula> y <formula>\tau_p</formula>, se debe comparar la respuesta del modelo teórico con la respuesta experimental de la
+planta ante la misma excitación. Esta comparación no debe limitarse únicamente al valor final alcanzado, sino también a la
+forma general de la curva temporal: pendiente inicial, rapidez de crecimiento, tiempo de establecimiento y eventual presencia
+de retardos o desviaciones sistemáticas. Si el modelo reproduce razonablemente estas características, puede considerarse
+válido para fines de análisis y diseño del controlador dentro del rango estudiado.</p><p>En caso de observar discrepancias importantes, corresponde ajustar los parámetros del modelo o revisar la estructura elegida.
+Por ejemplo, si el valor final coincide pero la respuesta calculada es demasiado rápida o demasiado lenta, el parámetro que
+debe corregirse prioritariamente es <formula>\tau_p</formula>. Si, en cambio, la forma de la curva es similar pero el incremento final no
+coincide con el registrado experimentalmente, el parámetro a reajustar es <formula>K_p</formula>. Si las diferencias persisten aun después
+de estos ajustes, ello puede indicar que el proceso no queda suficientemente representado por un primer orden puro y que sería
+necesario incorporar un retardo, una dinámica adicional o una no linealidad más explícita.</p><p>También resulta técnicamente conveniente repetir el ensayo con distintas amplitudes de escalón y, si es posible, bajo distintas
+condiciones de carga o humedad del producto. Esto permite evaluar el rango de validez del modelo linealizado y verificar si los
+parámetros identificados permanecen aproximadamente constantes o si varían de manera significativa con el punto de operación.
+Si la variación es pequeña, el modelo nominal puede considerarse adecuado para diseño inicial. Si la variación es grande, deberá
+dejarse explícito que el modelo solo es válido localmente.</p><p>En el caso del sensor y del acondicionador, la validación puede realizarse de forma más sencilla, ya que en este informe se ha
+optado por representarlos mediante una ganancia estática. Esa decisión se justifica si la dinámica de medición es mucho más
+rápida que la de la planta térmica y no introduce retardos apreciables en la escala temporal del secadero. Si en una futura
+implementación experimental se observara un retardo de medición relevante o una respuesta filtrada que afecte el lazo, entonces
+sería razonable reemplazar ese bloque por el modelo de primer orden propuesto para <formula>G_s(s)</formula>.</p><p>De manera análoga, el bloque actuador puede validarse comprobando que la relación entre la señal de control <formula>u(t)</formula> y la
+potencia térmica efectivamente entregada al proceso sea aproximadamente proporcional en la zona de operación considerada. Si se
+detectan tiempos de respuesta apreciables o saturaciones frecuentes, esas características deberán reflejarse en los parámetros
+<formula>K_a</formula>, <formula>\tau_a</formula> y en la función de saturación ya introducida en el modelo.</p><div class="page-break" data-hidden=""></div><h2 id="análisis-del-comportamiento-dinámico" data-location="1.3">Análisis del comportamiento dinámico</h2><h3 id="análisis-de-estabilidad-absoluta" data-location="1.3.1">Análisis de estabilidad absoluta</h3><p>Para el modelo de planta de primer orden propuesto:</p><formula data-block="">G_p(s) = \dfrac{K_p}{\tau_p s + 1}</formula><p>El denominador de la planta en lazo abierto es <formula>\tau_p s + 1</formula>. En consecuencia, presenta un único polo ubicado en:</p><formula data-block="">s = -\dfrac{1}{\tau_p}.</formula><p>Dado que en una planta térmica físicamente realizable se cumple <formula>\tau_p > 0</formula>, dicho polo pertenece al semiplano izquierdo
+del plano complejo. Por lo tanto, la planta aislada resulta <strong>absolutamente estable</strong>, ya que su respuesta natural decae con el
+tiempo y no presenta crecimiento no acotado frente a perturbaciones iniciales.</p><p>Ahora bien, como en el presente informe la estrategia de control seleccionada es un <strong>controlador PI</strong>, la estabilidad de lazo
+cerrado debe analizarse con esa estructura y no con un controlador puramente proporcional. Si se adopta:</p><formula data-block="">C(s) = K_c + \dfrac{K_i}{s},</formula><p>la ecuación característica del sistema realimentado viene dada por:</p><formula data-block="">1 + C(s)G_p(s) = 0.</formula><p>Reemplazando la planta y el controlador:</p><formula data-block="">1 + \left(K_c + \dfrac{K_i}{s}\right)\dfrac{K_p}{\tau_p s + 1} = 0,</formula><p>de donde se obtiene:</p><formula data-block="">\tau_p s^2 + (1 + K_c K_p)s + K_i K_p = 0.</formula><p>Se trata de un polinomio característico de segundo orden. Para este caso, una condición suficiente y necesaria de estabilidad
+es que todos sus coeficientes sean positivos. En el modelo adoptado eso ocurre si:</p><ul><li><formula>\tau_p > 0</formula>,</li><li><formula>K_p > 0</formula>,</li><li><formula>K_c > 0</formula>,</li><li><formula>K_i > 0</formula>.</li></ul><p>Estas condiciones son coherentes con la interpretación física del sistema: la planta posee inercia térmica positiva, la potencia
+térmica incrementa la temperatura del aire y el controlador PI actúa con ganancias positivas para corregir el error. En
+consecuencia, dentro del modelo nominal propuesto, el sistema en lazo cerrado con controlador PI también resulta estable.</p><h3 id="análisis-de-la-respuesta-temporal" data-location="1.3.2">Análisis de la respuesta temporal</h3><p>Dado que la estructura de control adoptada en el trabajo es un controlador PI, la respuesta temporal debe analizarse a partir
+del sistema realimentado de segundo orden equivalente. Con:</p><formula data-block="">C(s) = K_c + \dfrac{K_i}{s}, \qquad G_p(s) = \dfrac{K_p}{\tau_p s + 1},</formula><p>la función de transferencia de lazo cerrado entre la consigna y la salida queda:</p><formula data-block="">\dfrac{T(s)}{T_{ref}(s)} = \dfrac{K_p(K_c s + K_i)}{\tau_p s^2 + (1 + K_c K_p)s + K_i K_p}.</formula><p>Por lo tanto, ante un escalón de consigna, la evolución temporal de la temperatura ya no responde exactamente a la forma
+exponencial simple de un primer orden puro, sino a una dinámica de segundo orden cuyas características dependen de la posición
+de los polos de lazo cerrado.</p><p>Comparando el denominador con el polinomio canónico de segundo orden:</p><formula data-block="">s^2 + 2\zeta\omega_n s + \omega_n^2,</formula><p>pueden identificarse parámetros equivalentes de amortiguamiento y frecuencia natural mediante:</p><formula data-block="">2\zeta\omega_n = \dfrac{1 + K_c K_p}{\tau_p}, \qquad \omega_n^2 = \dfrac{K_i K_p}{\tau_p}.</formula><p>Esta representación permite relacionar directamente la elección de <formula>K_c</formula> y <formula>K_i</formula> con indicadores temporales de desempeño,
+como el tiempo de establecimiento, el sobrepasamiento máximo y la rapidez global de la respuesta. En particular, al aumentar
+<formula>K_c</formula> y/o <formula>K_i</formula> dentro de un rango físicamente razonable, la respuesta del sistema tiende a volverse más rápida, aunque
+también puede aumentar la sensibilidad frente a saturaciones del actuador o a incertidumbres del modelo.</p><p>En el caso específico del secadero, donde se busca error estacionario nulo frente a cambios escalón de consigna y una respuesta
+sin sobrepasamientos excesivos, el controlador PI permite alcanzar un compromiso adecuado entre rapidez y amortiguamiento. Por
+eso, en las secciones siguientes las especificaciones de diseño y las simulaciones se formularán sobre la base de esta dinámica
+de segundo orden en lazo cerrado.</p><h3 id="verificación-del-modelo-matemático-a-partir-de-la-respuesta-temporal" data-location="1.3.3">Verificación del modelo matemático a partir de la respuesta temporal</h3><p>La verificación del modelo a partir de la respuesta temporal constituye una aplicación práctica de la metodología de validación
+desarrollada en la sección anterior. En este punto, el objetivo ya no es volver a describir en detalle todo el procedimiento
+experimental, sino comprobar que los parámetros nominales adoptados para la planta reproducen adecuadamente la evolución temporal
+del secadero ante excitaciones compatibles con su operación normal.</p><p>Para ello, se considera una prueba de escalón sobre la variable manipulada y se compara la respuesta térmica medida con la que
+predice el modelo de primer orden propuesto. A partir de esa comparación pueden obtenerse estimaciones experimentales de la
+ganancia estática y de la constante de tiempo:</p><formula data-block="">K_{p,exp} = \dfrac{T_{\infty} - T_0}{\Delta Q}, \qquad \tau_{p,exp} \approx t_{63\%}.</formula><p>Si los valores obtenidos resultan próximos a los parámetros nominales <formula>K_p</formula> y <formula>\tau_p</formula>, y la forma general de la respuesta
+temporal presenta concordancia aceptable con el comportamiento observado, entonces el modelo puede considerarse válido dentro
+del rango de operación analizado. En caso contrario, deberán reajustarse dichos parámetros o bien reconsiderarse la estructura
+del modelo, por ejemplo incorporando retardos o dinámicas adicionales.</p><p>La verificación se completa repitiendo el análisis con escalones de distinta amplitud, a fin de comprobar si el comportamiento
+permanece aproximadamente lineal en el intervalo operativo de interés. Este paso es importante porque el modelo adoptado es
+linealizado y, por lo tanto, su validez debe entenderse como local respecto del punto nominal seleccionado.</p><h3 id="determinación-del-tipo-de-sistema" data-location="1.3.4">Determinación del tipo de sistema</h3><p>La noción de tipo de sistema se vincula con la cantidad de integradores puros presentes en la función de transferencia de lazo
+abierto y permite anticipar el comportamiento del error en estado estacionario frente a entradas de referencia estándar.</p><p>En primer lugar, la planta del secadero por sí sola está dada por:</p><formula data-block="">G_p(s) = \dfrac{K_p}{\tau_p s + 1}.</formula><p>Esta función no posee polos en el origen, por lo que la planta es de <strong>tipo 0</strong>. Desde el punto de vista práctico, esto
+significa que, si se utilizara únicamente un controlador proporcional, el sistema presentaría un error estacionario distinto
+de cero ante una entrada escalón de consigna.</p><p>Sin embargo, en este trabajo se adopta un controlador PI de la forma:</p><formula data-block="">C(s) = K_c + \dfrac{K_i}{s}.</formula><p>La presencia del término <formula>\dfrac{K_i}{s}</formula> introduce un integrador puro en el lazo abierto. En consecuencia, el sistema
+realimentado pasa a comportarse como un <strong>sistema de tipo 1</strong> respecto del seguimiento de referencias escalón. Esta propiedad
+es precisamente la que justifica el uso de acción integral en el secadero, ya que permite eliminar el error en estado
+estacionario frente a cambios permanentes de consigna, condición deseada para mantener la temperatura de secado en el valor
+de trabajo establecido.</p><h3 id="polos-dominantes" data-location="1.3.5">Polos dominantes</h3><p>Dado que en este trabajo se adopta un controlador PI, el análisis de polos dominantes debe realizarse directamente sobre la
+ecuación característica del lazo cerrado correspondiente a esa estructura. Para:</p><formula data-block="">C(s) = K_c + \dfrac{K_i}{s}, \qquad G_p(s) = \dfrac{K_p}{\tau_p s + 1},</formula><p>la función característica del sistema resulta:</p><formula data-block="">\tau_p s^2 + (1 + K_c K_p) s + K_i K_p = 0,</formula><p>que corresponde a un sistema de segundo orden. Sus polos de lazo cerrado vienen dados por:</p><formula data-block="">s = \frac{-(1 + K_c K_p) \pm \sqrt{(1 + K_c K_p)^2 - 4 \tau_p K_i K_p}}{2 \tau_p}.</formula><p>En este contexto, los <strong>polos dominantes</strong> son aquellos cuya parte real tiene menor valor absoluto, es decir, los polos más
+cercanos al eje imaginario. Son los que determinan en mayor medida la rapidez de respuesta, el amortiguamiento y la forma
+general del transitorio. Por ello, al diseñar el controlador PI, el objetivo consiste en ubicar dichos polos en una región
+del plano complejo compatible con las especificaciones temporales del sistema.</p><p>Si los polos dominantes son reales y negativos, la respuesta del secadero será sobreamortiguada o críticamente amortiguada,
+sin oscilaciones significativas. Si forman un par complejo conjugado con parte real negativa, la respuesta seguirá siendo
+estable, pero podrá presentar cierto sobrepasamiento, cuyo valor dependerá del amortiguamiento asociado. En ambos casos, cuanto
+más a la izquierda se encuentren los polos dominantes, más rápida será la respuesta; sin embargo, una ubicación excesivamente
+alejada del eje imaginario puede exigir acciones de control demasiado intensas o amplificar el efecto de no linealidades y
+saturaciones no modeladas.</p><p>En un proceso térmico lento como el secadero de yerba mate, resulta conveniente que los polos dominantes permanezcan en el
+semiplano izquierdo con amortiguamiento suficiente y con módulos compatibles con tiempos de establecimiento del orden de algunos
+minutos. Esta interpretación enlaza directamente con la sección siguiente, donde se fijan especificaciones temporales y se
+seleccionan valores de <formula>K_c</formula> y <formula>K_i</formula> para ubicar los polos del sistema en una zona adecuada del plano complejo.</p><div class="page-break" data-hidden=""></div><h2 id="especificaciones-de-diseño" data-location="1.4">Especificaciones de diseño</h2><h3 id="elección-del-dominio-de-especificación" data-location="1.4.1">Elección del dominio de especificación</h3><p>Para este trabajo se adopta el <strong>dominio del tiempo</strong> para definir las especificaciones de diseño.</p><p>Esta elección resulta la más adecuada por tres motivos principales:</p><ul><li>La variable controlada es la temperatura del aire, cuya evolución se interpreta de manera directa en función del tiempo.</li><li>El modelo propuesto para la planta es esencialmente de <strong>primer orden con dinámica lenta</strong>, por lo que los indicadores temporales describen bien el desempeño esperado.</li><li>Desde el punto de vista operativo, al proceso industrial le interesa saber si la temperatura alcanza la consigna con rapidez suficiente, sin oscilaciones excesivas y sin error permanente.</li></ul><p>Si bien el análisis en frecuencia también es útil para evaluar robustez, en este caso las exigencias de funcionamiento del secadero quedan mejor expresadas mediante <strong>error estacionario, sobrepasamiento
+y tiempo de establecimiento.</strong></p><h3 id="especificaciones-adoptadas" data-location="1.4.2">Especificaciones adoptadas</h3><p>Tomando como referencia los criterios clásicos de desempeño temporal utilizados en sistemas de control [3] y
+considerando la dinámica lenta reportada para secaderos continuos de yerba mate [4], se adoptan para este
+trabajo las siguientes especificaciones frente a un cambio escalón en la consigna de temperatura:</p><ul><li><strong>Error en estado estable:</strong> <formula>e_{ss} = 0</formula> frente a entrada escalón.</li><li><strong>Sobrepasamiento máximo:</strong> <formula>M_p \le 10\%</formula>.</li><li><strong>Tiempo de establecimiento:</strong> <formula>t_s(2\%) \le 300\ \mathrm{s}</formula>.</li></ul><p>Estas condiciones resultan razonables para un proceso térmico de secado [3] [4], ya que:</p><ul><li>Un error estacionario nulo evita desvíos permanentes respecto de la temperatura de trabajo.</li><li>Un sobrepasamiento acotado reduce el riesgo de sobrecalentamiento del producto.</li><li>Un tiempo de establecimiento del orden de pocos minutos es compatible con una planta cuya
+constante de tiempo nominal es aproximadamente <formula>\tau_p = 200\ \mathrm{s}</formula>.</li></ul><h3 id="definición-de-cada-especificación" data-location="1.4.3">Definición de cada especificación</h3><h4 id="error-en-estado-estable">Error en estado estable</h4><p>El error en estado estable se define como:</p><formula data-block="">e_{ss} = \lim_{t \to \infty} e(t) = \lim_{t \to \infty} \left[T_{ref}(t) - T(t)\right].</formula><p>Para el secadero se desea:</p><formula data-block="">e_{ss} = 0</formula><p>ante cambios escalón de consigna. Esto conduce naturalmente al uso de un controlador con acción integral, por ejemplo un PI,
+ya que la planta sola es de <strong>tipo 0</strong> y con control puramente proporcional quedaría un error residual [3].</p><h4 id="sobrepasamiento-máximo">Sobrepasamiento máximo</h4><p>El sobrepasamiento máximo se define como:</p><formula data-block="">M_p = \dfrac{T_{max} - T_{ref}}{T_{ref}} \cdot 100\%</formula><p>para una respuesta al escalón, donde <formula>T_{max}</formula> es el valor máximo alcanzado por la salida.</p><p>Se adopta como requisito:</p><formula data-block="">M_p \le 10\%.</formula><p>En un proceso térmico este límite es importante porque temperaturas excesivas pueden perjudicar la calidad del secado, aumentar
+el consumo energético y apartar al sistema de la zona de linealización del modelo [???].</p><h4 id="tiempo-de-establecimiento">Tiempo de establecimiento</h4><p>El tiempo de establecimiento se define como el tiempo necesario para que la respuesta permanezca dentro de una banda del 2 % alrededor del valor final:</p><formula data-block="">|T(t) - T(\infty)| \le 0.02\,|T(\infty)|.</formula><p>Se fija como objetivo:</p><formula data-block="">t_s \le 300\ \mathrm{s}.</formula><p>La adopción de un tiempo de establecimiento del orden de algunos minutos se considera compatible con una planta de secado con
+constante de tiempo nominal del orden de <formula>200\ \mathrm{s}</formula>, como la utilizada en este informe [4].</p><p>Este valor representa una mejora respecto de la dinámica natural de la planta y permite rechazar perturbaciones térmicas con una velocidad adecuada sin exigir una acción de control excesivamente agresiva.</p><h3 id="verificación-de-realizabilidad" data-location="1.4.4">Verificación de realizabilidad</h3><p>Debe verificarse ahora si estas especificaciones son compatibles con el modelo adoptado. Para ello se considera un controlador PI:</p><formula data-block="">C(s) = K_c + \dfrac{K_i}{s}.</formula><p>Combinado con la planta:</p><formula data-block="">G_p(s) = \dfrac{K_p}{\tau_p s + 1}, \qquad K_p = 0.02,\quad \tau_p = 200\ \mathrm{s},</formula><p>la ecuación característica de lazo cerrado resulta:</p><formula data-block="">\tau_p s^2 + (1 + K_c K_p)s + K_i K_p = 0.</formula><p>Comparando con el polinomio patrón de segundo orden:</p><formula data-block="">s^2 + 2 \zeta \omega_n s + \omega_n^2,</formula><p>puede buscarse un comportamiento con amortiguamiento aproximado <formula>\zeta \approx 0.7</formula>, valor para el cual el sobrepasamiento es menor al 10 %.</p><p>Además, usando la aproximación:</p><formula data-block="">t_s(2\%) \approx \dfrac{4}{\zeta \omega_n},</formula><p>la condición <formula>t_s \le 300\ \mathrm{s}</formula> exige aproximadamente:</p><formula data-block="">\zeta \omega_n \ge \dfrac{4}{300} = 0.0133.</formula><p>Tomando, por ejemplo:</p><formula data-block="">\zeta = 0.7,\qquad \omega_n \approx 0.019\ \mathrm{rad/s},</formula><p>se obtiene:</p><p><formula>M_p \approx 4.6\%</formula>,
+<formula>t_s \approx \dfrac{4}{0.7 \cdot 0.019} \approx 300\ \mathrm{s}</formula>.</p><p>Igualando coeficientes con <formula>\tau_p = 200\ \mathrm{s}</formula> y <formula>K_p = 0.02</formula>, resultan valores orientativos del controlador:</p><p><formula>K_c \approx 216</formula>,
+<formula>K_i \approx 3.6</formula>.</p><p>Estos valores son físicamente plausibles dentro del modelo linealizado y no implican requerimientos incompatibles con la naturaleza lenta del proceso. Además:</p><ul><li>El actuador tiene una constante de tiempo nominal pequeña frente a la de la planta (<formula>\tau_a \approx 5\ \mathrm{s} \ll \tau_p</formula>).</li><li>El sensor es mucho más rápido que la dinámica térmica principal.</li><li>El nivel de amortiguamiento adoptado evita respuestas oscilatorias severas.</li></ul><p>Por lo tanto, <strong>las especificaciones seleccionadas son realizables dentro del modelo nominal adoptado</strong>, siempre que el diseño final del PI contemple saturación del actuador
+ y se mantenga la operación alrededor del punto nominal de linealización.</p><div class="page-break" data-hidden=""></div><h2 id="diseño-del-controlador" data-location="1.5">Diseño del controlador</h2><h3 id="criterio-general-de-diseño" data-location="1.5.1">Criterio general de diseño</h3><p>Una vez definidas las especificaciones de desempeño, corresponde seleccionar una estructura de controlador apropiada para la planta térmica propuesta:</p><formula data-block="">G_p(s) = \dfrac{K_p}{\tau_p s + 1}, \qquad K_p = 0.02,\quad \tau_p = 200\ \mathrm{s}.</formula><p>Dado que se trata de una planta estable, lenta y de primer orden, en este trabajo se adopta como estrategia principal un
+<strong>controlador PI</strong>. La acción integral permite eliminar el error en estado estable ante escalones de consigna, mientras que la
+acción proporcional aporta la corrección necesaria para obtener una respuesta suficientemente rápida y compatible con la
+dinámica térmica del secadero. La acción derivativa no se considera necesaria como solución principal dentro del alcance del
+modelo adoptado.</p><p>En consecuencia, la solución seleccionada para el desarrollo principal del informe es un <strong>controlador PI obtenido por
+cancelación de polos dominantes</strong>, por ser el diseño más simple y físicamente razonable para un proceso térmico de estas
+características. El diseño PID se mantiene únicamente como alternativa de comparación y no como la estrategia de control
+adoptada para el secadero.</p><h3 id="método-de-cancelación-de-polos-dominantes" data-location="1.5.2">Método de cancelación de polos dominantes</h3><p>Se propone un controlador PI de la forma:</p><formula data-block="">C_{PI}(s) = K_c\left(1 + \dfrac{1}{T_i s}\right).</formula><p>La planta posee un polo en:</p><formula data-block="">s = -\dfrac{1}{\tau_p} = -\dfrac{1}{200} = -0.005\ \mathrm{s^{-1}}.</formula><p>Si se elige:</p><formula data-block="">T_i = \tau_p = 200\ \mathrm{s},</formula><p>entonces el cero del PI queda en:</p><formula data-block="">s = -\dfrac{1}{T_i} = -0.005\ \mathrm{s^{-1}},</formula><p>cancelando el polo dominante de la planta. En consecuencia:</p><formula data-block="">C_{PI}(s)G_p(s) = K_c\left(1 + \dfrac{1}{200s}\right)\dfrac{0.02}{200s+1} = \dfrac{0.02K_c}{200s}.</formula><p>El lazo cerrado resultante es:</p><formula data-block="">\dfrac{T(s)}{T_{ref}(s)} = \dfrac{0.02K_c}{200s + 0.02K_c}.</formula><p>Se obtiene así una dinámica de primer orden, sin sobrepasamiento, con error estacionario nulo frente a escalón.</p><p>La constante de tiempo de lazo cerrado queda:</p><formula data-block="">\tau_{cl} = \dfrac{200}{0.02K_c} = \dfrac{10000}{K_c}.</formula><p>Usando el criterio de tiempo de establecimiento para un primer orden:</p><formula data-block="">t_s(2\%) \approx 4\tau_{cl} = \dfrac{40000}{K_c}.</formula><p>Imponiendo la especificación:</p><formula data-block="">t_s \le 300\ \mathrm{s},</formula><p>resulta:</p><formula data-block="">\dfrac{40000}{K_c} \le 300 \Rightarrow K_c \ge 133.3.</formula><p>Se adopta el valor:</p><formula data-block="">K_c = 150.</formula><p>Por lo tanto, el controlador propuesto por este método es:</p><formula data-block="">C_{PI}(s) = 150\left(1 + \dfrac{1}{200s}\right).</formula><p>Con esta elección:</p><ul><li>El error en estado estable es nulo.</li><li>El sobrepasamiento es aproximadamente cero.</li><li>El tiempo de establecimiento es:</li></ul><formula data-block="">t_s \approx \dfrac{40000}{150} \approx 267\ \mathrm{s},</formula><p>cumpliendo las especificaciones adoptadas.</p><h3 id="método-de-la-bisectriz" data-location="1.5.3">Método de la bisectriz</h3><p>El método de la bisectriz se emplea habitualmente sobre el lugar de las raíces
+para ubicar polos dominantes deseados y determinar la posición de los ceros y polos del compensador. A partir de las especificaciones temporales seleccionadas puede proponerse un par de polos dominantes aproximados:</p><formula data-block="">\zeta \approx 0.7,\qquad \omega_n \approx 0.019\ \mathrm{rad/s},</formula><p>de donde:</p><formula data-block="">s_d = -\zeta\omega_n \pm j\,\omega_n\sqrt{1-\zeta^2}\approx -0.0133 \pm j\,0.0136.</formula><p>En un diseño por bisectriz, este punto deseado se ubica en el plano <formula>s</formula> y luego se determina un compensador de adelanto del tipo:</p><formula data-block="">C_a(s)=K_c\dfrac{T s + 1}{\alpha T s + 1}, \qquad 0 < \alpha < 1,</formula><p>de manera que el lugar de raíces pase por <formula>s_d</formula>. Geométricamente, el cero y el polo del compensador se escogen para aportar el ángulo faltante según el criterio de fase.</p><p>Para la planta del secadero, esta técnica es perfectamente aplicable; sin embargo, dado que la planta original ya es de primer orden y no presenta problemas severos de
+estabilidad, su uso no resulta tan directo ni tan económico como el diseño <strong>PI por cancelación</strong>. Por ello se considera una <strong>alternativa válida</strong>, pero no la opción principal seleccionada.</p><h3 id="métodos-de-compensación-en-frecuencia" data-location="1.5.4">Métodos de compensación en frecuencia</h3><p>Otra posibilidad es diseñar el controlador en el dominio de la frecuencia, fijando especificaciones de robustez como margen de fase y margen de ganancia. En ese caso podrían adoptarse, por ejemplo, criterios como:</p><ul><li>Error estacionario nulo ante escalón.</li><li>Margen de fase del orden de <formula>50^\circ</formula> a <formula>60^\circ</formula>.</li><li>Frecuencia de cruce compatible con la dinámica de la planta, del orden de <formula>0.01</formula> a <formula>0.02\ \mathrm{rad/s}</formula>.</li></ul><p>Con este enfoque pueden plantearse:</p><ul><li>Un <strong>compensador de adelanto</strong>, si se desea aumentar margen de fase y acelerar la respuesta.</li><li>Un <strong>compensador de atraso</strong>, si se busca mejorar precisión estacionaria con mínima modificación del transitorio.</li><li>Un <strong>adelanto-atraso</strong>, si se pretende combinar ambas ventajas.</li></ul><p>En el secadero de yerba mate, la compensación en frecuencia sería especialmente útil si se priorizara robustez ante incertidumbre de parámetros o si se contara con una identificación experimental más precisa del comportamiento dinámico. No obstante, para el nivel de modelado actual, el método temporal con PI ofrece una solución más directa y suficiente.</p><h3 id="diseño-de-un-controlador-pid" data-location="1.5.5">Diseño de un controlador PID</h3><p>Como alternativa más general, puede proponerse un controlador PID:</p><formula data-block="">C_{PID}(s) = K_c\left(1 + \dfrac{1}{T_i s} + T_d s\right).</formula><p>Al cerrar el lazo con la planta de primer orden, la ecuación característica queda:</p><formula data-block="">\left(200T_i + 0.02K_cT_iT_d\right)s^2 + T_i(1 + 0.02K_c)s + 0.02K_c = 0.</formula><p>Si se desea reproducir una dinámica de segundo orden equivalente con:</p><formula data-block="">\zeta = 0.7,\qquad \omega_n = 0.019\ \mathrm{rad/s},</formula><p>y se fija un tiempo derivativo moderado:</p><formula data-block="">T_d = 10\ \mathrm{s},</formula><p>se obtienen valores orientativos:</p><ul><li><formula>K_c \approx 294</formula>,</li><li><formula>T_i \approx 63\ \mathrm{s}</formula>,</li><li><formula>T_d = 10\ \mathrm{s}</formula>.</li></ul><p>Por lo tanto, un PID posible para este sistema es:</p><formula data-block="">C_{PID}(s) = 294\left(1 + \dfrac{1}{63s} + 10s\right).</formula><p>Este controlador también satisface, en el modelo nominal, error estacionario nulo y una respuesta suficientemente rápida y amortiguada. Sin embargo, en un proceso térmico real la acción derivativa puede amplificar ruido de medición y no siempre aporta beneficios significativos frente a un PI correctamente ajustado.</p><h3 id="controlador-seleccionado" data-location="1.5.6">Controlador seleccionado</h3><p>Aunque se ha verificado que un PID también puede diseñarse para la planta propuesta, se adopta como solución recomendada el siguiente controlador:</p><formula data-block="">\boxed{C(s) = 150\left(1 + \dfrac{1}{200s}\right)}</formula><p>Es decir, el controlador finalmente seleccionado para el secadero es un <strong>controlador PI</strong>. Esta elección no es arbitraria,
+sino que surge de manera coherente con todo el desarrollo a lo largo de este informe. En primer lugar, la planta modelada es
+térmica, estable, lenta y de primer orden, por lo que no requiere una estructura de control excesivamente compleja para cumplir
+las especificaciones planteadas. En segundo lugar, una de las exigencias principales del diseño es lograr <strong>error estacionario
+nulo</strong> frente a cambios escalón en la consigna, propiedad que se obtiene naturalmente mediante la acción integral incorporada en
+un PI. Finalmente, el análisis de realizabilidad y las simulaciones posteriores muestran que esta estructura resulta suficiente
+para alcanzar tiempos de establecimiento compatibles con el proceso sin introducir oscilaciones importantes.</p><p>Además, el método de cancelación de polos dominantes permitió obtener un controlador PI con parámetros físicamente razonables y
+de interpretación sencilla. La elección de un tiempo integral igual a la constante de tiempo nominal de la planta simplifica el
+diseño y mantiene una relación clara entre el modelo del secadero y la ley de control aplicada. Desde el punto de vista práctico,
+esto favorece una implementación más transparente y robusta que la de un PID completo, especialmente en presencia de ruido de
+medición, incertidumbre paramétrica y posibles saturaciones del actuador.</p><p>Las razones principales de esta elección son:</p><ul><li>Cumple las especificaciones de diseño establecidas.</li><li>Elimina el error en estado estable.</li><li>No introduce una acción derivativa innecesaria para una planta térmica lenta.</li><li>Su implementación industrial resulta más simple y robusta.</li></ul><p>Por lo tanto, dentro del marco del presente trabajo, el <strong>PI diseñado por cancelación de polos dominantes</strong> se adopta como la
+solución principal y recomendada para el control de temperatura del secadero de yerba mate. El diseño PID queda planteado solo
+como una alternativa adicional de comparación, pero no como la estrategia elegida para la implementación y validación del sistema
+propuesto.</p><div class="page-break" data-hidden=""></div><h2 id="simulación" data-location="1.6">Simulación</h2><h3 id="objetivo-de-la-simulación" data-location="1.6.1">Objetivo de la simulación</h3><p>Una vez definido el controlador, corresponde verificar por simulación si el sistema cumple las especificaciones de diseño y cómo se comporta frente a perturbaciones y no linealidades. Para ello se plantearon dos escenarios:</p><ul><li><strong>Escenario nominal:</strong> respuesta al escalón de referencia sin perturbaciones externas, utilizado para verificar error en estado estable, sobrepasamiento y tiempo de establecimiento.</li><li><strong>Escenario perturbado/no lineal:</strong> respuesta del sistema ante una perturbación de carga aplicada en <formula>t = 600\ \mathrm{s}</formula>, incorporando además saturación del actuador, dinámica del actuador, dinámica del sensor y una ligera no linealidad en la medición.</li></ul><p>De esta manera, no solo se verifica el desempeño del controlador en condiciones ideales, sino también su robustez frente a efectos más realistas del proceso.</p><h3 id="modelo-simulado" data-location="1.6.2">Modelo simulado</h3><p>La simulación se construye a partir del <strong>modelo nominal</strong> definido en las secciones anteriores y se complementa con un
+conjunto de <strong>supuestos adicionales de ensayo</strong> introducidos únicamente para evaluar el comportamiento del sistema en escenarios
+de seguimiento, perturbación y no linealidades moderadas.</p><p>En primer lugar, los parámetros que provienen directamente del desarrollo previo del informe son los siguientes:</p><formula data-block="">G_p(s) = \dfrac{K_p}{\tau_p s + 1}, \qquad K_p = 0.02,\quad \tau_p = 200\ \mathrm{s}.</formula><p>correspondiente al modelo nominal de la planta térmica adoptado en la etapa de modelado, junto con el controlador seleccionado:</p><formula data-block="">C(s) = 150\left(1 + \dfrac{1}{200s}\right).</formula><p>Además, para representar la dinámica de los bloques auxiliares ya discutidos en el informe, se incorporan:</p><ul><li>Dinámica del actuador con <formula>\tau_a = 5\ \mathrm{s}</formula>.</li><li>Dinámica del sensor con <formula>\tau_s = 1\ \mathrm{s}</formula>.</li></ul><p>Estos valores están en línea con los parámetros nominales presentados previamente y se utilizan para mantener coherencia entre
+el modelo teórico y la simulación.</p><p>En segundo lugar, para construir los escenarios de prueba y analizar la robustez del controlador, se adoptan los siguientes
+supuestos adicionales de simulación:</p><ul><li>Referencia escalón de <formula>20\ ^\circ \mathrm{C}</formula> aplicada en <formula>t = 10\ \mathrm{s}</formula>.</li><li>Perturbación térmica equivalente de <formula>-6\ ^\circ \mathrm{C}</formula> a partir de <formula>t = 600\ \mathrm{s}</formula>.</li><li>Saturación del actuador entre <formula>0</formula> y <formula>3000\ \mathrm{W}</formula>.</li><li>No linealidad suave del sensor, implementada mediante una leve distorsión cuadrática de la señal medida.</li><li>Cambio paramétrico de la planta en el caso no lineal, tomando <formula>K_p = 0.019</formula> y <formula>\tau_p = 230\ \mathrm{s}</formula> para representar
+una variación moderada de carga o de condiciones de secado.</li></ul><p>Estos últimos valores no surgen de una identificación experimental específica desarrollada en este trabajo, sino que se
+introducen como hipótesis razonables de simulación para someter al controlador PI a condiciones menos ideales que las del
+modelo nominal. Por lo tanto, deben interpretarse como parámetros de prueba orientados a evaluar robustez y sensibilidad del
+sistema, y no como constantes físicas definitivas de la planta real.</p><h3 id="código-de-simulación-en-octave" data-location="1.6.3">Código de simulación en Octave</h3><p>El siguiente script en Octave implementa la comparación entre el sistema inicial sin mejoras, el sistema con controlador PI lineal y el sistema con PI más no linealidades:</p><pre><code class="language-octave">% Simulacion del secadero de yerba mate
+% Compara:
+% 1) Planta sin mejoras (lazo abierto con ajuste nominal de potencia)
+% 2) Lazo cerrado con controlador PI lineal
+% 3) Lazo cerrado con PI + no linealidades (saturacion, dinamica de actuador,
+%    dinamica de sensor y variacion paramétrica por cambio de carga)
+%
+% El script genera metricas de desempeno y figuras comparativas.
+
+clear; clc; close all;
+
+% Parametros nominales
+Kp = 0.02;       % degC/W
+tau_p = 200;     % s
+tau_a = 5;       % s
+tau_s = 1;       % s
+
+% Controlador PI seleccionado en el informe
+Kc = 150;
+Ti = 200;
+
+% Escenario de simulacion
+dt = 0.5;
+t_end = 1800;
+t = 0:dt:t_end;
+n = length(t);
+
+% Referencia: escalon de 20 degC a partir de t = 10 s
+r = zeros(1, n);
+r(t &gt;= 10) = 20;
+
+d_nom = zeros(1, n);
+d_dist = zeros(1, n);
+d_dist(t &gt;= 600) = -6;
+
+% Potencia nominal en lazo abierto para alcanzar 20 degC en condiciones ideales
+Q_nom = 20 / Kp;
+
+% Simulaciones nominales
+[T_open_nom, Q_open_nom] = simular_abierto(t, r, d_nom, Kp, tau_p, Q_nom, dt);
+[T_lin_nom, Q_lin_nom] = simular_pi_lineal(t, r, d_nom, Kp, tau_p, Kc, Ti, dt);
+[T_nl_nom, Tm_nl_nom, Qcmd_nl_nom, Qact_nl_nom] = simular_pi_nolineal(t, r, d_nom, Kc, Ti, tau_a, tau_s, dt, false);
+
+% Simulaciones con perturbaciones / no linealidades
+[T_open_dist, Q_open_dist] = simular_abierto(t, r, d_dist, Kp, tau_p, Q_nom, dt);
+[T_lin_dist, Q_lin_dist] = simular_pi_lineal(t, r, d_dist, Kp, tau_p, Kc, Ti, dt);
+[T_nl_dist, Tm_nl_dist, Qcmd_nl_dist, Qact_nl_dist] = simular_pi_nolineal(t, r, d_dist, Kc, Ti, tau_a, tau_s, dt, true);
+
+% Metricas nominales de cumplimiento de especificaciones
+metric_open_nom = calcular_metricas(t, r, T_open_nom, 10);
+metric_lin_nom = calcular_metricas(t, r, T_lin_nom, 10);
+metric_nl_nom = calcular_metricas(t, r, T_nl_nom, 10);
+
+% Error residual ante perturbacion permanente
+err_open_dist = r(end) - mean(T_open_dist(end-20:end));
+err_lin_dist = r(end) - mean(T_lin_dist(end-20:end));
+err_nl_dist = r(end) - mean(T_nl_dist(end-20:end));
+
+fprintf(&#39;\nRESULTADOS NOMINALES\n&#39;);
+fprintf(&#39;Planta sin mejoras: ess = %.3f degC, Mp = %.3f %% , ts = %.1f s\n&#39;, ...
+  metric_open_nom.ess, metric_open_nom.Mp, metric_open_nom.ts);
+fprintf(&#39;PI lineal:          ess = %.3f degC, Mp = %.3f %% , ts = %.1f s\n&#39;, ...
+  metric_lin_nom.ess, metric_lin_nom.Mp, metric_lin_nom.ts);
+fprintf(&#39;PI no lineal:       ess = %.3f degC, Mp = %.3f %% , ts = %.1f s\n&#39;, ...
+  metric_nl_nom.ess, metric_nl_nom.Mp, metric_nl_nom.ts);
+
+fprintf(&#39;\nERROR EN REGIMEN CON PERTURBACION PERMANENTE\n&#39;);
+fprintf(&#39;Sin mejoras: %.3f degC\n&#39;, err_open_dist);
+fprintf(&#39;PI lineal:   %.3f degC\n&#39;, err_lin_dist);
+fprintf(&#39;PI no lineal %.3f degC\n&#39;, err_nl_dist);
+
+% Graficos
+figure(1);
+plot(t, r, &#39;k--&#39;, &#39;LineWidth&#39;, 1.6); hold on;
+plot(t, T_open_nom, &#39;LineWidth&#39;, 1.8);
+plot(t, T_lin_nom, &#39;LineWidth&#39;, 1.8);
+plot(t, T_nl_nom, &#39;LineWidth&#39;, 1.8);
+grid on;
+xlabel(&#39;Tiempo [s]&#39;);
+ylabel(&#39;Temperatura [^oC]&#39;);
+title(&#39;Respuesta nominal al escalon&#39;);
+legend(&#39;Referencia&#39;, &#39;Sin mejoras&#39;, &#39;PI lineal&#39;, &#39;PI con no linealidades&#39;, &#39;Location&#39;, &#39;southeast&#39;);
+
+figure(2);
+plot(t, r, &#39;k--&#39;, &#39;LineWidth&#39;, 1.6); hold on;
+plot(t, T_open_dist, &#39;LineWidth&#39;, 1.8);
+plot(t, T_lin_dist, &#39;LineWidth&#39;, 1.8);
+plot(t, T_nl_dist, &#39;LineWidth&#39;, 1.8);
+grid on;
+xlabel(&#39;Tiempo [s]&#39;);
+ylabel(&#39;Temperatura [^oC]&#39;);
+title(&#39;Respuesta con perturbacion y no linealidades&#39;);
+legend(&#39;Referencia&#39;, &#39;Sin mejoras&#39;, &#39;PI lineal&#39;, &#39;PI con no linealidades&#39;, &#39;Location&#39;, &#39;southeast&#39;);
+
+figure(3);
+plot(t, Q_open_dist, &#39;LineWidth&#39;, 1.8); hold on;
+plot(t, Q_lin_dist, &#39;LineWidth&#39;, 1.8);
+plot(t, Qcmd_nl_dist, &#39;LineWidth&#39;, 1.8);
+plot(t, Qact_nl_dist, &#39;LineWidth&#39;, 1.8);
+grid on;
+xlabel(&#39;Tiempo [s]&#39;);
+ylabel(&#39;Potencia / accion de control [W]&#39;);
+title(&#39;Accion de control comparativa&#39;);
+legend(&#39;Sin mejoras&#39;, &#39;PI lineal&#39;, &#39;PI no lineal - mando&#39;, &#39;PI no lineal - actuador&#39;, &#39;Location&#39;, &#39;southeast&#39;);
+
+function out = calcular_metricas(t, r, y, t_step)
+  idx = find(t &gt;= t_step, 1);
+  r_final = r(end);
+  yss = mean(y(end-20:end));
+  out.ess = r_final - yss;
+  if abs(r_final) &gt; 1e-9
+    out.Mp = max(0, (max(y(idx:end)) - r_final) / abs(r_final) * 100);
+  else
+    out.Mp = 0;
+  end
+
+  banda = 0.02 * abs(r_final);
+  ts = NaN;
+  for k = idx:length(t)
+    if all(abs(y(k:end) - r_final) &lt;= banda)
+      ts = t(k) - t_step;
+      break;
+    end
+  end
+  out.ts = ts;
+end
+
+function [T, Q] = simular_abierto(t, r, d, Kp, tau_p, Q_nom, dt)
+  n = length(t);
+  T = zeros(1, n);
+  Q = zeros(1, n);
+  for k = 1:n-1
+    if t(k) &gt;= 10
+      Q(k) = Q_nom;
+    end
+    dT = (-T(k) + Kp * Q(k) + d(k)) / tau_p;
+    T(k+1) = T(k) + dt * dT;
+  end
+  Q(n) = Q(n-1);
+end
+
+function [T, Q] = simular_pi_lineal(t, r, d, Kp, tau_p, Kc, Ti, dt)
+  n = length(t);
+  T = zeros(1, n);
+  Q = zeros(1, n);
+  I = 0;
+  for k = 1:n-1
+    e = r(k) - T(k);
+    I = I + e * dt;
+    Q(k) = Kc * (e + (1 / Ti) * I);
+    dT = (-T(k) + Kp * Q(k) + d(k)) / tau_p;
+    T(k+1) = T(k) + dt * dT;
+  end
+  Q(n) = Q(n-1);
+end
+
+function [T, Tm, Qcmd, Qact] = simular_pi_nolineal(t, r, d, Kc, Ti, tau_a, tau_s, dt, con_cambio_carga)
+  n = length(t);
+  T = zeros(1, n);
+  Tm = zeros(1, n);
+  Qcmd = zeros(1, n);
+  Qact = zeros(1, n);
+  I = 0;
+  for k = 1:n-1
+    if con_cambio_carga &amp;&amp; t(k) &gt;= 600
+      Kp_eff = 0.019;
+      tau_eff = 230;
+    else
+      Kp_eff = 0.02;
+      tau_eff = 200;
+    end
+    y_sensor = Tm(k) + 0.0003 * Tm(k)^2;
+    e = r(k) - y_sensor;
+    u_unsat = Kc * (e + (1 / Ti) * I);
+    u_sat = min(max(u_unsat, 0), 3000);
+    if abs(u_unsat - u_sat) &lt; 1e-9
+      I = I + e * dt;
+    end
+    Qcmd(k) = u_sat;
+    dQ = (-Qact(k) + Qcmd(k)) / tau_a;
+    Qact(k+1) = Qact(k) + dt * dQ;
+    dT = (-T(k) + Kp_eff * Qact(k) + d(k)) / tau_eff;
+    T(k+1) = T(k) + dt * dT;
+    dTm = (-Tm(k) + T(k)) / tau_s;
+    Tm(k+1) = Tm(k) + dt * dTm;
+  end
+  Qcmd(n) = Qcmd(n-1);
+end</code></pre><h3 id="verificación-de-las-especificaciones-de-diseño" data-location="1.6.4">Verificación de las especificaciones de diseño</h3><p>Sobre el escenario nominal, las métricas obtenidas son las siguientes:</p><table id="table-1.5"><thead><tr><th>Caso</th><th align="right">Error en estado estable</th><th align="right">Sobrepasamiento</th><th align="right">Tiempo de establecimiento</th></tr></thead><tbody><tr><td>Sistema inicial sin mejoras</td><td align="right"><formula>0.003\ ^\circ\mathrm{C}</formula></td><td align="right"><formula>0\%</formula></td><td align="right"><formula>781.5\ \mathrm{s}</formula></td></tr><tr><td>Sistema con PI lineal</td><td align="right"><formula>0.000005\ ^\circ\mathrm{C}</formula></td><td align="right"><formula>0\%</formula></td><td align="right"><formula>260.5\ \mathrm{s}</formula></td></tr><tr><td>Sistema con PI + no linealidades</td><td align="right"><formula>0.119\ ^\circ\mathrm{C}</formula></td><td align="right"><formula>0\%</formula></td><td align="right"><formula>279.5\ \mathrm{s}</formula></td></tr></tbody><caption class="caption-bottom" data-location="1.5"></caption></table><p>La interpretación de estos resultados es la siguiente:</p><ul><li>El <strong>sistema inicial sin mejoras</strong> resulta demasiado lento. Aunque en la simulación nominal alcanza el valor deseado porque se le aplica manualmente la potencia exacta, su tiempo de establecimiento es muy superior al exigido y no ofrece capacidad de corrección automática.</li><li>El <strong>sistema con controlador PI lineal</strong> cumple claramente las especificaciones fijadas en el diseño: error estacionario prácticamente nulo, ausencia de sobrepasamiento y tiempo de establecimiento menor a <formula>300\ \mathrm{s}</formula>.</li><li>El <strong>sistema con PI y no linealidades</strong> mantiene un comportamiento muy cercano al ideal. Aparece un pequeño error residual debido a la no linealidad introducida en la medición, pero el valor sigue siendo muy bajo en términos prácticos y el tiempo de establecimiento permanece dentro del rango especificado.</li></ul><p>En consecuencia, puede afirmarse que <strong>el controlador diseñado cumple las especificaciones de diseño</strong> sobre el modelo nominal y conserva un desempeño satisfactorio cuando se agregan no linealidades moderadas.</p><h3 id="respuesta-temporal-comparativa" data-location="1.6.5">Respuesta temporal comparativa</h3><p>La figura siguiente compara la respuesta nominal al escalón entre el sistema original sin mejoras y las configuraciones con control PI:</p><figure><img src="media/respuesta_nominal_escalon@-1327633214.svg" alt="" /></figure><p>Se observa que:</p><ul><li>La planta sin mejoras responde de manera mucho más lenta.</li><li>El controlador PI acelera significativamente la dinámica.</li><li>La incorporación de no linealidades no modifica de manera severa la forma general de la respuesta.</li></ul><p>Desde un punto de vista dinámico, el contraste entre las tres curvas permite identificar con claridad el efecto de la
+realimentación sobre un proceso térmico lento. En el caso sin mejoras, la planta evoluciona únicamente bajo la acción de una
+potencia fija nominal, por lo que la respuesta depende exclusivamente de la inercia térmica del secadero y no existe ningún
+mecanismo de corrección automática frente a diferencias entre la salida y la referencia. Esto se traduce en una trayectoria
+suave pero muy lenta, coherente con la constante de tiempo elevada del modelo de planta.</p><p>Cuando se incorpora el controlador PI lineal, la respuesta cambia de forma significativa. La acción proporcional incrementa la
+potencia al inicio del transitorio en proporción al error, mientras que la acción integral acumula la desviación residual y
+fuerza el seguimiento exacto de la consigna en régimen permanente. Como consecuencia, la temperatura alcanza mucho más rápido
+el valor deseado, sin presentar sobrepasamientos apreciables y con error estacionario prácticamente nulo. Este comportamiento
+es consistente con el diseño desarrollado en las secciones previas y confirma que la ubicación elegida de polos dominantes
+produce una dinámica suficientemente amortiguada para el secadero.</p><p>La curva correspondiente al sistema con PI y no linealidades conserva la misma tendencia general, pero exhibe una degradación
+moderada del desempeño ideal. Esto era esperable, ya que en ese caso la simulación incluye dinámica adicional de actuador y
+sensor, saturación y una ligera distorsión en la medición. Tales efectos introducen pequeños retardos internos y alteraciones
+en la realimentación, lo que se refleja en un seguimiento algo más lento y en la aparición de un error residual reducido pero
+no estrictamente nulo. Aun así, la proximidad entre la respuesta lineal y la no lineal indica que el controlador PI conserva
+robustez razonable frente a no idealidades moderadas.</p><p>Otro aspecto relevante es que, en los tres casos, la evolución de la temperatura mantiene una forma físicamente verosímil:
+las curvas son continuas, sin cambios abruptos incompatibles con un proceso térmico real. Esto refuerza la consistencia entre
+el modelo matemático adoptado y la interpretación física del secadero. En particular, el hecho de que el PI mejore
+notablemente la rapidez sin volver agresiva la respuesta respalda la elección de esta estructura como solución principal del
+trabajo.</p><p>El contraste es importante porque muestra el efecto directo de las mejoras introducidas a lo largo del informe: realimentación,
+acción integral, dinámica del actuador, dinámica del sensor y evaluación de robustez frente a desviaciones del modelo nominal.</p><h3 id="análisis-con-perturbaciones-y-no-linealidades" data-location="1.6.6">Análisis con perturbaciones y no linealidades</h3><p>Para evaluar el rechazo a perturbaciones se aplicó una perturbación de carga térmica a partir de <formula>t = 600\ \mathrm{s}</formula>. En el caso no lineal se agregó, además, una ligera variación de parámetros de la planta para representar un cambio en la carga del secadero.</p><p>La respuesta obtenida es la siguiente:</p><figure><img src="media/respuesta_con_perturbacion@744288411.svg" alt="" /></figure><p>Los resultados finales de error ante perturbación permanente son:</p><ul><li><strong>Sistema inicial sin mejoras:</strong> <formula>5.99\ ^\circ\mathrm{C}</formula> de error residual.</li><li><strong>Sistema con PI lineal:</strong> <formula>0.008\ ^\circ\mathrm{C}</formula> de error residual.</li><li><strong>Sistema con PI + no linealidades:</strong> <formula>0.126\ ^\circ\mathrm{C}</formula> de error residual.</li></ul><p>Este comportamiento confirma el rol de la acción integral:</p><ul><li>Sin realimentación, la planta queda desplazada de la referencia cuando aparece una perturbación.</li><li>Con PI lineal, el error permanente se anula prácticamente por completo.</li><li>Con PI no lineal la corrección sigue siendo muy buena, aunque no exacta debido a la distorsión del sensor y a la variación de parámetros.</li></ul><p>Desde el punto de vista físico, esta perturbación representa una pérdida térmica adicional o una variación de carga que exige
+mayor esfuerzo del sistema para sostener la misma temperatura de secado. En ausencia de realimentación, la planta abierta no
+dispone de ningún mecanismo para detectar esa desviación y compensarla, por lo que la salida se estabiliza naturalmente en un
+valor inferior al deseado. Esto explica por qué el sistema sin mejoras presenta un error residual elevado y, en consecuencia,
+no resulta apto para mantener condiciones de secado uniformes frente a cambios operativos.</p><p>En cambio, el sistema con PI lineal reacciona de forma muy distinta. Cuando aparece la perturbación, la temperatura medida cae,
+el error respecto de la referencia aumenta y el controlador incrementa automáticamente la acción de mando. La parte integral del
+PI continúa corrigiendo mientras exista desvío permanente, de modo que el lazo cerrado recupera la consigna con error final
+prácticamente nulo. Este resultado es especialmente importante porque confirma una de las decisiones centrales del trabajo:
+la inclusión de acción integral no solo mejora el seguimiento de referencia, sino que también aporta rechazo sostenido frente a
+perturbaciones constantes o lentas, típicas en un proceso de secado industrial.</p><p>El caso no lineal ofrece una interpretación aún más valiosa desde el punto de vista de robustez. Allí el controlador enfrenta,
+simultáneamente, una perturbación externa, una dinámica adicional en el actuador, retardo de medición, saturación y una leve
+distorsión no lineal del sensor, además de una modificación de los parámetros de planta. A pesar de todo ello, el error final
+permanece muy bajo en relación con la amplitud de la perturbación introducida. Esto indica que el PI seleccionado conserva
+capacidad de regulación incluso cuando el comportamiento real del proceso se aparta del modelo lineal ideal utilizado para el
+diseño.</p><p>También resulta relevante observar que la recuperación de la referencia no se produce de manera instantánea ni artificialmente
+agresiva, sino con una dinámica compatible con la naturaleza lenta del secadero. Esto refuerza la coherencia entre el modelo,
+la ley de control y la interpretación física del proceso: el sistema compensa la pérdida térmica con rapidez razonable, pero
+sin exigir cambios bruscos incompatibles con una planta térmica real.</p><p>En conjunto, este análisis muestra que la principal ventaja del controlador propuesto no reside solamente en mejorar la rapidez
+de la respuesta nominal, sino en sostener el funcionamiento del secadero cerca de la consigna aun cuando aparecen perturbaciones
+y no idealidades. Por ello, la simulación con perturbaciones constituye una evidencia especialmente fuerte de que el diseño PI
+adoptado resulta adecuado para el caso de estudio planteado.</p><h3 id="análisis-de-la-acción-de-control" data-location="1.6.7">Análisis de la acción de control</h3><p>Además de observar la variable de salida, resulta útil estudiar la acción de control, ya que ella muestra el esfuerzo exigido al actuador para sostener la temperatura de secado.</p><figure><img src="media/accion_de_control@-70819204.svg" alt="" /></figure><p>De la figura puede concluirse que:</p><ul><li>En el <strong>sistema sin mejoras</strong> la acción aplicada es constante, porque no existe realimentación que la ajuste ante cambios del proceso.</li><li>En el <strong>sistema con PI lineal</strong> la potencia aumenta rápidamente al inicio para llevar la temperatura hacia la referencia y luego se regula hasta alcanzar un valor estacionario.</li><li>En el <strong>modelo no lineal</strong> se distingue la diferencia entre la señal de mando y la acción efectiva del actuador, debido a la dinámica propia del elemento final de control.</li><li>Frente a la perturbación de carga el controlador incrementa automáticamente la potencia, compensando la pérdida térmica introducida.</li></ul><p>Desde una perspectiva de control, esta figura permite verificar no solo si la salida sigue adecuadamente la consigna, sino
+también si el esfuerzo exigido al actuador es físicamente coherente con el comportamiento del proceso. En el sistema sin
+mejoras, la potencia permanece prácticamente fija porque la estrategia considerada no mide la salida ni corrige desvíos.
+En consecuencia, el sistema carece de capacidad adaptativa: ante cualquier cambio en la carga térmica, la acción aplicada
+permanece inalterada y el error se traslada directamente a la temperatura del proceso.</p><p>En el caso del controlador PI lineal, la evolución de la potencia muestra claramente las dos funciones de la ley de control.
+Durante el arranque, la acción proporcional genera una respuesta intensa para reducir rápidamente el error inicial entre la
+temperatura real y la referencia. Luego, a medida que la salida se aproxima a la consigna, la acción de control disminuye y
+tiende hacia un valor estacionario compatible con el equilibrio térmico requerido para sostener la temperatura deseada. Este
+comportamiento resulta característico de un lazo correctamente ajustado: el controlador actúa con rapidez cuando el error es
+grande y modera el esfuerzo una vez alcanzado el régimen de operación.</p><p>La acción integral también puede interpretarse directamente en esta figura. Cuando aparece una perturbación de carga, el error
+vuelve a aumentar y el controlador incrementa la potencia hasta compensar la pérdida térmica. Si dicha perturbación persiste,
+la parte integral acumula ese desvío y eleva el nivel medio de la acción de control hasta encontrar un nuevo equilibrio con
+error prácticamente nulo. Esto confirma que el rechazo de perturbaciones no es consecuencia de una casualidad numérica de la
+simulación, sino del mecanismo esperado para un PI actuando sobre una planta térmica de tipo 0.</p><p>El modelo no lineal agrega una información adicional muy importante: muestra que la señal de mando calculada por el controlador
+no coincide instantáneamente con la potencia efectivamente entregada al proceso. La separación entre ambas curvas representa
+la dinámica propia del actuador y evidencia que existe una inercia adicional entre la orden de control y la acción física real.
+Desde el punto de vista práctico, esto significa que el controlador debe compensar no solo la inercia térmica de la planta,
+sino también la dinámica del elemento final de control.</p><p>Asimismo, la presencia de saturación en el caso no lineal aporta realismo al análisis. Cuando la señal de mando se aproxima a
+los límites físicos del actuador, el sistema deja de comportarse como un modelo estrictamente lineal. Aun así, la figura muestra
+que el PI seleccionado no exige acciones incompatibles con la escala del problema y que la potencia permanece dentro de valores
+plausibles para un secadero industrial. Esto refuerza la idea de que el diseño obtenido no solo cumple métricas de salida, sino
+que además lo hace con un esfuerzo de control razonable.</p><p>En síntesis, este análisis demuestra que el desempeño mejorado no surge de una respuesta &ldquo;gratuita&rdquo; del modelo, sino de una
+acción de control consistente con la física del proceso, con la dinámica del actuador y con las restricciones operativas
+introducidas en la simulación.</p><h3 id="incorporación-de-no-linealidades-al-modelo" data-location="1.6.8">Incorporación de no linealidades al modelo</h3><p>Tal como se había anticipado en la etapa de análisis, el secadero no es estrictamente lineal. Por eso, en la simulación avanzada se incorporaron las siguientes no linealidades y efectos dinámicos:</p><ul><li><strong>Saturación del actuador</strong>, para representar límites físicos de potencia.</li><li><strong>No linealidad del sensor</strong>, modelada como una leve distorsión cuadrática en la señal medida.</li><li><strong>Dinámica del actuador</strong>, que evita asumir una respuesta instantánea de la fuente de calor.</li><li><strong>Dinámica del sensor</strong>, para contemplar retardo de medición.</li><li><strong>Variación de parámetros de planta</strong>, representando el efecto de un cambio de carga o humedad sobre la constante de tiempo y la ganancia térmica.</li></ul><p>La incorporación de estos efectos no lineales y dinámicos permite interpretar con mayor realismo los resultados obtenidos en
+las subsecciones anteriores. En particular:</p><ul><li>La <strong>saturación del actuador</strong> representa el hecho de que la potencia térmica disponible no puede crecer indefinidamente. Su
+efecto se observa en que el controlador no dispone de una acción ilimitada para corregir errores grandes, lo que puede
+enlentecer la respuesta respecto del caso ideal.</li><li>La <strong>no linealidad del sensor</strong> implica que la señal utilizada por el controlador no coincide exactamente con la temperatura
+real, introduciendo una pequeña distorsión en la realimentación. Esto ayuda a explicar la aparición de un error residual bajo
+pero no estrictamente nulo en la simulación no lineal.</li><li>La <strong>dinámica del actuador</strong> genera una diferencia entre la orden de mando calculada por el PI y la potencia efectivamente
+entregada al secadero. Como se observó en el análisis de la acción de control, esta inercia adicional suaviza la respuesta y
+hace que la compensación no sea instantánea.</li><li>La <strong>dinámica del sensor</strong> introduce un retardo de medición, de modo que el controlador actúa sobre una señal levemente
+atrasada respecto de la temperatura real. Este efecto contribuye a la degradación moderada del desempeño respecto del caso
+lineal puro.</li><li>La <strong>variación paramétrica de la planta</strong> refleja que el secadero no mantiene exactamente la misma ganancia térmica ni la
+misma constante de tiempo cuando cambian la carga o la humedad del producto. En la simulación, esta modificación se traduce
+en una respuesta algo más lenta y en una mayor exigencia para sostener la consigna.</li></ul><p>La comparación entre el modelo lineal y el no lineal muestra, entonces, que el controlador PI conserva estabilidad, que el
+tiempo de respuesta se degrada solo levemente y que aparece un pequeño error residual, pero sin perder la capacidad de
+seguimiento ni de rechazo a perturbaciones. Dicho de otro modo, las no linealidades incorporadas no invalidan el diseño
+realizado, sino que permiten verificar que el comportamiento esperado se mantiene cuando el proceso se representa de forma más
+próxima a la realidad física.</p><p>Por lo tanto, esta sección funciona como una síntesis de los análisis previos: confirma que el modelo lineal fue útil para
+diseñar el controlador y que, aun al incorporar efectos más realistas, la estrategia PI continúa siendo claramente superior al
+caso sin mejoras y suficientemente robusta para el alcance del trabajo.</p><hr /><div class="page-break" data-hidden=""></div><h2 id="conclusiones" data-location="1.7">Conclusiones</h2><p>El desarrollo realizado permitió pasar desde una descripción cualitativa del secadero de yerba mate a un planteo formal de control realimentado, con modelo dinámico, especificaciones, diseño de controlador y validación por simulación. Desde el punto de vista técnico, el aporte central del trabajo fue demostrar que un proceso térmico industrial, aun siendo lento y afectado por perturbaciones, puede ser regulado de manera efectiva mediante una estrategia PI correctamente ajustada.</p><p>La secuencia de mejoras introducidas a lo largo del informe puede resumirse del siguiente modo:</p><ul><li>En una primera etapa se identificó la variable relevante del proceso, el sensor, el actuador, las perturbaciones y las no linealidades dominantes.</li><li>Luego se obtuvo un modelo linealizado de primer orden, suficiente para representar la dinámica térmica en torno al punto nominal.</li><li>A partir de ese modelo se definieron especificaciones temporales realizables y se diseñó un controlador PI por cancelación de polos dominantes.</li><li>Finalmente, se validó el desempeño del sistema mediante simulaciones nominales y no lineales, incorporando dinámica de sensor, dinámica de actuador, saturación y variaciones paramétricas.</li></ul><p>La comparación cuantitativa entre el sistema inicial sin mejoras y el sistema final controlado muestra mejoras claras y medibles:</p><ul><li>El tiempo de establecimiento pasó de <formula>781.5\ \mathrm{s}</formula> a <formula>260.5\ \mathrm{s}</formula>, lo que representa una reducción aproximada del <strong>66.7 %</strong>.</li><li>En el caso con no linealidades, el tiempo de establecimiento fue de <formula>279.5\ \mathrm{s}</formula>, lo que todavía implica una mejora del <strong>64.2 %</strong> respecto del sistema original.</li><li>Frente a una perturbación permanente, el error residual se redujo de <formula>5.99\ ^\circ\mathrm{C}</formula> a <formula>0.008\ ^\circ\mathrm{C}</formula> en el modelo lineal, equivalente a una mejora del <strong>99.9 %</strong> en capacidad de rechazo.</li><li>Bajo no linealidades y variación paramétrica, el error residual quedó en <formula>0.126\ ^\circ\mathrm{C}</formula>, lo que representa una mejora aproximada del <strong>97.9 %</strong> respecto del caso sin mejoras.</li></ul><p>Estos resultados tienen una interpretación de ingeniería directa. La reducción del tiempo de establecimiento indica que el secadero puede alcanzar más rápidamente su condición de operación, mejorando la productividad y reduciendo el tiempo en que el proceso trabaja fuera de consigna. Por otra parte, la disminución drástica del error frente a perturbaciones demuestra que la acción integral del controlador resulta fundamental para compensar cambios en la carga térmica, humedad inicial del producto y demás incertidumbres operativas.</p><p>Desde el punto de vista conceptual, el trabajo permitió aplicar de manera integrada los principales contenidos de la asignatura:</p><ul><li>modelado de sistemas físicos,</li><li>linealización alrededor de un punto de operación,</li><li>análisis de estabilidad,</li><li>definición de especificaciones de desempeño,</li><li>diseño de controladores clásicos,</li><li>e interpretación de la respuesta temporal y de la acción de control.</li></ul><p>Asimismo, la incorporación de no linealidades en la etapa de simulación permitió verificar una cuestión importante: el modelo lineal no describe completamente al proceso real, pero sí constituye una aproximación útil para el diseño inicial del controlador. Aun cuando la dinámica no lineal degrada parcialmente el desempeño ideal, el sistema controlado mantiene estabilidad, buen seguimiento de referencia y fuerte rechazo a perturbaciones, lo cual valida la estrategia adoptada.</p><p>En síntesis, el análisis realizado demuestra que [???]  la incorporación de realimentación, sensado adecuado y un controlador PI bien ajustado produce una mejora técnica sustancial en el comportamiento del secadero de yerba mate. El sistema final no solo cumple las especificaciones planteadas, sino que también exhibe robustez razonable frente a efectos no ideales del proceso, lo que convierte a la solución propuesta en una alternativa técnicamente consistente dentro del alcance del presente trabajo.</p><hr /><div class="page-break" data-hidden=""></div><h1 id="bibliografía">Bibliografía</h1><div class="bibliography bibliography-ieeetr"><span class="bibliography-entry-label">[1]</span><span class="bibliography-entry-content">{. Gruber}, “Proceso de Elaboracion de la Yerba Mate.” Slow Food Posadas. N/N. . January. 2011.</span><span class="bibliography-entry-label">[2]</span><span class="bibliography-entry-content">{Emerson}, “Thermocouples.” NATIONAL INSTRUMENTS CORP. . 2026.</span><span class="bibliography-entry-label">[3]</span><span class="bibliography-entry-content">D. Seborg, T. Edgar, D. Mellichamp, and F. III, <em>Process Dynamics and Control</em>. Hoboken, NJ: John Wiley \& Sons, 2010.</span><span class="bibliography-entry-label">[4]</span><span class="bibliography-entry-content">E. Zanoelo, A. Abitante, and L. Meleiro, “Dynamic modeling and feedback control for conveyors-belt dryers of mate leaves,” <em>Journal of Food Engineering</em>, vol. 84, no. 3, pp. 458–468, 2008.</span></div></body>
+</html>

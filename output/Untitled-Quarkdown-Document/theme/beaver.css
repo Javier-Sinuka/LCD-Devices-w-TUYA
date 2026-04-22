@@ -1,0 +1,49 @@
+/* Beamer's Beaver color theme */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css");
+:root {
+  --qd-primary-color: rgb(187, 39, 26);
+  --primary-darker: rgb(149, 29, 18);
+  --secondary: rgb(236, 236, 236);
+  --tertiary: rgb(216, 216, 216);
+  --qd-main-color: rgb(10, 10, 10);
+  --qd-background-color: white;
+  --qd-link-color: var(--qd-primary-color);
+  --qd-color-on-primary: var(--qd-background-color);
+  --qd-callout-background-color: rgb(234, 233, 247);
+  --qd-callout-content-foreground-color: var(--qd-main-color);
+  --qd-callout-title-foreground-color: rgb(83, 81, 152);
+  --qd-mermaid-node-background-color: var(--qd-background-color);
+  --qd-mermaid-node-text-color: var(--qd-main-color);
+}
+
+.quarkdown h1, .quarkdown h2 {
+  color: var(--qd-primary-color) !important;
+}
+.quarkdown h1:not(.box h1) {
+  background-color: var(--secondary);
+}
+.quarkdown .box.callout {
+  --qd-box-header-background-color: color-mix(in srgb, var(--qd-callout-title-foreground-color) 7%, var(--qd-callout-background-color));
+}
+.quarkdown .box.callout .box-content li::marker {
+  color: var(--qd-callout-foreground-color);
+}
+.quarkdown .box.callout:has(.box-content h1) {
+  background-color: var(--secondary);
+}
+.quarkdown .color-preview {
+  border-color: var(--secondary) !important;
+}
+.quarkdown .page-margin-bottom-center > * {
+  background-color: var(--tertiary);
+  color: var(--qd-primary-color);
+}
+.quarkdown .page-margin-bottom-center > *:first-child {
+  background-color: var(--qd-primary-color);
+  color: white;
+}
+.quarkdown .page-margin-bottom-center > *:nth-child(even) {
+  background-color: var(--secondary);
+}
+
+/*# sourceMappingURL=beaver.css.map */
